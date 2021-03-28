@@ -18,12 +18,18 @@ export class Api {
   config: ApiConfig
 
   /**
+   * The authentication token.
+   */
+  authToken: string
+
+  /**
    * Creates the api.
    *
    * @param config The configuration to use.
    */
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
     this.config = config
+    this.authToken = undefined
   }
 
   /**
@@ -42,6 +48,38 @@ export class Api {
         Accept: 'application/json',
       },
     })
+  }
+
+  setAuthToken(authToken: string) {
+    this.authToken = authToken
+    this.apisauce.setHeader('Authorization', `Bearer ${authToken}`)
+  }
+
+  /**
+   * Logs the user in, returning the authentication token.
+   * @param username the username
+   * @param password the password
+   * @returns a Promise wrapping the token
+   */
+  async login(username: string, password: string): Promise<Types.LoginResult> {
+    try {
+      const response: ApiResponse<any> = await this.apisauce.post(
+        `${this.config.url}/oauth/token`,
+        { username, password },
+      )
+
+      if (!response.ok) {
+        const problem = getGeneralApiProblem(response)
+        if (problem) return problem
+      }
+
+      const token = response.data
+
+      return { kind: 'ok', token }
+    } catch (e) {
+      __DEV__ && console.tron.log(e.message)
+      return { kind: 'bad-data' }
+    }
   }
 
   /**

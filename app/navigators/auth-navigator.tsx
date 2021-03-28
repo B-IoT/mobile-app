@@ -1,12 +1,6 @@
-/**
- * This is the navigator you will modify to display the logged-in screens of your app.
- * You can use RootNavigator to also display an auth flow or other user flows.
- *
- * You'll likely spend most of your time in this file.
- */
 import React from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { ScanScreen, RegisterScreen, InfoScreen } from '../screens'
+import { LoginScreen } from '../screens'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -20,25 +14,20 @@ import { ScanScreen, RegisterScreen, InfoScreen } from '../screens'
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
-export type MainPrimaryParamList = {
-  scan: undefined
-  register: undefined
-  info: undefined
+export type AuthPrimaryParamList = {
+  login: undefined
 }
 
-// Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<MainPrimaryParamList>()
+const Stack = createNativeStackNavigator<AuthPrimaryParamList>()
 
-export function MainNavigator() {
+export function AuthNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="scan" component={ScanScreen} />
-      <Stack.Screen name="register" component={RegisterScreen} />
-      <Stack.Screen name="info" component={InfoScreen} />
+      <Stack.Screen name="login" component={LoginScreen} />
     </Stack.Navigator>
   )
 }

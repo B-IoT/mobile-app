@@ -25,7 +25,7 @@ export class Environment {
     if (__DEV__) {
       await this.reactotron.setup()
     }
-    await this.api.setup()
+    this.api.setup()
   }
 
   /**

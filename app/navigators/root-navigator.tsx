@@ -8,6 +8,7 @@ import React from 'react'
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { MainNavigator } from './main-navigator'
+import { AuthNavigator } from './auth-navigator'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -21,17 +22,27 @@ import { MainNavigator } from './main-navigator'
  */
 export type RootParamList = {
   mainStack: undefined
+  authStack: undefined
 }
 
 const Stack = createNativeStackNavigator<RootParamList>()
 
 const RootStack = () => {
+  // TODO: conditionally choose a stack based on whether we have the auth token
   return (
     <Stack.Navigator
+      initialRouteName="authStack"
       screenOptions={{
         headerShown: false,
       }}
     >
+      <Stack.Screen
+        name="authStack"
+        component={AuthNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="mainStack"
         component={MainNavigator}
@@ -55,3 +66,15 @@ export const RootNavigator = React.forwardRef<
 })
 
 RootNavigator.displayName = 'RootNavigator'
+
+/**
+ * A list of routes from which we're allowed to leave the app when
+ * the user presses the back button on Android.
+ *
+ * Anything not on this list will be a standard `back` action in
+ * react-navigation.
+ *
+ * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
+ */
+const exitRoutes = ['welcome', 'login']
+export const canExit = (routeName: string) => exitRoutes.includes(routeName)
