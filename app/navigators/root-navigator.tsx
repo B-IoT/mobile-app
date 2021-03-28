@@ -9,6 +9,7 @@ import { NavigationContainer, NavigationContainerRef } from '@react-navigation/n
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { MainNavigator } from './main-navigator'
 import { AuthNavigator } from './auth-navigator'
+import { useStores } from '../models'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -28,7 +29,8 @@ export type RootParamList = {
 const Stack = createNativeStackNavigator<RootParamList>()
 
 const RootStack = () => {
-  // TODO: conditionally choose a stack based on whether we have the auth token
+  const { itemStore } = useStores()
+
   return (
     <Stack.Navigator
       initialRouteName="authStack"
@@ -36,20 +38,23 @@ const RootStack = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="authStack"
-        component={AuthNavigator}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="mainStack"
-        component={MainNavigator}
-        options={{
-          headerShown: false,
-        }}
-      />
+      {itemStore.isAuthenticated ? (
+        <Stack.Screen
+          name="mainStack"
+          component={MainNavigator}
+          options={{
+            headerShown: false,
+          }}
+        />
+      ) : (
+        <Stack.Screen
+          name="authStack"
+          component={AuthNavigator}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
     </Stack.Navigator>
   )
 }
