@@ -1,6 +1,6 @@
-import { ViewStyle } from "react-native"
-import { isNil } from "ramda"
-import { color } from "../../theme"
+import { ViewStyle } from 'react-native'
+import { isNil } from 'ramda'
+import { color } from '../../theme'
 
 /**
  * All screen keyboard offsets.
@@ -26,13 +26,13 @@ export const presets = {
     outer: {
       backgroundColor: color.background,
       flex: 1,
-      height: "100%",
+      height: '100%',
     } as ViewStyle,
     inner: {
-      justifyContent: "flex-start",
-      alignItems: "stretch",
-      height: "100%",
-      width: "100%",
+      justifyContent: 'flex-start',
+      alignItems: 'stretch',
+      height: '100%',
+      width: '100%',
     } as ViewStyle,
   },
 
@@ -45,9 +45,9 @@ export const presets = {
     outer: {
       backgroundColor: color.background,
       flex: 1,
-      height: "100%",
+      height: '100%',
     } as ViewStyle,
-    inner: { justifyContent: "flex-start", alignItems: "stretch" } as ViewStyle,
+    inner: { justifyContent: 'flex-start', alignItems: 'stretch' } as ViewStyle,
   },
 }
 
@@ -63,5 +63,5 @@ export type ScreenPresets = keyof typeof presets
  */
 export function isNonScrolling(preset: ScreenPresets) {
   // any of these things will make you scroll
-  return isNil(preset) || !preset.length || isNil(presets[preset]) || preset === "fixed"
+  return isNil(preset) || !preset.length || isNil(presets[preset]) || preset === 'fixed'
 }

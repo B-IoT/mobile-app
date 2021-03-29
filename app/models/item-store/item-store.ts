@@ -50,7 +50,7 @@ export const ItemStoreModel = types
       }
     }),
 
-    login: flow(function* (username: string, password: string, remember: boolean) {
+    login: flow(function* (username: string, password: string, remember = false) {
       try {
         const result = yield self.environment.api.login(username, password)
         if (result.kind === 'ok') {

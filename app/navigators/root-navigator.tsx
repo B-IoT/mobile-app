@@ -4,12 +4,14 @@
  * and a "main" flow (which is contained in your MainNavigator) which the user
  * will use once logged in.
  */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
+import { observer } from 'mobx-react-lite'
 import { MainNavigator } from './main-navigator'
 import { AuthNavigator } from './auth-navigator'
 import { useStores } from '../models'
+import * as Keychain from '../utils/keychain'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -28,12 +30,27 @@ export type RootParamList = {
 
 const Stack = createNativeStackNavigator<RootParamList>()
 
-const RootStack = () => {
+const RootStack = observer(() => {
   const { itemStore } = useStores()
+
+  const isAuthenticated = itemStore.isAuthenticated
+  useEffect(() => {
+    // If the user is not authenticated, try to authenticate it with his credentials, if stored
+    const loginIfCredentials = async () => {
+      const credentials = await Keychain.load()
+      if (credentials) {
+        const { username, password } = credentials
+        await itemStore.login(username, password)
+      }
+    }
+
+    if (!isAuthenticated) {
+      loginIfCredentials()
+    }
+  }, [])
 
   return (
     <Stack.Navigator
-      initialRouteName="authStack"
       screenOptions={{
         headerShown: false,
       }}
@@ -57,7 +74,7 @@ const RootStack = () => {
       )}
     </Stack.Navigator>
   )
-}
+})
 
 export const RootNavigator = React.forwardRef<
   NavigationContainerRef,

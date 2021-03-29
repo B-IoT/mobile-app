@@ -21,13 +21,18 @@ export async function save(username: string, password: string) {
  * Loads credentials that were already saved.
  *
  */
-export async function load(): Promise<Credentials> {
-  return JSON.parse(await SecureStore.getItemAsync(CREDENTIALS))
+export async function load(): Promise<Credentials | null> {
+  const result = await SecureStore.getItemAsync(CREDENTIALS)
+  if (result) {
+    return JSON.parse(result)
+  }
+
+  return null
 }
 
 /**
  * Resets any existing credentials for the given server.
  */
 export async function reset() {
-  SecureStore.deleteItemAsync(CREDENTIALS)
+  await SecureStore.deleteItemAsync(CREDENTIALS)
 }

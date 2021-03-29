@@ -17,10 +17,9 @@ export const LoginScreen = observer(function LoginScreen() {
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
-  console.log('HERE')
   return (
     <Screen style={ROOT} preset="scroll">
-      <Text preset="header" text="Login" />
+      <Text preset="header" tx="loginScreen.login" />
     </Screen>
   )
 })

@@ -1,0 +1,10 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Effacer",
+    "back": "Retourner"
+  },
+  "loginScreen": {
+    "login": "Se connecter"
+  }
+}
