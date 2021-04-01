@@ -630,7 +630,7 @@ exports[`Storyshots Checkbox Behaviour 1`] = `
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#FBA928",
+                      "backgroundColor": "#2673E8",
                       "height": 12,
                       "width": 12,
                     }
@@ -3515,8 +3515,8 @@ exports[`Storyshots Switch Behaviour 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "backgroundColor": "#FBA928",
-                  "borderColor": "#FBA928",
+                  "backgroundColor": "#2673E8",
+                  "borderColor": "#2673E8",
                   "borderRadius": 22.5,
                   "borderWidth": 1,
                   "height": 32,

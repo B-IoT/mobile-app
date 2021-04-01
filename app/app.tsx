@@ -13,6 +13,10 @@ import './i18n'
 import './utils/ignore-warnings'
 import React, { useState, useEffect, useRef } from 'react'
 import { NavigationContainerRef } from '@react-navigation/native'
+import * as eva from '@eva-design/eva'
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
+import CustomTheme from './theme/theme.json'
+import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context'
 import { initFonts } from './theme/fonts' // expo
 import * as storage from './utils/storage'
@@ -67,11 +71,14 @@ function App() {
     <ToggleStorybook>
       <RootStoreProvider value={rootStore}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <RootNavigator
-            ref={navigationRef}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider {...eva} theme={{ ...eva.light, ...CustomTheme }}>
+            <RootNavigator
+              ref={navigationRef}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </ApplicationProvider>
         </SafeAreaProvider>
       </RootStoreProvider>
     </ToggleStorybook>

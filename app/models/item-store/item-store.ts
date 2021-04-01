@@ -59,6 +59,7 @@ export const ItemStoreModel = types
           if (remember) {
             yield self.storeCredentials(username, password)
           }
+          return true
         } else {
           __DEV__ && console.tron.log(result.kind)
           self.setAuthenticated(false)
@@ -67,6 +68,8 @@ export const ItemStoreModel = types
         __DEV__ && console.tron.log(e.message)
         self.setAuthenticated(false)
       }
+
+      return false
     }),
   }))
 

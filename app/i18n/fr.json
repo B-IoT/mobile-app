@@ -5,6 +5,15 @@
     "back": "Retourner"
   },
   "loginScreen": {
-    "login": "Se connecter"
+    "welcome": "Bienvenue,",
+    "loginToContinue": "Connecte-toi pour continuer!",
+    "email": "Email",
+    "emailPlaceholder": "Entre ton adresse email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entre ton mot de passe",
+    "rememberMe": "Mémoriser info",
+    "login": "Se connecter",
+    "shouldNotBeEmpty": "Ne devrait pas être vide",
+    "error": "Erreur, réessaye!"
   }
 }
