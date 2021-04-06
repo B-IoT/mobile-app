@@ -16,7 +16,7 @@ publish: &publish
 
     - run:
         name: Install expo-optimize dependency
-        command: npm install -g sharp-cli
+        command: npm install sharp-cli
 
     - run:
         name: Optimize assets
