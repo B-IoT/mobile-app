@@ -1,8 +1,12 @@
-# Welcome to your new ignited app!
+# BIoT mobile app
+
+[![CircleCI](https://circleci.com/gh/B-IoT/mobile-app.svg?style=svg&circle-token=b35bec0e14f0006328c68b47829a5fa53efec6dc)](https://app.circleci.com/pipelines/github/B-IoT)
+
+## Welcome to your new ignited app!
 
 [![CircleCI](https://circleci.com/gh/infinitered/ignite.svg?style=svg)](https://circleci.com/gh/infinitered/ignite)
 
-## The latest and greatest boilerplate for Infinite Red opinions
+### The latest and greatest boilerplate for Infinite Red opinions
 
 This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
 
@@ -14,7 +18,7 @@ Currently includes:
 - TypeScript
 - And more!
 
-## Quick Start
+### Quick Start
 
 The Ignite boilerplate project's structure will look similar to this:
 
@@ -68,7 +72,7 @@ ignite-project
 
 ```
 
-### ./app directory
+#### ./app directory
 
 Included in an Ignite boilerplate project is the `app` directory. This is a directory you would normally have to create when using vanilla React Native.
 
@@ -113,19 +117,19 @@ This is a great place to put miscellaneous helpers and utilities. Things like da
 
 **app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
 
-### ./ignite directory
+#### ./ignite directory
 
 The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find generators, plugins and examples to help you get started with React Native.
 
-### ./storybook directory
+#### ./storybook directory
 
 This is where your stories will be registered and where the Storybook configs will live.
 
-### ./test directory
+#### ./test directory
 
 This directory will hold your Jest configs and mocks, as well as your [storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots) test file. This is a file that contains the snapshots of all your component storybooks.
 
-## Running Storybook
+### Running Storybook
 
 From the command line in your generated app's root directory, enter `yarn run storybook`
 This starts up the storybook server and opens a story navigator in your browser. With your app
@@ -134,7 +138,7 @@ use the story navigator in your browser to change stories.
 
 For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
 
-## Running e2e tests
+### Running e2e tests
 
 Read [e2e setup instructions](./e2e/README.md).
 

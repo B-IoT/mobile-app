@@ -60,6 +60,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "7.12.1",
     "@babel/plugin-proposal-optional-catch-binding": "7.12.1",
+    "@testing-library/jest-native": "^4.0.1",
+    "@testing-library/react-native": "^7.2.0",
     "@types/i18n-js": "3.0.3",
     "@types/jest": "26.0.19",
     "@types/ramda": "0.27.32",
@@ -106,20 +108,22 @@
     "preset": "jest-expo",
     "setupFiles": [
       "<rootDir>/node_modules/react-native/jest/setup.js",
-      "<rootDir>/test/setup.ts"
+      "<rootDir>/test/setup.ts",
+      "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
     ],
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/e2e"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules)"
+      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules|@ui-kitten|unimodules-permissions-interface)"
     ],
     "projects": [
       {
         "preset": "jest-expo/ios",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",
@@ -129,7 +133,7 @@
       {
         "preset": "jest-expo/android",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",
