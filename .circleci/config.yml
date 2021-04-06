@@ -11,6 +11,18 @@ publish: &publish
         command: npm ci
 
     - run:
+        name: Run tests
+        command: npm test
+
+    - run:
+        name: Install expo-optimize dependency
+        command: npm install -g sharp-cli
+
+    - run:
+        name: Optimize assets
+        command: npx expo-optimize ~/my-app
+
+    - run:
         name: Login into Expo
         command: npx expo-cli login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 

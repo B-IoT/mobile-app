@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 import { ViewStyle, TouchableWithoutFeedback } from 'react-native'
 import { Text, Input, CheckBox, Button, Icon, Popover, useTheme } from '@ui-kitten/components'
 import { Screen } from '../../components'
-// import { useNavigation } from "@react-navigation/native"
 import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
