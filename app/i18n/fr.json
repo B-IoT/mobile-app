@@ -15,5 +15,8 @@
     "login": "Se connecter",
     "shouldNotBeEmpty": "Ne devrait pas être vide",
     "error": "Erreur, réessaye!"
+  },
+  "scanScreen": {
+    "scan": "Scannes ton QR code"
   }
 }

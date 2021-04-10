@@ -109,7 +109,7 @@ export const LoginScreen = observer(function LoginScreen() {
         }
 
         if (!emptyEmail && !emptyPassword) {
-          const isSuccessful = await itemStore.login(email, password)
+          const isSuccessful = await itemStore.login(email, password, checked)
           if (!isSuccessful) {
             setErrorPopupVisible(true)
             setTimeout(() => setErrorPopupVisible(false), TIMEOUT)
