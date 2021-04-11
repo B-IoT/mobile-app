@@ -21,6 +21,7 @@
     "scan": "Scan your QR code",
     "logout": "Logout",
     "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
-    "requestingCamera": "Requesting camera permissions..."
+    "requestingCamera": "Requesting camera permissions...",
+    "error": "Error, try again!"
   }
 }

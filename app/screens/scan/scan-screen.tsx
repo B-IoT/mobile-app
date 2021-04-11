@@ -4,7 +4,16 @@ import { StyleSheet, View, ViewStyle, useWindowDimensions, TextStyle } from 'rea
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import Constants from 'expo-constants'
 import { Screen } from '../../components'
-import { Button, Icon, Layout, Modal, Spinner, Text, useTheme } from '@ui-kitten/components'
+import {
+  Button,
+  Icon,
+  Layout,
+  Modal,
+  Popover,
+  Spinner,
+  Text,
+  useTheme,
+} from '@ui-kitten/components'
 import { useStores } from '../../models'
 import { useNavigation } from '@react-navigation/native'
 import { translate } from '../../i18n'
@@ -84,14 +93,24 @@ const POPUP_BUTTON: ViewStyle = {
   borderRadius: 8,
 }
 
+const ERROR_POPOVER: ViewStyle = {
+  borderRadius: 8,
+  marginTop: spacing[4],
+  paddingHorizontal: spacing[2],
+  paddingVertical: spacing[2],
+}
+
 const strings = {
   scan: translate('scanScreen.scan'),
   logout: translate('scanScreen.logout'),
   whyCamera: translate('scanScreen.whyCamera'),
   requestingCamera: translate('scanScreen.requestingCamera'),
+  error: translate('scanScreen.error'),
 }
 
 const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} name="info" />
+
+const TIMEOUT = 2000
 
 export const ScanScreen = observer(function ScanScreen() {
   const windowHeight = useWindowDimensions().height
@@ -99,7 +118,8 @@ export const ScanScreen = observer(function ScanScreen() {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [paused, setPaused] = useState(false)
-  const [popupVisible, setPopupVisible] = useState(false)
+  const [infoPopupVisible, setInfoPopupVisible] = useState(false)
+  const [errorPopupVisible, setErrorPopupVisible] = useState(false)
 
   const { itemStore } = useStores()
 
@@ -134,7 +154,11 @@ export const ScanScreen = observer(function ScanScreen() {
         })
         break
       default:
-        // TODO show error
+        setErrorPopupVisible(true)
+        setTimeout(() => {
+          setScanned(false)
+          setErrorPopupVisible(false)
+        }, TIMEOUT)
         break
     }
   }
@@ -159,10 +183,19 @@ export const ScanScreen = observer(function ScanScreen() {
     )
   }
 
-  // TODO: popover over spinner with error message if server returns an error
+  const dangerColor = theme['color-danger-default']
   const scannedLayout = (
     <View style={SCANNED_LAYOUT}>
-      <Spinner size="giant" status="control" />
+      <Popover
+        style={[ERROR_POPOVER, { backgroundColor: dangerColor, borderColor: dangerColor }]}
+        visible={errorPopupVisible}
+        anchor={() => <Spinner size="giant" status="control" />}
+        onBackdropPress={() => setErrorPopupVisible(false)}
+      >
+        <Text category="p1" status="control">
+          {strings.error}
+        </Text>
+      </Popover>
     </View>
   )
 
@@ -178,7 +211,7 @@ export const ScanScreen = observer(function ScanScreen() {
         accessoryLeft={InfoIcon}
         onPress={() => {
           setPaused(true) // pause scanner
-          setPopupVisible(true)
+          setInfoPopupVisible(true)
         }}
       />
       <Text category="h5" appearance="alternative" style={HINT}>
@@ -194,11 +227,11 @@ export const ScanScreen = observer(function ScanScreen() {
         ]}
       />
       <Modal
-        visible={popupVisible}
+        visible={infoPopupVisible}
         backdropStyle={POPUP_BACKDROP}
         onBackdropPress={() => {
           setPaused(false) // resume scanner
-          setPopupVisible(false)
+          setInfoPopupVisible(false)
         }}
       >
         <Layout style={POPUP_LAYOUT}>

@@ -21,6 +21,7 @@
     "scan": "Scannes ton QR code",
     "logout": "Se déconnecter",
     "whyCamera": "Caméra pas disponible.\nLa caméra est nécessaire pour scanner les QR codes",
-    "requestingCamera": "En train de demander les permissions pour la caméra..."
+    "requestingCamera": "En train de demander les permissions pour la caméra...",
+    "error": "Erreur, réessaye!"
   }
 }
