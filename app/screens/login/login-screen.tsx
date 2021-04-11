@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle, TouchableWithoutFeedback } from 'react-native'
-import { Text, Input, CheckBox, Button, Icon, Popover, useTheme } from '@ui-kitten/components'
+import { ViewStyle, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  Text,
+  Input,
+  CheckBox,
+  Button,
+  Icon,
+  Popover,
+  useTheme,
+  Spinner,
+} from '@ui-kitten/components'
 import { Screen } from '../../components'
 import { useStores } from '../../models'
 import { translate } from '../../i18n'
@@ -45,6 +54,11 @@ const POPOVER: ViewStyle = {
   paddingVertical: spacing[2],
 }
 
+const LOADING_INDICATOR: ViewStyle = {
+  justifyContent: 'center',
+  alignItems: 'center',
+}
+
 const strings = {
   welcome: translate('loginScreen.welcome'),
   loginToContinue: translate('loginScreen.loginToContinue'),
@@ -78,6 +92,7 @@ export const LoginScreen = observer(function LoginScreen() {
   const [secureTextEntry, setSecureTextEntry] = useState(true)
   const [checked, setChecked] = useState(false)
   const [errorPopupVisible, setErrorPopupVisible] = useState(false)
+  const [loggingIn, setLoggingIn] = useState(false)
 
   const CloseIcon = (props) => (
     <TouchableWithoutFeedback onPress={() => setEmail('')}>
@@ -91,9 +106,16 @@ export const LoginScreen = observer(function LoginScreen() {
     </TouchableWithoutFeedback>
   )
 
+  const LoadingIndicator = (props) => (
+    <View style={[props.style, LOADING_INDICATOR]}>
+      <Spinner status="control" />
+    </View>
+  )
+
   const LoginButton = () => (
     <Button
       style={BUTTON}
+      accessoryLeft={loggingIn ? LoadingIndicator : null}
       onPress={async () => {
         const emptyEmail = email.length === 0
         const emptyPassword = password.length === 0
@@ -109,15 +131,17 @@ export const LoginScreen = observer(function LoginScreen() {
         }
 
         if (!emptyEmail && !emptyPassword) {
+          setLoggingIn(true)
           const isSuccessful = await itemStore.login(email, password, checked)
           if (!isSuccessful) {
+            setLoggingIn(false)
             setErrorPopupVisible(true)
             setTimeout(() => setErrorPopupVisible(false), TIMEOUT)
           }
         }
       }}
     >
-      {strings.login}
+      {loggingIn ? null : strings.login}
     </Button>
   )
 

@@ -2,7 +2,8 @@
   "common": {
     "ok": "OK",
     "cancel": "Effacer",
-    "back": "Retourner"
+    "back": "Retourner",
+    "retry": "Réessayer"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -17,6 +18,9 @@
     "error": "Erreur, réessaye!"
   },
   "scanScreen": {
-    "scan": "Scannes ton QR code"
+    "scan": "Scannes ton QR code",
+    "logout": "Se déconnecter",
+    "whyCamera": "Caméra pas disponible.\nLa caméra est nécessaire pour scanner les QR codes",
+    "requestingCamera": "En train de demander les permissions pour la caméra..."
   }
 }

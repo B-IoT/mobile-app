@@ -2,20 +2,30 @@ import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
 import { Item, ItemModel, ItemSnapshot } from '../item/item'
 import { ItemApi } from '../../services/api/item-api'
 import { withEnvironment } from '../extensions/with-environment'
-import { save } from '../../utils/keychain'
+import { reset, save } from '../../utils/keychain'
+
+export enum GetItemResult {
+  OK,
+  NOT_FOUND,
+  ERROR,
+}
 
 export const ItemStoreModel = types
   .model('ItemStore')
   .props({
     item: types.maybe(ItemModel),
+    itemId: types.maybe(types.number),
     isAuthenticated: types.optional(types.boolean, false),
+    authToken: types.maybe(types.string),
   })
   .extend(withEnvironment)
   .actions((self) => ({
     saveItem: (itemSnapshot: ItemSnapshot) => {
       self.item = itemSnapshot
+      self.itemId = itemSnapshot.id
     },
     setAuthToken(token: string) {
+      self.authToken = token
       self.environment.api.setAuthToken(token)
     },
     setAuthenticated(value: boolean) {
@@ -26,27 +36,42 @@ export const ItemStoreModel = types
     storeCredentials: flow(function* (username: string, password: string) {
       yield save(username, password)
     }),
+    removeCredentials: flow(function* () {
+      yield reset()
+    }),
   }))
   .actions((self) => ({
     getItem: flow(function* (id: number) {
+      // First we update the auth token with the one stored, which is not volatile
+      self.environment.api.setAuthToken(self.authToken)
+
       const itemApi = new ItemApi(self.environment.api)
       const result = yield itemApi.getItem(id)
 
-      if (result.kind === 'ok') {
-        self.saveItem(result.item)
-      } else {
-        __DEV__ && console.tron.log(result.kind)
+      switch (result.kind) {
+        case 'ok':
+          self.saveItem(result.item)
+          return GetItemResult.OK
+        case 'not-found':
+          self.itemId = id
+          return GetItemResult.NOT_FOUND
+        default:
+          __DEV__ && console.log(result.kind)
+          return GetItemResult.ERROR
       }
     }),
 
     registerItem: flow(function* (item: Item) {
+      // First we update the auth token with the one stored, which is not volatile
+      self.environment.api.setAuthToken(self.authToken)
+
       const itemApi = new ItemApi(self.environment.api)
       const result = yield itemApi.registerItem(item)
 
       if (result.kind === 'ok') {
-        // self.saveItem(result.item)
+        self.saveItem(result.item)
       } else {
-        __DEV__ && console.tron.log(result.kind)
+        __DEV__ && console.log(result.kind)
       }
     }),
 
@@ -61,15 +86,21 @@ export const ItemStoreModel = types
           }
           return true
         } else {
-          __DEV__ && console.tron.log(result.kind)
+          __DEV__ && console.log(result.kind)
           self.setAuthenticated(false)
         }
       } catch (e) {
-        __DEV__ && console.tron.log(e.message)
+        __DEV__ && console.log(e.message)
         self.setAuthenticated(false)
       }
 
       return false
+    }),
+
+    logout: flow(function* () {
+      yield self.removeCredentials()
+      self.setAuthToken(undefined)
+      self.setAuthenticated(false)
     }),
   }))
 

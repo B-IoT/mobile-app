@@ -2,7 +2,8 @@
   "common": {
     "ok": "OK!",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "retry": "Retry"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -17,6 +18,9 @@
     "error": "Error, try again!"
   },
   "scanScreen": {
-    "scan": "Scan your QR code"
+    "scan": "Scan your QR code",
+    "logout": "Logout",
+    "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
+    "requestingCamera": "Requesting camera permissions..."
   }
 }

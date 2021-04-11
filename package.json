@@ -36,6 +36,7 @@
     "apisauce": "2.0.0",
     "expo": "40.0.1",
     "expo-barcode-scanner": "~9.1.0",
+    "expo-constants": "~9.3.3",
     "expo-localization": "9.1.0",
     "expo-secure-store": "~9.3.0",
     "expo-status-bar": "1.0.3",
@@ -111,7 +112,9 @@
       "<rootDir>/test/setup.ts",
       "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
     ],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/e2e"
