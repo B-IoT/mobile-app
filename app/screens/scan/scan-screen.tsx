@@ -183,19 +183,15 @@ export const ScanScreen = observer(function ScanScreen() {
     )
   }
 
-  const dangerColor = theme['color-danger-default']
   const scannedLayout = (
     <View style={SCANNED_LAYOUT}>
-      <Popover
-        style={[ERROR_POPOVER, { backgroundColor: dangerColor, borderColor: dangerColor }]}
-        visible={errorPopupVisible}
-        anchor={() => <Spinner size="giant" status="control" />}
-        onBackdropPress={() => setErrorPopupVisible(false)}
-      >
-        <Text category="p1" status="control">
+      {errorPopupVisible ? (
+        <Text category="h5" status="danger">
           {strings.error}
         </Text>
-      </Popover>
+      ) : (
+        <Spinner size="giant" status="control" />
+      )}
     </View>
   )
 
