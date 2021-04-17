@@ -9,7 +9,6 @@ import {
   Icon,
   Layout,
   Modal,
-  Popover,
   Spinner,
   Text,
   useTheme,
@@ -91,13 +90,6 @@ const POPUP_LAYOUT: ViewStyle = {
 
 const POPUP_BUTTON: ViewStyle = {
   borderRadius: 8,
-}
-
-const ERROR_POPOVER: ViewStyle = {
-  borderRadius: 8,
-  marginTop: spacing[4],
-  paddingHorizontal: spacing[2],
-  paddingVertical: spacing[2],
 }
 
 const strings = {

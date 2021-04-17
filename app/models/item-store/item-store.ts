@@ -1,8 +1,9 @@
-import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, flow, cast } from 'mobx-state-tree'
 import { Item, ItemModel, ItemSnapshot } from '../item/item'
 import { ItemApi } from '../../services/api/item-api'
 import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
+import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'
 
 export enum GetItemResult {
   OK,
@@ -17,17 +18,52 @@ export const ItemStoreModel = types
     itemId: types.maybe(types.number),
     isAuthenticated: types.optional(types.boolean, false),
     authToken: types.maybe(types.string),
+    /**
+     * Map from dataType to (map from entryName to rank)
+     */
+    autocompleteDataMap: types.map(types.map(types.integer)),
   })
   .extend(withEnvironment)
   .actions((self) => ({
+    getAutocompleteData: (dataType: string) => {
+      // Create a list of AutocompleteEntry
+      const entries = [...self.autocompleteDataMap.get(dataType).entries()].map(([name, rank]) =>
+        AutocompleteEntryModel.create({
+          rank,
+          name,
+        }),
+      )
+
+      // Sort the entries by rank, the ones with the highest ranks come first (descending order)
+      return entries.sort((e1, e2) => e2.rank - e1.rank)
+    },
+
+    addAutocompleteEntryData: (dataType: string, entry: string) => {
+      if (self.autocompleteDataMap.has(dataType)) {
+        const data = self.autocompleteDataMap.get(dataType)
+        if (data.has(entry)) {
+          data.set(entry, data.get(entry) + 1)
+        } else {
+          data.set(entry, 1)
+        }
+      } else {
+        const newData = {
+          [entry]: 1,
+        }
+        self.autocompleteDataMap.set(dataType, newData)
+      }
+    },
+
     saveItem: (itemSnapshot: ItemSnapshot) => {
       self.item = itemSnapshot
       self.itemId = itemSnapshot.id
     },
+
     setAuthToken(token: string) {
       self.authToken = token
       self.environment.api.setAuthToken(token)
     },
+
     setAuthenticated(value: boolean) {
       self.isAuthenticated = value
     },
@@ -36,6 +72,7 @@ export const ItemStoreModel = types
     storeCredentials: flow(function* (username: string, password: string) {
       yield save(username, password)
     }),
+
     removeCredentials: flow(function* () {
       yield reset()
     }),

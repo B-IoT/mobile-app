@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { ViewStyle } from 'react-native'
-import { Screen } from '../../components'
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "../../models"
+import { Autocomplete, Screen } from '../../components'
+import { useNavigation } from '@react-navigation/native'
 import { color } from '../../theme'
 import { Text } from '@ui-kitten/components'
+import { useStores } from '../../models'
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -13,14 +13,15 @@ const ROOT: ViewStyle = {
 }
 
 export const RegisterScreen = observer(function RegisterScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { itemStore } = useStores()
+  const navigation = useNavigation()
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+  const [category, setCategory] = useState('')
+
   return (
     <Screen style={ROOT} preset="scroll">
       <Text>Register</Text>
+      <Autocomplete dataType="category" value={category} setValue={setCategory} />
     </Screen>
   )
 })

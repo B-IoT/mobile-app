@@ -1,6 +1,6 @@
 import { ItemModel } from './item'
 
-test('can be created', () => {
+it('can be created', () => {
   const instance = ItemModel.create({
     id: 1,
     beacon: 'aa:aa:aa:aa:aa:aa',
