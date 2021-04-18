@@ -27,12 +27,15 @@ export const ItemStoreModel = types
   .actions((self) => ({
     getAutocompleteData: (dataType: string) => {
       // Create a list of AutocompleteEntry
-      const entries = [...self.autocompleteDataMap.get(dataType).entries()].map(([name, rank]) =>
-        AutocompleteEntryModel.create({
-          rank,
-          name,
-        }),
-      )
+      const entryMap = self.autocompleteDataMap.get(dataType)
+      const entries = entryMap
+        ? [...entryMap.entries()].map(([name, rank]) =>
+            AutocompleteEntryModel.create({
+              rank,
+              name,
+            }),
+          )
+        : []
 
       // Sort the entries by rank, the ones with the highest ranks come first (descending order)
       return entries.sort((e1, e2) => e2.rank - e1.rank)
@@ -107,8 +110,10 @@ export const ItemStoreModel = types
 
       if (result.kind === 'ok') {
         self.saveItem(result.item)
+        return true
       } else {
         __DEV__ && console.log(result.kind)
+        return false
       }
     }),
 
@@ -117,18 +122,15 @@ export const ItemStoreModel = types
         const result = yield self.environment.api.login(username, password)
         if (result.kind === 'ok') {
           self.setAuthToken(result.token)
-          self.setAuthenticated(true)
           if (remember) {
             yield self.storeCredentials(username, password)
           }
           return true
         } else {
           __DEV__ && console.log(result.kind)
-          self.setAuthenticated(false)
         }
       } catch (e) {
         __DEV__ && console.log(e.message)
-        self.setAuthenticated(false)
       }
 
       return false

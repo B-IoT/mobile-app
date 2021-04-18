@@ -125,3 +125,15 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 
   return { onNavigationStateChange, restoreState, initialNavigationState }
 }
+
+/**
+ * Resets the stack and navigates to the given route.
+ * @param navigation the navigation prop
+ * @param destination the destination route name
+ */
+export function resetAndNavigateTo(navigation, destinationRoute: string) {
+  navigation.reset({
+    index: 0,
+    routes: [{ name: destinationRoute }],
+  })
+}

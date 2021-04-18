@@ -95,7 +95,7 @@ describe('Login screen', () => {
     const loginButton = component.queryByText(translate('loginScreen.login'))
     fireEvent.press(loginButton)
 
-    expect(component.queryByText(translate('loginScreen.error'))).toBeFalsy() // the error is not shown
+    expect(component.queryByText(translate('common.error'))).toBeFalsy() // the error is not shown
     expect(loginMock).toHaveBeenCalledTimes(1)
     expect(loginMock).toHaveBeenCalledWith('email', 'password', true)
   })

@@ -1898,7 +1898,6 @@ exports[`Login screen should match snapshot 1`] = `
               accessible={true}
               focusable={true}
               onClick={[Function]}
-              onLayout={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}

@@ -1,20 +1,12 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle, TouchableWithoutFeedback, View } from 'react-native'
-import {
-  Text,
-  Input,
-  CheckBox,
-  Button,
-  Icon,
-  Popover,
-  useTheme,
-  Spinner,
-} from '@ui-kitten/components'
+import { ViewStyle, TouchableWithoutFeedback } from 'react-native'
+import { Text, Input, CheckBox, Icon } from '@ui-kitten/components'
 import { Screen } from '../../components'
 import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
+import { AsyncButton } from '../../components/async-button/async-button'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -43,20 +35,7 @@ const CHECKBOX: ViewStyle = {
 }
 
 const BUTTON: ViewStyle = {
-  borderRadius: 8,
   marginTop: spacing[8],
-}
-
-const POPOVER: ViewStyle = {
-  borderRadius: 8,
-  marginTop: spacing[2],
-  paddingHorizontal: spacing[2],
-  paddingVertical: spacing[2],
-}
-
-const LOADING_INDICATOR: ViewStyle = {
-  justifyContent: 'center',
-  alignItems: 'center',
 }
 
 const strings = {
@@ -69,7 +48,6 @@ const strings = {
   rememberMe: translate('loginScreen.rememberMe'),
   login: translate('loginScreen.login'),
   shouldNotBeEmpty: translate('loginScreen.shouldNotBeEmpty'),
-  error: translate('loginScreen.error'),
 }
 
 const EmailIcon = (props) => <Icon {...props} name="email-outline" />
@@ -78,12 +56,10 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
-const TIMEOUT = 2000
+const TIMEOUT = 2000 // milliseconds
 
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
-
-  const theme = useTheme()
 
   const [email, setEmail] = useState('')
   const [emailStatus, setEmailStatus] = useState('basic')
@@ -91,8 +67,8 @@ export const LoginScreen = observer(function LoginScreen() {
   const [passwordStatus, setPasswordStatus] = useState('basic')
   const [secureTextEntry, setSecureTextEntry] = useState(true)
   const [checked, setChecked] = useState(false)
-  const [errorPopupVisible, setErrorPopupVisible] = useState(false)
   const [loggingIn, setLoggingIn] = useState(false)
+  const [success, setSuccess] = useState<boolean>(undefined)
 
   const CloseIcon = (props) => (
     <TouchableWithoutFeedback onPress={() => setEmail('')}>
@@ -106,47 +82,8 @@ export const LoginScreen = observer(function LoginScreen() {
     </TouchableWithoutFeedback>
   )
 
-  const LoadingIndicator = (props) => (
-    <View style={[props.style, LOADING_INDICATOR]}>
-      <Spinner status="control" />
-    </View>
-  )
-
-  const LoginButton = () => (
-    <Button
-      style={BUTTON}
-      accessoryLeft={loggingIn ? LoadingIndicator : null}
-      onPress={async () => {
-        const emptyEmail = email.length === 0
-        const emptyPassword = password.length === 0
-
-        if (emptyEmail) {
-          setEmailStatus('danger')
-          setTimeout(() => setEmailStatus('basic'), TIMEOUT)
-        }
-
-        if (emptyPassword) {
-          setPasswordStatus('danger')
-          setTimeout(() => setPasswordStatus('basic'), TIMEOUT)
-        }
-
-        if (!emptyEmail && !emptyPassword) {
-          setLoggingIn(true)
-          const isSuccessful = await itemStore.login(email, password, checked)
-          if (!isSuccessful) {
-            setLoggingIn(false)
-            setErrorPopupVisible(true)
-            setTimeout(() => setErrorPopupVisible(false), TIMEOUT)
-          }
-        }
-      }}
-    >
-      {loggingIn ? null : strings.login}
-    </Button>
-  )
-
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="scroll" statusBar="dark-content">
       <Text category="h3" style={TITLE}>
         {strings.welcome}
       </Text>
@@ -187,16 +124,40 @@ export const LoginScreen = observer(function LoginScreen() {
       >
         {strings.rememberMe}
       </CheckBox>
-      <Popover
-        style={[POPOVER, { borderColor: theme['color-danger-default'] }]}
-        visible={errorPopupVisible}
-        anchor={LoginButton}
-        onBackdropPress={() => setErrorPopupVisible(false)}
-      >
-        <Text category="c2" status="danger">
-          {strings.error}
-        </Text>
-      </Popover>
+      <AsyncButton
+        style={BUTTON}
+        loading={loggingIn}
+        success={success}
+        text={strings.login}
+        onPress={async () => {
+          const emptyEmail = email.length === 0
+          const emptyPassword = password.length === 0
+
+          if (emptyEmail) {
+            setEmailStatus('danger')
+            setTimeout(() => setEmailStatus('basic'), TIMEOUT)
+          }
+
+          if (emptyPassword) {
+            setPasswordStatus('danger')
+            setTimeout(() => setPasswordStatus('basic'), TIMEOUT)
+          }
+
+          if (!emptyEmail && !emptyPassword) {
+            setLoggingIn(true)
+            const isSuccessful = await itemStore.login(email, password, checked)
+            setLoggingIn(false)
+            if (!isSuccessful) {
+              setSuccess(false)
+              itemStore.setAuthenticated(false)
+              setTimeout(() => setSuccess(undefined), TIMEOUT)
+            } else {
+              setSuccess(true)
+              setTimeout(() => itemStore.setAuthenticated(true), TIMEOUT)
+            }
+          }
+        }}
+      />
     </Screen>
   )
 })

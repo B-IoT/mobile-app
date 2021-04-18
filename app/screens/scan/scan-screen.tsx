@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { GetItemResult } from '../../models/item-store/item-store'
+import { resetAndNavigateTo } from '../../navigators'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -97,7 +98,7 @@ const strings = {
   logout: translate('scanScreen.logout'),
   whyCamera: translate('scanScreen.whyCamera'),
   requestingCamera: translate('scanScreen.requestingCamera'),
-  error: translate('scanScreen.error'),
+  error: translate('common.error'),
 }
 
 const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} name="info" />
@@ -107,17 +108,15 @@ const TIMEOUT = 2000
 export const ScanScreen = observer(function ScanScreen() {
   const windowHeight = useWindowDimensions().height
 
+  const { itemStore } = useStores()
+  const theme = useTheme()
+  const navigation = useNavigation()
+
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [paused, setPaused] = useState(false)
   const [infoPopupVisible, setInfoPopupVisible] = useState(false)
   const [errorPopupVisible, setErrorPopupVisible] = useState(false)
-
-  const { itemStore } = useStores()
-
-  const theme = useTheme()
-
-  const navigation = useNavigation()
 
   useEffect(() => {
     ;(async () => {
@@ -134,16 +133,10 @@ export const ScanScreen = observer(function ScanScreen() {
     const result = await itemStore.getItem(itemId)
     switch (result) {
       case GetItemResult.OK:
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'info' }],
-        })
+        resetAndNavigateTo(navigation, 'info')
         break
       case GetItemResult.NOT_FOUND:
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'register' }],
-        })
+        resetAndNavigateTo(navigation, 'register')
         break
       default:
         setErrorPopupVisible(true)

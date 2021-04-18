@@ -3,7 +3,8 @@
     "ok": "OK!",
     "cancel": "Cancel",
     "back": "Back",
-    "retry": "Retry"
+    "retry": "Retry",
+    "error": "Error, try again!"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -14,14 +15,16 @@
     "passwordPlaceholder": "Enter your password",
     "rememberMe": "Remember me",
     "login": "Login",
-    "shouldNotBeEmpty": "Should not be empty",
-    "error": "Error, try again!"
+    "shouldNotBeEmpty": "Should not be empty"
   },
   "scanScreen": {
     "scan": "Scan your QR code",
     "logout": "Logout",
     "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
-    "requestingCamera": "Requesting camera permissions...",
-    "error": "Error, try again!"
+    "requestingCamera": "Requesting camera permissions..."
+  },
+  "registerScreen": {
+    "register": "Register",
+    "title": "Register an item"
   }
 }
