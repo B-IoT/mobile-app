@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle } from 'react-native'
+import { TouchableWithoutFeedback, ViewStyle } from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
@@ -22,12 +22,17 @@ const MAIN_LAYOUT: ViewStyle = {
   paddingBottom: spacing[5],
   paddingStart: spacing[5],
   paddingEnd: spacing[5],
-  paddingTop: spacing[4],
+  paddingTop: spacing[2],
 }
 
 const DIVIDER: ViewStyle = {
   marginStart: spacing[4],
   marginEnd: spacing[4],
+}
+
+const INPUT: ViewStyle = {
+  borderRadius: 8,
+  marginVertical: spacing[3],
 }
 
 const REGISTER_BUTTON: ViewStyle = {
@@ -37,22 +42,34 @@ const REGISTER_BUTTON: ViewStyle = {
 const strings = {
   register: translate('registerScreen.register'),
   title: translate('registerScreen.title'),
+  category: translate('registerScreen.category'),
+  categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
+  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
 const TIMEOUT = 2000 // milliseconds
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
+const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
+
 export const RegisterScreen = observer(function RegisterScreen() {
   const { itemStore } = useStores()
   const navigation = useNavigation()
 
+  const [categoryStatus, setCategoryStatus] = useState('basic')
   const [category, setCategory] = useState('')
   const [registering, setRegistering] = useState(false)
-  const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup
+  const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
   const BackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'scan')} />
+  )
+
+  const CloseIconCategory = (props) => (
+    <TouchableWithoutFeedback onPress={() => setCategory('')}>
+      <Icon {...props} name={'close-outline'} />
+    </TouchableWithoutFeedback>
   )
 
   return (
@@ -60,7 +77,20 @@ export const RegisterScreen = observer(function RegisterScreen() {
       <TopNavigation accessoryLeft={BackAction} title={strings.title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
-        <Autocomplete dataType="category" value={category} setValue={setCategory} />
+        <Autocomplete
+          style={INPUT}
+          size="large"
+          label={strings.category}
+          status={categoryStatus}
+          placeholder={strings.categoryPlaceholder}
+          caption={categoryStatus === 'danger' ? strings.shouldNotBeEmpty : null}
+          accessoryRight={CloseIconCategory}
+          captionIcon={categoryStatus === 'danger' ? AlertIcon : null}
+          onChangeText={(nextValue) => setCategory(nextValue)}
+          dataType="category"
+          value={category}
+          setValue={setCategory}
+        />
         <AsyncButton
           style={REGISTER_BUTTON}
           loading={registering}
@@ -68,18 +98,26 @@ export const RegisterScreen = observer(function RegisterScreen() {
           text={strings.register}
           onPress={async () => {
             // TODO: handle errors
+            const emptyCategory = category.length === 0
+
+            if (emptyCategory) {
+              setCategoryStatus('danger')
+              setTimeout(() => setCategoryStatus('basic'), TIMEOUT)
+            }
 
             // TODO: if not errors then
-            setRegistering(true)
-            const item: Item = {}
-            const isSuccessful = await itemStore.registerItem(item)
-            setRegistering(false)
-            if (!isSuccessful) {
-              setSuccess(false)
-              setTimeout(() => setSuccess(undefined), TIMEOUT)
-            } else {
-              setSuccess(true)
-              setTimeout(() => resetAndNavigateTo(navigation, 'scan'), TIMEOUT)
+            if (!emptyCategory) {
+              setRegistering(true)
+              const item: Item = {} // TODO:
+              const isSuccessful = await itemStore.registerItem(item)
+              setRegistering(false)
+              if (!isSuccessful) {
+                setSuccess(false)
+                setTimeout(() => setSuccess(undefined), TIMEOUT)
+              } else {
+                setSuccess(true)
+                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), TIMEOUT)
+              }
             }
           }}
         />

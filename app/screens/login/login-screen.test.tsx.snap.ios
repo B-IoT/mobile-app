@@ -435,6 +435,8 @@ exports[`Login screen should match snapshot 1`] = `
                 <TextInput
                   allowFontScaling={true}
                   appearance="default"
+                  autoCapitalize="none"
+                  autoCompleteType="email"
                   editable={true}
                   onBlur={[Function]}
                   onChangeText={[Function]}
@@ -1110,6 +1112,7 @@ exports[`Login screen should match snapshot 1`] = `
                 <TextInput
                   allowFontScaling={true}
                   appearance="default"
+                  autoCompleteType="password"
                   editable={true}
                   onBlur={[Function]}
                   onChangeText={[Function]}

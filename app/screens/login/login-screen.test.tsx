@@ -107,7 +107,7 @@ describe('Login screen', () => {
     const loginButton = component.queryByText(translate('loginScreen.login'))
     fireEvent.press(loginButton)
 
-    const warnings = component.queryAllByText(translate('loginScreen.shouldNotBeEmpty'))
+    const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     expect(warnings).toHaveLength(2)
     expect(warnings[0]).toBeTruthy()
     expect(warnings[1]).toBeTruthy()

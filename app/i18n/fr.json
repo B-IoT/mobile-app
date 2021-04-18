@@ -4,7 +4,8 @@
     "cancel": "Effacer",
     "back": "Retourner",
     "retry": "Réessayer",
-    "error": "Erreur, réessaye!"
+    "error": "Erreur, réessaye!",
+    "shouldNotBeEmpty": "Ne devrait pas être vide"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -14,8 +15,7 @@
     "password": "Mot de passe",
     "passwordPlaceholder": "Entre ton mot de passe",
     "rememberMe": "Mémoriser info",
-    "login": "Se connecter",
-    "shouldNotBeEmpty": "Ne devrait pas être vide"
+    "login": "Se connecter"
   },
   "scanScreen": {
     "scan": "Scannes ton QR code",
@@ -25,6 +25,8 @@
   },
   "registerScreen": {
     "register": "Enregistrer",
-    "title": "Enregister un objet"
+    "title": "Enregister un objet",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Enttre la catégorie"
   }
 }

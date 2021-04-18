@@ -47,7 +47,7 @@ const strings = {
   passwordPlaceholder: translate('loginScreen.passwordPlaceholder'),
   rememberMe: translate('loginScreen.rememberMe'),
   login: translate('loginScreen.login'),
-  shouldNotBeEmpty: translate('loginScreen.shouldNotBeEmpty'),
+  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
 const EmailIcon = (props) => <Icon {...props} name="email-outline" />
@@ -102,6 +102,8 @@ export const LoginScreen = observer(function LoginScreen() {
         accessoryRight={CloseIcon}
         captionIcon={emailStatus === 'danger' ? AlertIcon : null}
         onChangeText={(nextValue) => setEmail(nextValue)}
+        autoCompleteType="email"
+        autoCapitalize="none"
       />
       <Input
         style={INPUT}
@@ -116,6 +118,7 @@ export const LoginScreen = observer(function LoginScreen() {
         captionIcon={passwordStatus === 'danger' ? AlertIcon : null}
         secureTextEntry={secureTextEntry}
         onChangeText={(nextValue) => setPassword(nextValue)}
+        autoCompleteType="password"
       />
       <CheckBox
         style={CHECKBOX}
