@@ -48,6 +48,7 @@ const strings = {
 }
 
 const TIMEOUT = 2000 // milliseconds
+const REGISTER_TIMEOUT = 1200
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
@@ -116,7 +117,7 @@ export const RegisterScreen = observer(function RegisterScreen() {
                 setTimeout(() => setSuccess(undefined), TIMEOUT)
               } else {
                 setSuccess(true)
-                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), TIMEOUT)
+                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), REGISTER_TIMEOUT)
               }
             }
           }}

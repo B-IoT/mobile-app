@@ -57,6 +57,7 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
 const TIMEOUT = 2000 // milliseconds
+const LOGIN_TIMEOUT = 1200
 
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
@@ -156,7 +157,7 @@ export const LoginScreen = observer(function LoginScreen() {
               setTimeout(() => setSuccess(undefined), TIMEOUT)
             } else {
               setSuccess(true)
-              setTimeout(() => itemStore.setAuthenticated(true), TIMEOUT)
+              setTimeout(() => itemStore.setAuthenticated(true), LOGIN_TIMEOUT)
             }
           }
         }}
