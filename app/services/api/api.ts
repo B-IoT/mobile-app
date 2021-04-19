@@ -77,7 +77,7 @@ export class Api {
 
       return { kind: 'ok', token }
     } catch (e) {
-      __DEV__ && console.tron.log(e.message)
+      __DEV__ && console.log(e.message)
       return { kind: 'bad-data' }
     }
   }

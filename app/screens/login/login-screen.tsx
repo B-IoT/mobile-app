@@ -7,6 +7,7 @@ import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { AsyncButton } from '../../components/async-button/async-button'
+import isEmpty from '../../utils/function-utils/function-utils'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -57,7 +58,7 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
 const TIMEOUT = 2000 // milliseconds
-const LOGIN_TIMEOUT = 1200
+const LOGIN_TIMEOUT = 1000
 
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
@@ -100,7 +101,7 @@ export const LoginScreen = observer(function LoginScreen() {
         status={emailStatus}
         placeholder={strings.emailPlaceholder}
         caption={emailStatus === 'danger' ? strings.shouldNotBeEmpty : null}
-        accessoryRight={CloseIcon}
+        accessoryRight={email ? CloseIcon : null}
         captionIcon={emailStatus === 'danger' ? AlertIcon : null}
         onChangeText={(nextValue) => setEmail(nextValue)}
         autoCompleteType="email"
@@ -134,8 +135,8 @@ export const LoginScreen = observer(function LoginScreen() {
         success={success}
         text={strings.login}
         onPress={async () => {
-          const emptyEmail = email.length === 0
-          const emptyPassword = password.length === 0
+          const emptyEmail = isEmpty(email)
+          const emptyPassword = isEmpty(password)
 
           if (emptyEmail) {
             setEmailStatus('danger')

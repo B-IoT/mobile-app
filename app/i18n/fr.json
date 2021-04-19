@@ -27,6 +27,12 @@
     "register": "Enregistrer",
     "title": "Enregister un objet",
     "category": "Catégorie",
-    "categoryPlaceholder": "Enttre la catégorie"
+    "categoryPlaceholder": "Entre la catégorie",
+    "brand": "Marque",
+    "brandPlaceholder": "Entre la marque",
+    "model": "Modèle",
+    "modelPlaceholder": "Entre le modèle",
+    "supplier": "Fournisseur",
+    "supplierPlaceholder": "Entre le fournisseur"
   }
 }

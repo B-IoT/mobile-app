@@ -14,8 +14,8 @@ const BUTTON: ViewStyle = {
 }
 
 const SUCCESS_ICON: ViewStyle = {
-  width: 28,
-  height: 28,
+  width: 26,
+  height: 26,
 }
 
 const LoadingIndicator = (props) => (

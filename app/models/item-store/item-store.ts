@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types, flow, cast } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
 import { Item, ItemModel, ItemSnapshot } from '../item/item'
 import { ItemApi } from '../../services/api/item-api'
 import { withEnvironment } from '../extensions/with-environment'
@@ -9,6 +9,13 @@ export enum GetItemResult {
   OK,
   NOT_FOUND,
   ERROR,
+}
+
+export enum DataType {
+  CATEGORY,
+  BRAND,
+  MODEL,
+  SUPPLIER,
 }
 
 export const ItemStoreModel = types
@@ -25,9 +32,9 @@ export const ItemStoreModel = types
   })
   .extend(withEnvironment)
   .actions((self) => ({
-    getAutocompleteData: (dataType: string) => {
+    getAutocompleteData: (dataType: DataType) => {
       // Create a list of AutocompleteEntry
-      const entryMap = self.autocompleteDataMap.get(dataType)
+      const entryMap = self.autocompleteDataMap.get(dataType.toString())
       const entries = entryMap
         ? [...entryMap.entries()].map(([name, rank]) =>
             AutocompleteEntryModel.create({
@@ -41,9 +48,10 @@ export const ItemStoreModel = types
       return entries.sort((e1, e2) => e2.rank - e1.rank)
     },
 
-    addAutocompleteEntryData: (dataType: string, entry: string) => {
-      if (self.autocompleteDataMap.has(dataType)) {
-        const data = self.autocompleteDataMap.get(dataType)
+    addAutocompleteEntryData: (dataType: DataType, entry: string) => {
+      const stringifiedDataType = dataType.toString()
+      if (self.autocompleteDataMap.has(stringifiedDataType)) {
+        const data = self.autocompleteDataMap.get(stringifiedDataType)
         if (data.has(entry)) {
           data.set(entry, data.get(entry) + 1)
         } else {
@@ -53,7 +61,7 @@ export const ItemStoreModel = types
         const newData = {
           [entry]: 1,
         }
-        self.autocompleteDataMap.set(dataType, newData)
+        self.autocompleteDataMap.set(stringifiedDataType, newData)
       }
     },
 

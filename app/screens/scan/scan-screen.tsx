@@ -2,23 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { StyleSheet, View, ViewStyle, useWindowDimensions, TextStyle } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import Constants from 'expo-constants'
+
 import { Screen } from '../../components'
-import {
-  Button,
-  Icon,
-  Layout,
-  Modal,
-  Spinner,
-  Text,
-  useTheme,
-} from '@ui-kitten/components'
+import { Button, Icon, Spinner, Text, useTheme } from '@ui-kitten/components'
 import { useStores } from '../../models'
 import { useNavigation } from '@react-navigation/native'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { GetItemResult } from '../../models/item-store/item-store'
 import { resetAndNavigateTo } from '../../navigators'
+import { InfoPopup } from './info-popup'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -76,26 +69,8 @@ const RECTANGLE: ViewStyle = {
   height: 280,
 }
 
-const POPUP_BACKDROP: ViewStyle = {
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-}
-
-const POPUP_LAYOUT: ViewStyle = {
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 8,
-  minWidth: 250,
-  padding: spacing[4],
-}
-
-const POPUP_BUTTON: ViewStyle = {
-  borderRadius: 8,
-}
-
 const strings = {
   scan: translate('scanScreen.scan'),
-  logout: translate('scanScreen.logout'),
   whyCamera: translate('scanScreen.whyCamera'),
   requestingCamera: translate('scanScreen.requestingCamera'),
   error: translate('common.error'),
@@ -207,21 +182,13 @@ export const ScanScreen = observer(function ScanScreen() {
           },
         ]}
       />
-      <Modal
+      <InfoPopup
         visible={infoPopupVisible}
-        backdropStyle={POPUP_BACKDROP}
         onBackdropPress={() => {
           setPaused(false) // resume scanner
           setInfoPopupVisible(false)
         }}
-      >
-        <Layout style={POPUP_LAYOUT}>
-          <Button size="large" style={POPUP_BUTTON} onPress={async () => await itemStore.logout()}>
-            {strings.logout}
-          </Button>
-          <Text style={{ marginTop: spacing[2] }}>v{Constants.manifest.version}</Text>
-        </Layout>
-      </Modal>
+      />
     </View>
   )
 

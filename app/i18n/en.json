@@ -27,6 +27,12 @@
     "register": "Register",
     "title": "Register an item",
     "category": "Category",
-    "categoryPlaceholder": "Enter the category"
+    "categoryPlaceholder": "Enter the category",
+    "brand": "Brand",
+    "brandPlaceholder": "Enter the brand",
+    "model": "Model",
+    "modelPlaceholder": "Enter the model",
+    "supplier": "Supplier",
+    "supplierPlaceholder": "Enter the supplier"
   }
 }
