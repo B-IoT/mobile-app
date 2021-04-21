@@ -12,11 +12,11 @@ publish: &publish
 
     - run:
         name: Run tests
-        command: npm test
+        command: npm run test:cov 
 
     - run: 
         name: Upload code coverage
-        command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f coverage/*.json
+        command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
     - run:
         name: Install expo-optimize dependency
