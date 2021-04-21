@@ -14,6 +14,10 @@ publish: &publish
         name: Run tests
         command: npm test
 
+    - run: 
+        name: Upload code coverage
+        command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+
     - run:
         name: Install expo-optimize dependency
         command: npm install sharp-cli
