@@ -16,7 +16,7 @@ publish: &publish
 
     - run: 
         name: Upload code coverage
-        command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+        command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f coverage/*.json
 
     - run:
         name: Install expo-optimize dependency
