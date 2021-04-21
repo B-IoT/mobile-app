@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { ViewStyle, TouchableWithoutFeedback } from 'react-native'
-import { Text, Input, CheckBox, Button, Icon, Popover, useTheme } from '@ui-kitten/components'
+import { Text, Input, CheckBox, Icon } from '@ui-kitten/components'
 import { Screen } from '../../components'
 import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
+import { AsyncButton } from '../../components/async-button/async-button'
+import isEmpty from '../../utils/function-utils/function-utils'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -34,15 +36,7 @@ const CHECKBOX: ViewStyle = {
 }
 
 const BUTTON: ViewStyle = {
-  borderRadius: 8,
   marginTop: spacing[8],
-}
-
-const POPOVER: ViewStyle = {
-  borderRadius: 8,
-  marginTop: spacing[2],
-  paddingHorizontal: spacing[2],
-  paddingVertical: spacing[2],
 }
 
 const strings = {
@@ -54,8 +48,7 @@ const strings = {
   passwordPlaceholder: translate('loginScreen.passwordPlaceholder'),
   rememberMe: translate('loginScreen.rememberMe'),
   login: translate('loginScreen.login'),
-  shouldNotBeEmpty: translate('loginScreen.shouldNotBeEmpty'),
-  error: translate('loginScreen.error'),
+  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
 const EmailIcon = (props) => <Icon {...props} name="email-outline" />
@@ -64,12 +57,11 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
-const TIMEOUT = 2000
+const TIMEOUT = 2000 // milliseconds
+const LOGIN_TIMEOUT = 1000
 
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
-
-  const theme = useTheme()
 
   const [email, setEmail] = useState('')
   const [emailStatus, setEmailStatus] = useState('basic')
@@ -77,7 +69,8 @@ export const LoginScreen = observer(function LoginScreen() {
   const [passwordStatus, setPasswordStatus] = useState('basic')
   const [secureTextEntry, setSecureTextEntry] = useState(true)
   const [checked, setChecked] = useState(false)
-  const [errorPopupVisible, setErrorPopupVisible] = useState(false)
+  const [loggingIn, setLoggingIn] = useState(false)
+  const [success, setSuccess] = useState<boolean>(undefined)
 
   const CloseIcon = (props) => (
     <TouchableWithoutFeedback onPress={() => setEmail('')}>
@@ -91,38 +84,8 @@ export const LoginScreen = observer(function LoginScreen() {
     </TouchableWithoutFeedback>
   )
 
-  const LoginButton = () => (
-    <Button
-      style={BUTTON}
-      onPress={async () => {
-        const emptyEmail = email.length === 0
-        const emptyPassword = password.length === 0
-
-        if (emptyEmail) {
-          setEmailStatus('danger')
-          setTimeout(() => setEmailStatus('basic'), TIMEOUT)
-        }
-
-        if (emptyPassword) {
-          setPasswordStatus('danger')
-          setTimeout(() => setPasswordStatus('basic'), TIMEOUT)
-        }
-
-        if (!emptyEmail && !emptyPassword) {
-          const isSuccessful = await itemStore.login(email, password, checked)
-          if (!isSuccessful) {
-            setErrorPopupVisible(true)
-            setTimeout(() => setErrorPopupVisible(false), TIMEOUT)
-          }
-        }
-      }}
-    >
-      {strings.login}
-    </Button>
-  )
-
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="scroll" statusBar="dark-content">
       <Text category="h3" style={TITLE}>
         {strings.welcome}
       </Text>
@@ -138,9 +101,11 @@ export const LoginScreen = observer(function LoginScreen() {
         status={emailStatus}
         placeholder={strings.emailPlaceholder}
         caption={emailStatus === 'danger' ? strings.shouldNotBeEmpty : null}
-        accessoryRight={CloseIcon}
+        accessoryRight={email ? CloseIcon : null}
         captionIcon={emailStatus === 'danger' ? AlertIcon : null}
         onChangeText={(nextValue) => setEmail(nextValue)}
+        autoCompleteType="email"
+        autoCapitalize="none"
       />
       <Input
         style={INPUT}
@@ -155,6 +120,7 @@ export const LoginScreen = observer(function LoginScreen() {
         captionIcon={passwordStatus === 'danger' ? AlertIcon : null}
         secureTextEntry={secureTextEntry}
         onChangeText={(nextValue) => setPassword(nextValue)}
+        autoCompleteType="password"
       />
       <CheckBox
         style={CHECKBOX}
@@ -163,16 +129,40 @@ export const LoginScreen = observer(function LoginScreen() {
       >
         {strings.rememberMe}
       </CheckBox>
-      <Popover
-        style={[POPOVER, { borderColor: theme['color-danger-default'] }]}
-        visible={errorPopupVisible}
-        anchor={LoginButton}
-        onBackdropPress={() => setErrorPopupVisible(false)}
-      >
-        <Text category="c2" status="danger">
-          {strings.error}
-        </Text>
-      </Popover>
+      <AsyncButton
+        style={BUTTON}
+        loading={loggingIn}
+        success={success}
+        text={strings.login}
+        onPress={async () => {
+          const emptyEmail = isEmpty(email)
+          const emptyPassword = isEmpty(password)
+
+          if (emptyEmail) {
+            setEmailStatus('danger')
+            setTimeout(() => setEmailStatus('basic'), TIMEOUT)
+          }
+
+          if (emptyPassword) {
+            setPasswordStatus('danger')
+            setTimeout(() => setPasswordStatus('basic'), TIMEOUT)
+          }
+
+          if (!emptyEmail && !emptyPassword) {
+            setLoggingIn(true)
+            const isSuccessful = await itemStore.login(email, password, checked)
+            setLoggingIn(false)
+            if (!isSuccessful) {
+              setSuccess(false)
+              itemStore.setAuthenticated(false)
+              setTimeout(() => setSuccess(undefined), TIMEOUT)
+            } else {
+              setSuccess(true)
+              setTimeout(() => itemStore.setAuthenticated(true), LOGIN_TIMEOUT)
+            }
+          }
+        }}
+      />
     </Screen>
   )
 })

@@ -16,6 +16,7 @@
     "patch": "patch-package",
     "storybook": "start-storybook -p 9001 -c ./storybook",
     "test": "jest",
+    "test:cov": "jest --collectCoverage",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
@@ -36,6 +37,7 @@
     "apisauce": "2.0.0",
     "expo": "40.0.1",
     "expo-barcode-scanner": "~9.1.0",
+    "expo-constants": "~9.3.3",
     "expo-localization": "9.1.0",
     "expo-secure-store": "~9.3.0",
     "expo-status-bar": "1.0.3",
@@ -88,9 +90,10 @@
     "expo-detox-hook": "1.0.10",
     "jest": "25.5.4",
     "jest-circus": "25.5.4",
-    "jest-expo": "40.0.1",
+    "jest-expo": "^40.0.1",
     "jetifier": "1.6.6",
     "mocha": "8.2.1",
+    "msw": "^0.28.1",
     "npm-run-all": "4.1.5",
     "patch-package": "6.2.2",
     "prettier": "2.2.1",
@@ -98,7 +101,7 @@
     "react-dom": "16.14.0",
     "react-native-web": "0.13.18",
     "react-powerplug": "1.0.0",
-    "react-test-renderer": "17.0.1",
+    "react-test-renderer": "^16.13.1",
     "rimraf": "3.0.2",
     "solidarity": "2.3.1",
     "typescript": "4.1.3",
@@ -111,7 +114,9 @@
       "<rootDir>/test/setup.ts",
       "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
     ],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/e2e"
@@ -140,6 +145,14 @@
           "/e2e"
         ]
       }
+    ],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/react-native.config.js",
+      "!**/setup.ts"
     ]
   },
   "prettier": {

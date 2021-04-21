@@ -24,11 +24,21 @@ export class ItemApi {
         if (problem) return problem
       }
 
-      const item = response.data
-
-      return { kind: 'ok', item }
+      // transform the data into the format we are expecting
+      try {
+        const rawItem = response.data
+        const item: Item = {
+          id: rawItem.id,
+          beacon: rawItem.beacon,
+          category: rawItem.category,
+          service: rawItem.service,
+        }
+        return { kind: 'ok', item }
+      } catch {
+        return { kind: 'bad-data' }
+      }
     } catch (e) {
-      __DEV__ && console.tron.log(e.message)
+      __DEV__ && console.log(e.message)
       return { kind: 'bad-data' }
     }
   }
@@ -50,7 +60,7 @@ export class ItemApi {
 
       return { kind: 'ok', id }
     } catch (e) {
-      __DEV__ && console.tron.log(e.message)
+      __DEV__ && console.log(e.message)
       return { kind: 'bad-data' }
     }
   }

@@ -95,7 +95,7 @@ describe('Login screen', () => {
     const loginButton = component.queryByText(translate('loginScreen.login'))
     fireEvent.press(loginButton)
 
-    expect(component.queryByText(translate('loginScreen.error'))).toBeFalsy() // the error is not shown
+    expect(component.queryByText(translate('common.error'))).toBeFalsy() // the error is not shown
     expect(loginMock).toHaveBeenCalledTimes(1)
     expect(loginMock).toHaveBeenCalledWith('email', 'password', true)
   })
@@ -107,7 +107,7 @@ describe('Login screen', () => {
     const loginButton = component.queryByText(translate('loginScreen.login'))
     fireEvent.press(loginButton)
 
-    const warnings = component.queryAllByText(translate('loginScreen.shouldNotBeEmpty'))
+    const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     expect(warnings).toHaveLength(2)
     expect(warnings[0]).toBeTruthy()
     expect(warnings[1]).toBeTruthy()

@@ -2,7 +2,10 @@
   "common": {
     "ok": "OK!",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "retry": "Retry",
+    "error": "Error, try again!",
+    "shouldNotBeEmpty": "Should not be empty"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -12,11 +15,24 @@
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
     "rememberMe": "Remember me",
-    "login": "Login",
-    "shouldNotBeEmpty": "Should not be empty",
-    "error": "Error, try again!"
+    "login": "Login"
   },
   "scanScreen": {
-    "scan": "Scan your QR code"
+    "scan": "Scan your QR code",
+    "logout": "Logout",
+    "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
+    "requestingCamera": "Requesting camera permissions..."
+  },
+  "registerScreen": {
+    "register": "Register",
+    "title": "Register an item",
+    "category": "Category",
+    "categoryPlaceholder": "Enter the category",
+    "brand": "Brand",
+    "brandPlaceholder": "Enter the brand",
+    "model": "Model",
+    "modelPlaceholder": "Enter the model",
+    "supplier": "Supplier",
+    "supplierPlaceholder": "Enter the supplier"
   }
 }

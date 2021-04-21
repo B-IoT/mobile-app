@@ -2,7 +2,10 @@
   "common": {
     "ok": "OK",
     "cancel": "Effacer",
-    "back": "Retourner"
+    "back": "Retourner",
+    "retry": "Réessayer",
+    "error": "Erreur, réessaye!",
+    "shouldNotBeEmpty": "Ne devrait pas être vide"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -12,11 +15,24 @@
     "password": "Mot de passe",
     "passwordPlaceholder": "Entre ton mot de passe",
     "rememberMe": "Mémoriser info",
-    "login": "Se connecter",
-    "shouldNotBeEmpty": "Ne devrait pas être vide",
-    "error": "Erreur, réessaye!"
+    "login": "Se connecter"
   },
   "scanScreen": {
-    "scan": "Scannes ton QR code"
+    "scan": "Scannes ton QR code",
+    "logout": "Se déconnecter",
+    "whyCamera": "Caméra pas disponible.\nLa caméra est nécessaire pour scanner les QR codes",
+    "requestingCamera": "En train de demander les permissions pour la caméra..."
+  },
+  "registerScreen": {
+    "register": "Enregistrer",
+    "title": "Enregister un objet",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Entre la catégorie",
+    "brand": "Marque",
+    "brandPlaceholder": "Entre la marque",
+    "model": "Modèle",
+    "modelPlaceholder": "Entre le modèle",
+    "supplier": "Fournisseur",
+    "supplierPlaceholder": "Entre le fournisseur"
   }
 }

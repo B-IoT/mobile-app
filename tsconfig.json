@@ -24,6 +24,6 @@
   "include": [
     "App.js",
     "app",
-    "test",
+    "test"
   ]
 }

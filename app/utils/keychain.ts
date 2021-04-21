@@ -31,7 +31,7 @@ export async function load(): Promise<Credentials | null> {
 }
 
 /**
- * Resets any existing credentials for the given server.
+ * Resets any existing credentials.
  */
 export async function reset() {
   await SecureStore.deleteItemAsync(CREDENTIALS)

@@ -100,7 +100,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 
     if (previousRouteName !== currentRouteName) {
       // track screens.
-      __DEV__ && console.tron.log(currentRouteName)
+      __DEV__ && console.log(currentRouteName)
     }
 
     // Save the current route name for later comparision
@@ -124,4 +124,16 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
   }, [isRestoringNavigationState])
 
   return { onNavigationStateChange, restoreState, initialNavigationState }
+}
+
+/**
+ * Resets the stack and navigates to the given route.
+ * @param navigation the navigation prop
+ * @param destination the destination route name
+ */
+export function resetAndNavigateTo(navigation, destinationRoute: string) {
+  navigation.reset({
+    index: 0,
+    routes: [{ name: destinationRoute }],
+  })
 }
