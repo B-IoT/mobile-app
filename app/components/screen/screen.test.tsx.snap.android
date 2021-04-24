@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Screen component should match snapshot with scroll 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#ffffff",
+          "flex": 1,
+          "height": "100%",
+        },
+        Object {},
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#ffffff",
+            "flex": 1,
+            "height": "100%",
+          },
+          Object {},
+          Object {
+            "paddingTop": 0,
+          },
+        ]
+      }
+    >
+      <RCTScrollView
+        contentContainerStyle={
+          Array [
+            Object {
+              "alignItems": "stretch",
+              "justifyContent": "flex-start",
+            },
+            Object {},
+          ]
+        }
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#ffffff",
+              "flex": 1,
+              "height": "100%",
+            },
+            Object {},
+          ]
+        }
+      >
+        <View />
+      </RCTScrollView>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
+
+exports[`Screen component should match snapshot without scroll 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#ffffff",
+          "flex": 1,
+          "height": "100%",
+        },
+        Object {},
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "stretch",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "width": "100%",
+          },
+          Object {},
+          Object {
+            "paddingTop": 0,
+          },
+        ]
+      }
+    />
+  </View>
+</RNCSafeAreaProvider>
+`;
