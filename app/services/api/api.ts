@@ -63,7 +63,7 @@ export class Api {
    */
   async login(username: string, password: string): Promise<Types.LoginResult> {
     try {
-      const response: ApiResponse<any> = await this.apisauce.post(
+      const response: ApiResponse<string> = await this.apisauce.post(
         `${this.config.url}/oauth/token`,
         { username, password },
       )
