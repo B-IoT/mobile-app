@@ -12,25 +12,9 @@ import { RootStoreModel, RootStoreProvider } from '../../models'
 import { ItemStoreModel } from '../../models/item-store/item-store'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import { DEFAULT_API_CONFIG } from '../../services/api/api-config'
-
-const server = setupServer(
-  rest.post(`${DEFAULT_API_CONFIG}/api/items`, (req, res, ctx) => {
-    return res(ctx.text('1'))
-  }),
-)
 
 describe('Register screen', () => {
-  // Enable API mocking before tests.
-  beforeAll(() => server.listen())
-
-  // Reset any runtime request handlers we may add during the tests.
-  afterEach(() => server.resetHandlers())
-
-  // Disable API mocking after the tests are done.
-  afterAll(() => server.close())
+  // TODO: mock server
 
   function buildRegisterScreen() {
     const itemStore = ItemStoreModel.create()

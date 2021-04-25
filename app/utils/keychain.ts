@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store'
 
-const CREDENTIALS = 'credentials'
+export const CREDENTIALS = 'credentials'
 
 export interface Credentials {
   username: string
@@ -19,7 +19,6 @@ export async function save(username: string, password: string) {
 
 /**
  * Loads credentials that were already saved.
- *
  */
 export async function load(): Promise<Credentials | null> {
   const result = await SecureStore.getItemAsync(CREDENTIALS)
