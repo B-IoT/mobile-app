@@ -4,7 +4,7 @@
 
 ## Deployment
 
-The app is automatically built and publish (on Expo channels) by [CircleCI](https://app.circleci.com/pipelines/github/B-IoT/mobile-app).
+The app is automatically built and published (on Expo channels) by [CircleCI](https://app.circleci.com/pipelines/github/B-IoT/mobile-app).
 
 ## Project structure
 
