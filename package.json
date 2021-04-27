@@ -145,6 +145,7 @@
     ],
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
+      "!**/app/navigators/**",
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
