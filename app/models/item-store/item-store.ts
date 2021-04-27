@@ -1,9 +1,9 @@
 import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
 import { Item, ItemModel, ItemSnapshot } from '../item/item'
-import { ItemApi } from '../../services/api/item-api'
 import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
 import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'
+import { ItemApi } from '../../services/api'
 
 export enum GetItemResult {
   OK,

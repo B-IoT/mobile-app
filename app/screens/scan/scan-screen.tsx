@@ -11,7 +11,7 @@ import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { GetItemResult } from '../../models/item-store/item-store'
 import { resetAndNavigateTo } from '../../navigators'
-import { InfoPopup } from './info-popup'
+import { InfoPopup } from './info-popup/info-popup'
 
 const ROOT: ViewStyle = {
   flex: 1,

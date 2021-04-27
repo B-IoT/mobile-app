@@ -474,7 +474,7 @@ exports[`Login screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "marginTop": 4,
+                      "marginTop": undefined,
                     },
                     Object {
                       "alignItems": "center",
@@ -1276,7 +1276,7 @@ exports[`Login screen should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "marginTop": 4,
+                      "marginTop": undefined,
                     },
                     Object {
                       "alignItems": "center",

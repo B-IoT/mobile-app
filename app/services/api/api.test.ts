@@ -1,3 +1,4 @@
+import { SERVER_ERROR } from 'apisauce'
 import { Api } from './api'
 import { DEFAULT_API_CONFIG } from './api-config'
 
@@ -51,5 +52,41 @@ describe('Api', () => {
     expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/oauth/token`, { username, password })
     expect(result.kind).toEqual('ok')
     expect(result.token).toEqual(token)
+  })
+
+  it('should fail the login', async () => {
+    const api = new Api()
+    api.setup()
+
+    const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
+      ok: false,
+      problem: SERVER_ERROR,
+      originalError: null,
+    })
+
+    const username = 'username'
+    const password = 'password'
+    const result = await api.login(username, password)
+
+    expect(mockPost).toHaveBeenCalledTimes(1)
+    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/oauth/token`, { username, password })
+    expect(result.kind).toEqual('server')
+  })
+
+  it('should fail the login because of bad data', async () => {
+    const api = new Api()
+    api.setup()
+
+    const mockPost = jest.spyOn(api.apisauce, 'post').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const username = 'username'
+    const password = 'password'
+    const result = await api.login(username, password)
+
+    expect(mockPost).toHaveBeenCalledTimes(1)
+    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/oauth/token`, { username, password })
+    expect(result.kind).toEqual('bad-data')
   })
 })

@@ -1,6 +1,6 @@
 import { createEnvironment } from '..'
 import { ItemModel } from '../item/item'
-import { DataType, ItemStoreModel } from './item-store'
+import { DataType, GetItemResult, ItemStoreModel } from './item-store'
 import { reset, save } from '../../utils/keychain'
 import { ItemApi } from '../../services/api/item-api'
 import { Api } from '../../services/api/api'
@@ -302,12 +302,71 @@ describe('Item store', () => {
     mockGetItem.mockResolvedValue({ kind: 'ok', item: expectedItem })
     ItemApi.prototype.getItem = mockGetItem
 
-    await instance.getItem(1)
+    const result = await instance.getItem(1)
 
     expect(mockGetItem).toHaveBeenCalledTimes(1)
     expect(mockGetItem).toHaveBeenCalledWith(1)
+    expect(result).toEqual(GetItemResult.OK)
     expect(instance.item).toEqual(expectedItem)
     expect(instance.itemId).toEqual(expectedItem.id)
+  })
+
+  it('should return NOT_FOUND when getting a non-existent item', async () => {
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    const mockGetItem = jest.fn()
+    mockGetItem.mockResolvedValue({ kind: 'not-found' })
+    ItemApi.prototype.getItem = mockGetItem
+
+    const id = 1
+    const result = await instance.getItem(id)
+
+    expect(mockGetItem).toHaveBeenCalledTimes(1)
+    expect(mockGetItem).toHaveBeenCalledWith(1)
+    expect(result).toEqual(GetItemResult.NOT_FOUND)
+    expect(instance.itemId).toEqual(id)
+  })
+
+  it('should fail getting an item', async () => {
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    const mockGetItem = jest.fn()
+    mockGetItem.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.getItem = mockGetItem
+
+    const result = await instance.getItem(1)
+
+    expect(mockGetItem).toHaveBeenCalledTimes(1)
+    expect(mockGetItem).toHaveBeenCalledWith(1)
+    expect(result).toEqual(GetItemResult.ERROR)
   })
 
   it('should register an item', async () => {
@@ -347,6 +406,41 @@ describe('Item store', () => {
     expect(instance.itemId).toEqual(expectedItem.id)
   })
 
+  it('should fail registering an item', async () => {
+    const expectedItem = {
+      id: 2,
+      beacon: 'bb:aa:aa:aa:aa:aa',
+      category: 'ECG',
+      service: 'Bloc 3',
+    }
+
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    const mockRegisterItem = jest.fn()
+    mockRegisterItem.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.registerItem = mockRegisterItem
+
+    const result = await instance.registerItem(expectedItem)
+
+    expect(result).toBeFalsy()
+    expect(mockRegisterItem).toHaveBeenCalledTimes(1)
+    expect(mockRegisterItem).toHaveBeenCalledWith(expectedItem)
+  })
+
   it('should login', async () => {
     const instance = ItemStoreModel.create(
       {
@@ -374,6 +468,56 @@ describe('Item store', () => {
     expect(save).toHaveBeenCalledTimes(1)
     expect(save).toHaveBeenCalledWith('username', 'password')
     expect(instance.authToken).toEqual(token)
+  })
+
+  it('should fail logging in', async () => {
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    jest.spyOn(Api.prototype, 'login').mockResolvedValue({ kind: 'server' })
+
+    const result = await instance.login('username', 'password', true)
+
+    expect(result).toBeFalsy()
+  })
+
+  it('should fail logging in because of exceptions', async () => {
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    jest.spyOn(Api.prototype, 'login').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const result = await instance.login('username', 'password', true)
+
+    expect(result).toBeFalsy()
   })
 
   it('should logout', async () => {
