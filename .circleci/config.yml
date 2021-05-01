@@ -39,6 +39,11 @@ jobs:
     environment:
       EXPO_RELEASE_CHANNEL: dev
     <<: *publish
+    
+  publish_to_expo_dependabot:
+    environment:
+      EXPO_RELEASE_CHANNEL: dependabot
+    <<: *publish
 
   publish_to_expo_prod:
     environment:
@@ -53,6 +58,10 @@ workflows:
           filters:
             branches:
               only: dev
+      - publish_to_expo_dependabot:
+          filters:
+            branches:
+              only: dependabot*
       - publish_to_expo_prod:
           filters:
             branches:
