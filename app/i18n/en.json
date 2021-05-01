@@ -34,5 +34,9 @@
     "modelPlaceholder": "Enter the model",
     "supplier": "Supplier",
     "supplierPlaceholder": "Enter the supplier"
+  },
+  "infoScreen": {
+    "update": "Update",
+    "title": "Update an item"
   }
 }

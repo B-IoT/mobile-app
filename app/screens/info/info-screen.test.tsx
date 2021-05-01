@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { RegisterScreen } from './register-screen'
+import { InfoScreen } from './info-screen'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { render, fireEvent } from '@testing-library/react-native'
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
@@ -13,12 +13,20 @@ import { ItemStoreModel } from '../../models/item-store/item-store'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
-describe('Register screen', () => {
-  const mockRegisterItem = jest.fn().mockResolvedValue(true)
+describe('Info screen', () => {
+  const mockUpdateItem = jest.fn().mockResolvedValue(true)
+  // TODO: update with real parameters
+  const initialItem = {
+    id: 1,
+    beacon: 'aa:aa:aa:aa:aa:aa',
+    category: 'Lit',
+    service: 'Bloc 1',
+  }
 
-  function buildRegisterScreen() {
+  function buildInfoScreen() {
     const itemStore = ItemStoreModel.create()
-    Object.defineProperty(itemStore, 'registerItem', { value: mockRegisterItem, writable: true })
+    itemStore.saveItem(initialItem)
+    Object.defineProperty(itemStore, 'updateItem', { value: mockUpdateItem, writable: true })
     const rootStore = RootStoreModel.create({ itemStore })
 
     const Stack = createStackNavigator()
@@ -35,7 +43,7 @@ describe('Register screen', () => {
           <ApplicationProvider {...eva} theme={{ ...eva.light, ...CustomTheme }}>
             <NavigationContainer>
               <Stack.Navigator>
-                <Stack.Screen name="register" component={RegisterScreen} />
+                <Stack.Screen name="info" component={InfoScreen} />
               </Stack.Navigator>
             </NavigationContainer>
           </ApplicationProvider>
@@ -47,49 +55,53 @@ describe('Register screen', () => {
   }
 
   it('should show the title', () => {
-    const screen = buildRegisterScreen()
+    const screen = buildInfoScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.title'))).toBeTruthy()
+    expect(component.queryByText(translate('infoScreen.title'))).toBeTruthy()
   })
 
-  it('should show the category input', () => {
-    const screen = buildRegisterScreen()
+  it('should show the category input', async () => {
+    const screen = buildInfoScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.category'))).toBeTruthy()
+    // expect(await component.findByText(initialItem.category)).toBeTruthy()
   })
 
   it('should show the brand input', () => {
-    const screen = buildRegisterScreen()
+    const screen = buildInfoScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.brand'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.brand)).toBeTruthy()
   })
 
   it('should show the model input', () => {
-    const screen = buildRegisterScreen()
+    const screen = buildInfoScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.model'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.model)).toBeTruthy()
   })
 
   it('should show the supplier input', () => {
-    const screen = buildRegisterScreen()
+    const screen = buildInfoScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.supplier'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.supplier)).toBeTruthy()
   })
 
-  it('should show the register item button', () => {
-    const screen = buildRegisterScreen()
+  it('should show the update item button', () => {
+    const screen = buildInfoScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.register'))).toBeTruthy()
+    expect(component.queryByText(translate('infoScreen.update'))).toBeTruthy()
   })
 
-  it('should register the item when pressing the register item button', () => {
-    const screen = buildRegisterScreen()
+  it('should update the item when pressing the update item button', () => {
+    const screen = buildInfoScreen()
     const component = render(screen)
 
     const categoryInput = component.queryByText(translate('registerScreen.category'))
@@ -104,20 +116,32 @@ describe('Register screen', () => {
     const supplierInput = component.queryByText(translate('registerScreen.supplier'))
     fireEvent.changeText(supplierInput, 'supplier')
 
-    const registerItemButton = component.queryByText(translate('registerScreen.register'))
-    fireEvent.press(registerItemButton)
+    const updateItemButton = component.queryByText(translate('infoScreen.update'))
+    fireEvent.press(updateItemButton)
 
     expect(component.queryByText(translate('common.error'))).toBeFalsy() // the error is not shown
-    expect(mockRegisterItem).toHaveBeenCalledTimes(1)
-    expect(mockRegisterItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
+    expect(mockUpdateItem).toHaveBeenCalledTimes(1)
+    expect(mockUpdateItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
   })
 
-  it('should show four warnings when registering an item with empty fields', () => {
-    const screen = buildRegisterScreen()
+  it('should show four warnings when updating an item with empty fields', () => {
+    const screen = buildInfoScreen()
     const component = render(screen)
 
-    const registerItemButton = component.queryByText(translate('registerScreen.register'))
-    fireEvent.press(registerItemButton)
+    const categoryInput = component.queryByText(translate('registerScreen.category'))
+    fireEvent.changeText(categoryInput, '')
+
+    const brandInput = component.queryByText(translate('registerScreen.brand'))
+    fireEvent.changeText(brandInput, '')
+
+    const modelInput = component.queryByText(translate('registerScreen.model'))
+    fireEvent.changeText(modelInput, '')
+
+    const supplierInput = component.queryByText(translate('registerScreen.supplier'))
+    fireEvent.changeText(supplierInput, '')
+
+    const updateItemButton = component.queryByText(translate('infoScreen.update'))
+    fireEvent.press(updateItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     expect(warnings).toHaveLength(4)
@@ -128,7 +152,7 @@ describe('Register screen', () => {
   })
 
   it('should match snapshot', () => {
-    const screen = buildRegisterScreen()
+    const screen = buildInfoScreen()
     const tree = renderer.create(screen).toJSON()
     expect(tree).toMatchSnapshot()
   })

@@ -1,65 +1,22 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle } from 'react-native'
-import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
-import { spacing } from '../../theme'
-import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from '@ui-kitten/components'
 import { useStores } from '../../models'
-import { AsyncButton } from '../../components/async-button/async-button'
 import { translate } from '../../i18n'
 import { Item } from '../../models/item/item'
 import { resetAndNavigateTo } from '../../navigators'
 import { AutocompleteStatus } from '../../components/autocomplete/autocomplete.props'
+import { isEmpty } from '../../utils/function-utils/function-utils'
 import { DataType } from '../../models/item-store/item-store'
-import isEmpty from '../../utils/function-utils/function-utils'
-
-const ROOT: ViewStyle = {
-  flex: 1,
-  flexDirection: 'column',
-}
-
-const MAIN_LAYOUT: ViewStyle = {
-  flex: 1,
-  flexDirection: 'column',
-  paddingBottom: spacing[5],
-  paddingStart: spacing[5],
-  paddingEnd: spacing[5],
-  paddingTop: spacing[2],
-}
-
-const DIVIDER: ViewStyle = {
-  marginStart: spacing[4],
-  marginEnd: spacing[4],
-}
-
-const INPUT: ViewStyle = {
-  borderRadius: 8,
-  marginVertical: spacing[3],
-}
-
-const REGISTER_BUTTON: ViewStyle = {
-  marginTop: spacing[8],
-}
+import { ItemScreen } from '../../components'
 
 const strings = {
   register: translate('registerScreen.register'),
   title: translate('registerScreen.title'),
-  category: translate('registerScreen.category'),
-  categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
-  brand: translate('registerScreen.brand'),
-  brandPlaceholder: translate('registerScreen.brandPlaceholder'),
-  model: translate('registerScreen.model'),
-  modelPlaceholder: translate('registerScreen.modelPlaceholder'),
-  supplier: translate('registerScreen.supplier'),
-  supplierPlaceholder: translate('registerScreen.supplierPlaceholder'),
-  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
 const TIMEOUT = 2000 // milliseconds
 const REGISTER_TIMEOUT = 1000
-
-const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
 export const RegisterScreen = observer(function RegisterScreen() {
   const { itemStore } = useStores()
@@ -85,91 +42,55 @@ export const RegisterScreen = observer(function RegisterScreen() {
     setTimeout(() => setStatus('basic'), TIMEOUT)
   }
 
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'scan')} />
-  )
-
   return (
-    <Screen style={ROOT} preset="scroll" statusBar="dark-content">
-      <TopNavigation accessoryLeft={BackAction} title={strings.title} />
-      <Divider style={DIVIDER} />
-      <Layout style={MAIN_LAYOUT}>
-        <Autocomplete
-          style={INPUT}
-          label={strings.category}
-          status={categoryStatus}
-          placeholder={strings.categoryPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
-          dataType={DataType.CATEGORY}
-          value={category}
-          setValue={setCategory}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.brand}
-          status={brandStatus}
-          placeholder={strings.brandPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
-          dataType={DataType.BRAND}
-          value={brand}
-          setValue={setBrand}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.model}
-          status={modelStatus}
-          placeholder={strings.modelPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
-          dataType={DataType.MODEL}
-          value={model}
-          setValue={setModel}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.supplier}
-          status={supplierStatus}
-          placeholder={strings.supplierPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
-          dataType={DataType.SUPPLIER}
-          value={supplier}
-          setValue={setSupplier}
-        />
-        <AsyncButton
-          style={REGISTER_BUTTON}
-          loading={registering}
-          success={success}
-          text={strings.register}
-          onPress={async () => {
-            // prettier-ignore
-            const statusSetters: Array<[boolean, React.Dispatch<React.SetStateAction<AutocompleteStatus>>]> = [
-              [isEmpty(category), setCategoryStatus],
-              [isEmpty(brand), setBrandStatus],
-              [isEmpty(model), setModelStatus],
-              [isEmpty(supplier), setSupplierStatus],
-            ]
+    <ItemScreen
+      onButtonPress={async () => {
+        // prettier-ignore
+        const statusSetters: Array<[boolean, React.Dispatch<React.SetStateAction<AutocompleteStatus>>]> = [
+          [isEmpty(category), setCategoryStatus],
+          [isEmpty(brand), setBrandStatus],
+          [isEmpty(model), setModelStatus],
+          [isEmpty(supplier), setSupplierStatus],
+        ]
 
-            const noErrors = statusSetters.reduce((empty, [currEmpty, currSetter]) => {
-              // Show error if empty
-              currEmpty && showError(currSetter)
-              return empty && currEmpty
-            }, true)
+        const noErrors = statusSetters.reduce((noErrors, [currEmpty, currSetter]) => {
+          // Show error if empty
+          currEmpty && showError(currSetter)
+          return noErrors && !currEmpty
+        }, true)
 
-            if (noErrors) {
-              setRegistering(true)
-              const item: Item = {} // TODO:
-              const isSuccessful = await itemStore.registerItem(item)
-              setRegistering(false)
-              if (!isSuccessful) {
-                setSuccess(false)
-                setTimeout(() => setSuccess(undefined), TIMEOUT)
-              } else {
-                setSuccess(true)
-                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), REGISTER_TIMEOUT)
-              }
-            }
-          }}
-        />
-      </Layout>
-    </Screen>
+        if (noErrors) {
+          setRegistering(true)
+          const item: Item = {} // TODO:
+          const isSuccessful = await itemStore.registerItem(item)
+          setRegistering(false)
+          if (!isSuccessful) {
+            setSuccess(false)
+            setTimeout(() => setSuccess(undefined), TIMEOUT)
+          } else {
+            // Save the data inserted by the user for future autocompletion
+            itemStore.addAutocompleteEntryData(DataType.CATEGORY, category)
+            itemStore.addAutocompleteEntryData(DataType.BRAND, brand)
+            itemStore.addAutocompleteEntryData(DataType.MODEL, model)
+            itemStore.addAutocompleteEntryData(DataType.SUPPLIER, supplier)
+
+            setSuccess(true)
+            setTimeout(() => resetAndNavigateTo(navigation, 'scan'), REGISTER_TIMEOUT)
+          }
+        }
+      }}
+      categoryState={[category, setCategory]}
+      categoryStatus={categoryStatus}
+      brandState={[brand, setBrand]}
+      brandStatus={brandStatus}
+      modelState={[model, setModel]}
+      modelStatus={modelStatus}
+      supplierState={[supplier, setSupplier]}
+      supplierStatus={supplierStatus}
+      buttonText={strings.register}
+      title={strings.title}
+      executing={registering}
+      success={success}
+    />
   )
 })

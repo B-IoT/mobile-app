@@ -125,6 +125,22 @@ export const ItemStoreModel = types
       }
     }),
 
+    updateItem: flow(function* (item: Item) {
+      // First we update the auth token with the one stored, which is not volatile
+      self.environment.api.setAuthToken(self.authToken)
+
+      const itemApi = new ItemApi(self.environment.api)
+      const result = yield itemApi.updateItem(item)
+
+      if (result.kind === 'ok') {
+        self.saveItem(item)
+        return true
+      } else {
+        __DEV__ && console.log(result.kind)
+        return false
+      }
+    }),
+
     login: flow(function* (username: string, password: string, remember = false) {
       try {
         const result = yield self.environment.api.login(username, password)

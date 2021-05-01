@@ -7,7 +7,7 @@ import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { AsyncButton } from '../../components/async-button/async-button'
-import isEmpty from '../../utils/function-utils/function-utils'
+import { isEmpty } from '../../utils/function-utils/function-utils'
 
 const ROOT: ViewStyle = {
   flex: 1,

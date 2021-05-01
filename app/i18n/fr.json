@@ -34,5 +34,9 @@
     "modelPlaceholder": "Entre le modèle",
     "supplier": "Fournisseur",
     "supplierPlaceholder": "Entre le fournisseur"
+  },
+  "infoScreen": {
+    "update": "Mettre à jour",
+    "title": "Mettre à jour un objet"
   }
 }

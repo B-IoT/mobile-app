@@ -441,6 +441,78 @@ describe('Item store', () => {
     expect(mockRegisterItem).toHaveBeenCalledWith(expectedItem)
   })
 
+  it('should update an item', async () => {
+    const expectedItem = {
+      id: 2,
+      beacon: 'bb:aa:aa:aa:aa:aa',
+      category: 'ECG',
+      service: 'Bloc 3',
+    }
+
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    const mockUpdateItem = jest.fn()
+    mockUpdateItem.mockResolvedValue({ kind: 'ok' })
+    ItemApi.prototype.updateItem = mockUpdateItem
+
+    const result = await instance.updateItem(expectedItem)
+
+    expect(result).toBeTruthy()
+    expect(mockUpdateItem).toHaveBeenCalledTimes(1)
+    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem)
+    expect(instance.item).toEqual(expectedItem)
+    expect(instance.itemId).toEqual(expectedItem.id)
+  })
+
+  it('should fail updating an item', async () => {
+    const expectedItem = {
+      id: 2,
+      beacon: 'bb:aa:aa:aa:aa:aa',
+      category: 'ECG',
+      service: 'Bloc 3',
+    }
+
+    const instance = ItemStoreModel.create(
+      {
+        isAuthenticated: false,
+        itemId: 1,
+        item: ItemModel.create({
+          id: 1,
+          beacon: 'aa:aa:aa:aa:aa:aa',
+          category: 'Lit',
+          service: 'Bloc 1',
+        }),
+        authToken: 'token',
+        autocompleteDataMap: {},
+      },
+      await createEnvironment(),
+    )
+
+    const mockUpdateItem = jest.fn()
+    mockUpdateItem.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.updateItem = mockUpdateItem
+
+    const result = await instance.updateItem(expectedItem)
+
+    expect(result).toBeFalsy()
+    expect(mockUpdateItem).toHaveBeenCalledTimes(1)
+    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem)
+  })
+
   it('should login', async () => {
     const instance = ItemStoreModel.create(
       {
