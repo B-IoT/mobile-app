@@ -1202,6 +1202,7 @@ exports[`Info screen should match snapshot 1`] = `
                                           ]
                                         }
                                         underlineColorAndroid="transparent"
+                                        value=""
                                       />
                                     </View>
                                     <View
@@ -1312,6 +1313,7 @@ exports[`Info screen should match snapshot 1`] = `
                                           ]
                                         }
                                         underlineColorAndroid="transparent"
+                                        value=""
                                       />
                                     </View>
                                     <View
@@ -1422,6 +1424,7 @@ exports[`Info screen should match snapshot 1`] = `
                                           ]
                                         }
                                         underlineColorAndroid="transparent"
+                                        value=""
                                       />
                                     </View>
                                     <View

@@ -1,62 +1,31 @@
-import { GestureResponderEvent } from 'react-native'
+import { Item } from '../../models/item/item'
 import { AutocompleteStatus } from '../autocomplete/autocomplete.props'
 
 export interface ItemScreenProps {
   /**
-   * The callback to execute when the button is pressed.
+   * The async operation to execute when the button is pressed.
    */
-  onButtonPress: (event: GestureResponderEvent) => void
+  asyncOperation: (item: Item) => Promise<boolean>
 
   /**
-   * The category state pair.
+   * The initial category value. If not specified, defaults to ''.
    */
-  categoryState: [string, React.Dispatch<React.SetStateAction<string>>]
+  initialCategory?: string
 
   /**
-   * The category status.
+   * The initial brand value. If not specified, defaults to ''.
    */
-  categoryStatus: AutocompleteStatus
+  initialBrand?: string
 
   /**
-   * The brand state pair.
+   * The initial model value. If not specified, defaults to ''.
    */
-  brandState: [string, React.Dispatch<React.SetStateAction<string>>]
+  initialModel?: string
 
   /**
-   * The brand status.
+   * The initial supplier value. If not specified, defaults to ''.
    */
-  brandStatus: AutocompleteStatus
-
-  /**
-   * The model state pair.
-   */
-  modelState: [string, React.Dispatch<React.SetStateAction<string>>]
-
-  /**
-   * The model status.
-   */
-  modelStatus: AutocompleteStatus
-
-  /**
-   * The supplier state pair.
-   */
-  supplierState: [string, React.Dispatch<React.SetStateAction<string>>]
-
-  /**
-   * The supplier status.
-   */
-  supplierStatus: AutocompleteStatus
-
-  /**
-   * Whether the user is registering/updating the item
-   */
-  executing: boolean
-
-  /**
-   * Whether the action triggered by the user by pressing the button was successful or not.
-   * Can be undefined it the action has not been triggered yet.
-   */
-  success: boolean
+  initialSupplier?: string
 
   /**
    * The text displayed by the button

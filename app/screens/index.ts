@@ -1,3 +1,6 @@
+export const ERROR_TIMEOUT = 2000 // milliseconds
+export const OPERATION_TIMEOUT = 1000
+
 // export other screens here
 export * from './login/login-screen'
 export * from './scan/scan-screen'
