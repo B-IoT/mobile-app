@@ -58,6 +58,9 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
+/**
+ * Login screen.
+ */
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
 

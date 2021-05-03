@@ -57,6 +57,7 @@ export class Api {
 
   /**
    * Logs the user in, returning the authentication token.
+   *
    * @param username the username
    * @param password the password
    * @returns a Promise wrapping the token
@@ -77,7 +78,7 @@ export class Api {
 
       return { kind: 'ok', token }
     } catch (e) {
-      __DEV__ && console.log(e.message)
+      __DEV__ && console.log(`Bad login request with error message ${e.message}`)
       return { kind: 'bad-data' }
     }
   }

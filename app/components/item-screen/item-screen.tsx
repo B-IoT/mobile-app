@@ -58,6 +58,10 @@ const strings = {
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
+/**
+ * A screen displaying various information related to an item, with a button that executes an operation
+ * (either register or update).
+ */
 export function ItemScreen(props: ItemScreenProps) {
   const {
     asyncOperation,

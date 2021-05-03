@@ -44,7 +44,7 @@ export class ItemApi {
         return { kind: 'bad-data' }
       }
     } catch (e) {
-      __DEV__ && console.log(e.message)
+      __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
       return { kind: 'bad-data' }
     }
   }
@@ -72,7 +72,7 @@ export class ItemApi {
 
       return { kind: 'ok', id }
     } catch (e) {
-      __DEV__ && console.log(e.message)
+      __DEV__ && console.log(`Bad registerItem request with error message ${e.message}`)
       return { kind: 'bad-data' }
     }
   }
@@ -98,7 +98,7 @@ export class ItemApi {
 
       return { kind: 'ok' }
     } catch (e) {
-      __DEV__ && console.log(e.message)
+      __DEV__ && console.log(`Bad updateItem request with error message ${e.message}`)
       return { kind: 'bad-data' }
     }
   }

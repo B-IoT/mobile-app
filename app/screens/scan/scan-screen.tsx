@@ -80,6 +80,9 @@ const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} na
 
 const TIMEOUT = 2000
 
+/**
+ * Screen that displays a QR code scanner.
+ */
 export const ScanScreen = observer(function ScanScreen() {
   const windowHeight = useWindowDimensions().height
 

@@ -9,6 +9,9 @@ export const ItemModel = types.model('Item').props({
 })
 
 type ItemType = Instance<typeof ItemModel>
+/**
+ * An inventory item.
+ */
 export interface Item extends ItemType {}
 type ItemSnapshotType = SnapshotOut<typeof ItemModel>
 export interface ItemSnapshot extends ItemSnapshotType {}
