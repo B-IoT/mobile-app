@@ -26,6 +26,8 @@
   "registerScreen": {
     "register": "Register",
     "title": "Register an item",
+    "itemID": "Item ID",
+    "itemIDPlaceholder": "Enter the item ID",
     "category": "Category",
     "categoryPlaceholder": "Enter the category",
     "brand": "Brand",
@@ -33,7 +35,17 @@
     "model": "Model",
     "modelPlaceholder": "Enter the model",
     "supplier": "Supplier",
-    "supplierPlaceholder": "Enter the supplier"
+    "supplierPlaceholder": "Enter the supplier",
+    "originLocation": "Place of origin",
+    "originLocationPlaceholder": "Enter the place of origin",
+    "currentLocation": "Current location",
+    "currentLocationPlaceholder": "Enter the current location",
+    "room": "Room",
+    "roomPlaceholder": "Enter the room",
+    "contact": "Contact (person)",
+    "contactPlaceholder": "Enter the contact",
+    "owner": "Owner",
+    "ownerPlaceholder": "Enter the owner"
   },
   "infoScreen": {
     "update": "Update",

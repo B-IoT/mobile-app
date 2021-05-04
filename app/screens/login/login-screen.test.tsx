@@ -11,6 +11,8 @@ import { translate } from '../../i18n'
 import { RootStoreModel, RootStoreProvider } from '../../models'
 import { ItemStoreModel } from '../../models/item-store/item-store'
 
+jest.useFakeTimers()
+
 describe('Login screen', () => {
   function buildLoginScreen() {
     const itemStore = ItemStoreModel.create()

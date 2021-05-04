@@ -16,20 +16,31 @@ export const InfoScreen = observer(function InfoScreen() {
   const { itemStore } = useStores()
 
   const {
-    id,
-    category: itemCategory,
-    brand: itemBrand,
-    model: itemModel,
-    supplier: itemSupplier,
+    itemID,
+    category,
+    brand,
+    model,
+    supplier,
+    originLocation,
+    currentLocation,
+    room,
+    contact,
+    owner
   } = itemStore.item
 
   return (
     <ItemScreen
       asyncOperation={itemStore.updateItem}
-      initialCategory={itemCategory}
-      initialBrand={itemBrand}
-      initialModel={itemModel}
-      initialSupplier={itemSupplier}
+      initialItemID={itemID}
+      initialCategory={category}
+      initialBrand={brand}
+      initialModel={model}
+      initialSupplier={supplier}
+      initialOriginLocation={originLocation}
+      initialCurrentLocation={currentLocation}
+      initialRoom={room}
+      initialContact={contact}
+      initialOwner={owner}
       buttonText={strings.update}
       title={strings.title}
     />

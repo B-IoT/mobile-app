@@ -45,6 +45,8 @@ const BUTTON: ViewStyle = {
 }
 
 const strings = {
+  itemID: translate('registerScreen.itemID'),
+  itemIDPlaceholder: translate('registerScreen.itemIDPlaceholder'),
   category: translate('registerScreen.category'),
   categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
   brand: translate('registerScreen.brand'),
@@ -53,6 +55,16 @@ const strings = {
   modelPlaceholder: translate('registerScreen.modelPlaceholder'),
   supplier: translate('registerScreen.supplier'),
   supplierPlaceholder: translate('registerScreen.supplierPlaceholder'),
+  originLocation: translate('registerScreen.originLocation'),
+  originLocationPlaceholder: translate('registerScreen.originLocationPlaceholder'),
+  currentLocation: translate('registerScreen.currentLocation'),
+  currentLocationPlaceholder: translate('registerScreen.currentLocationPlaceholder'),
+  room: translate('registerScreen.room'),
+  roomPlaceholder: translate('registerScreen.roomPlaceholder'),
+  contact: translate('registerScreen.contact'),
+  contactPlaceholder: translate('registerScreen.contactPlaceholder'),
+  owner: translate('registerScreen.owner'),
+  ownerPlaceholder: translate('registerScreen.ownerPlaceholder'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
@@ -65,14 +77,22 @@ const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 export function ItemScreen(props: ItemScreenProps) {
   const {
     asyncOperation,
+    initialItemID,
     initialCategory,
     initialBrand,
     initialModel,
     initialSupplier,
+    initialOriginLocation,
+    initialCurrentLocation,
+    initialRoom,
+    initialContact,
+    initialOwner,
     buttonText,
     title,
   } = props
 
+  const [itemID, setItemID] = useState(initialItemID ? initialItemID : '')
+  const [itemIDStatus, setItemIDStatus] = useState<AutocompleteStatus>('basic')
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
   const [categoryStatus, setCategoryStatus] = useState<AutocompleteStatus>('basic')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
@@ -81,6 +101,20 @@ export function ItemScreen(props: ItemScreenProps) {
   const [modelStatus, setModelStatus] = useState<AutocompleteStatus>('basic')
   const [supplier, setSupplier] = useState(initialSupplier ? initialSupplier : '')
   const [supplierStatus, setSupplierStatus] = useState<AutocompleteStatus>('basic')
+  const [originLocation, setOriginLocation] = useState(
+    initialOriginLocation ? initialOriginLocation : '',
+  )
+  const [originLocationStatus, setOriginLocationStatus] = useState<AutocompleteStatus>('basic')
+  const [currentLocation, setCurrentLocation] = useState(
+    initialCurrentLocation ? initialCurrentLocation : '',
+  )
+  const [currentLocationStatus, setCurrentLocationStatus] = useState<AutocompleteStatus>('basic')
+  const [room, setRoom] = useState(initialRoom ? initialRoom : '')
+  const [roomStatus, setRoomStatus] = useState<AutocompleteStatus>('basic')
+  const [contact, setContact] = useState(initialContact ? initialContact : '')
+  const [contactStatus, setContactStatus] = useState<AutocompleteStatus>('basic')
+  const [owner, setOwner] = useState(initialOwner ? initialOwner : '')
+  const [ownerStatus, setOwnerStatus] = useState<AutocompleteStatus>('basic')
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
@@ -105,6 +139,16 @@ export function ItemScreen(props: ItemScreenProps) {
       <TopNavigation accessoryLeft={BackAction} title={title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
+        <Autocomplete
+          style={INPUT}
+          label={strings.itemID}
+          status={itemIDStatus}
+          placeholder={strings.itemIDPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.ITEM_ID}
+          value={itemID}
+          setValue={setItemID}
+        />
         <Autocomplete
           style={INPUT}
           label={strings.category}
@@ -145,6 +189,56 @@ export function ItemScreen(props: ItemScreenProps) {
           value={supplier}
           setValue={setSupplier}
         />
+        <Autocomplete
+          style={INPUT}
+          label={strings.originLocation}
+          status={originLocationStatus}
+          placeholder={strings.originLocationPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.ORIGIN}
+          value={originLocation}
+          setValue={setOriginLocation}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.currentLocation}
+          status={currentLocationStatus}
+          placeholder={strings.currentLocationPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.LOCATION}
+          value={currentLocation}
+          setValue={setCurrentLocation}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.room}
+          status={roomStatus}
+          placeholder={strings.roomPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.ROOM}
+          value={room}
+          setValue={setRoom}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.contact}
+          status={contactStatus}
+          placeholder={strings.contactPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.CONTACT}
+          value={contact}
+          setValue={setContact}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.owner}
+          status={ownerStatus}
+          placeholder={strings.ownerPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.OWNER}
+          value={owner}
+          setValue={setOwner}
+        />
         <AsyncButton
           style={BUTTON}
           loading={executing}
@@ -153,10 +247,16 @@ export function ItemScreen(props: ItemScreenProps) {
           onPress={async () => {
             // prettier-ignore
             const statusSetters: Array<[boolean, React.Dispatch<React.SetStateAction<AutocompleteStatus>>]> = [
+              [isEmpty(itemID), setItemIDStatus],
               [isEmpty(category), setCategoryStatus],
               [isEmpty(brand), setBrandStatus],
               [isEmpty(model), setModelStatus],
               [isEmpty(supplier), setSupplierStatus],
+              [isEmpty(originLocation), setOriginLocationStatus],
+              [isEmpty(currentLocation), setCurrentLocationStatus],
+              [isEmpty(room), setRoomStatus],
+              [isEmpty(contact), setContactStatus],
+              [isEmpty(owner), setOwnerStatus]
             ]
 
             const noErrors = statusSetters.reduce((noErrors, [currEmpty, currSetter]) => {
@@ -175,10 +275,21 @@ export function ItemScreen(props: ItemScreenProps) {
                 setTimeout(() => setSuccess(undefined), ERROR_TIMEOUT)
               } else {
                 // Save the data inserted by the user for future autocompletion
-                itemStore.addAutocompleteEntryData(DataType.CATEGORY, category)
-                itemStore.addAutocompleteEntryData(DataType.BRAND, brand)
-                itemStore.addAutocompleteEntryData(DataType.MODEL, model)
-                itemStore.addAutocompleteEntryData(DataType.SUPPLIER, supplier)
+                const newAutocompleteEntries: Array<[DataType, string]> = [
+                  [DataType.ITEM_ID, itemID],
+                  [DataType.CATEGORY, category],
+                  [DataType.BRAND, brand],
+                  [DataType.MODEL, model],
+                  [DataType.SUPPLIER, supplier],
+                  [DataType.ORIGIN, originLocation],
+                  [DataType.LOCATION, currentLocation],
+                  [DataType.ROOM, room],
+                  [DataType.CONTACT, contact],
+                  [DataType.OWNER, owner],
+                ]
+                newAutocompleteEntries.forEach(([dataType, entry]) =>
+                  itemStore.addAutocompleteEntryData(dataType, entry),
+                )
 
                 setSuccess(true)
                 setTimeout(() => resetAndNavigateTo(navigation, 'scan'), OPERATION_TIMEOUT)

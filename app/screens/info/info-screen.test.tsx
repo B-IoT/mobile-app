@@ -13,6 +13,8 @@ import { ItemStoreModel } from '../../models/item-store/item-store'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
+jest.useFakeTimers()
+
 describe('Info screen', () => {
   const mockUpdateItem = jest.fn().mockResolvedValue(true)
   // TODO: update with real parameters
@@ -61,6 +63,13 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('infoScreen.title'))).toBeTruthy()
   })
 
+  it('should show the id input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.itemID'))).toBeTruthy()
+  })
+
   it('should show the category input', async () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -93,6 +102,46 @@ describe('Info screen', () => {
     // expect(component.queryByText(initialItem.supplier)).toBeTruthy()
   })
 
+  it('should show the origin location input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.originLocation'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.originLocation)).toBeTruthy()
+  })
+
+  it('should show the current location input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.currentLocation'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.currentLocation)).toBeTruthy()
+  })
+
+  it('should show the room input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.room'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.room)).toBeTruthy()
+  })
+
+  it('should show the contact input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.contact'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.contact)).toBeTruthy()
+  })
+
+  it('should show the owner input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.owner'))).toBeTruthy()
+    // expect(component.queryByText(initialItem.owner)).toBeTruthy()
+  })
+
   it('should show the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -103,6 +152,9 @@ describe('Info screen', () => {
   it('should update the item when pressing the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
+
+    const idInput = component.queryByText(translate('registerScreen.itemID'))
+    fireEvent.changeText(idInput, 'id')
 
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, 'category')
@@ -116,6 +168,21 @@ describe('Info screen', () => {
     const supplierInput = component.queryByText(translate('registerScreen.supplier'))
     fireEvent.changeText(supplierInput, 'supplier')
 
+    const originLocationInput = component.queryByText(translate('registerScreen.originLocation'))
+    fireEvent.changeText(originLocationInput, 'origin')
+
+    const currentLocationInput = component.queryByText(translate('registerScreen.currentLocation'))
+    fireEvent.changeText(currentLocationInput, 'currentLocation')
+
+    const roomInput = component.queryByText(translate('registerScreen.room'))
+    fireEvent.changeText(roomInput, 'room')
+
+    const contactInput = component.queryByText(translate('registerScreen.contact'))
+    fireEvent.changeText(contactInput, 'contact')
+
+    const ownerInput = component.queryByText(translate('registerScreen.owner'))
+    fireEvent.changeText(ownerInput, 'owner')
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
@@ -124,9 +191,12 @@ describe('Info screen', () => {
     expect(mockUpdateItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
   })
 
-  it('should show four warnings when updating an item with empty fields', () => {
+  it('should show ten warnings when updating an item with empty fields', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
+
+    const idInput = component.queryByText(translate('registerScreen.itemID'))
+    fireEvent.changeText(idInput, '')
 
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, '')
@@ -140,15 +210,27 @@ describe('Info screen', () => {
     const supplierInput = component.queryByText(translate('registerScreen.supplier'))
     fireEvent.changeText(supplierInput, '')
 
+    const originLocationInput = component.queryByText(translate('registerScreen.originLocation'))
+    fireEvent.changeText(originLocationInput, '')
+
+    const currentLocationInput = component.queryByText(translate('registerScreen.currentLocation'))
+    fireEvent.changeText(currentLocationInput, '')
+
+    const roomInput = component.queryByText(translate('registerScreen.room'))
+    fireEvent.changeText(roomInput, '')
+
+    const contactInput = component.queryByText(translate('registerScreen.contact'))
+    fireEvent.changeText(contactInput, '')
+
+    const ownerInput = component.queryByText(translate('registerScreen.owner'))
+    fireEvent.changeText(ownerInput, '')
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
-    expect(warnings).toHaveLength(4)
-    expect(warnings[0]).toBeTruthy()
-    expect(warnings[1]).toBeTruthy()
-    expect(warnings[2]).toBeTruthy()
-    expect(warnings[3]).toBeTruthy()
+    expect(warnings).toHaveLength(10)
+    warnings.forEach((w) => expect(w).toBeTruthy())
   })
 
   it('should match snapshot', () => {

@@ -13,6 +13,8 @@ import { ItemStoreModel } from '../../models/item-store/item-store'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
+jest.useFakeTimers()
+
 describe('Register screen', () => {
   const mockRegisterItem = jest.fn().mockResolvedValue(true)
 
@@ -53,6 +55,13 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.title'))).toBeTruthy()
   })
 
+  it('should show the id input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.itemID'))).toBeTruthy()
+  })
+
   it('should show the category input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
@@ -81,6 +90,41 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.supplier'))).toBeTruthy()
   })
 
+  it('should show the origin location input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.originLocation'))).toBeTruthy()
+  })
+
+  it('should show the current location input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.currentLocation'))).toBeTruthy()
+  })
+
+  it('should show the room input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.room'))).toBeTruthy()
+  })
+
+  it('should show the contact input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.contact'))).toBeTruthy()
+  })
+
+  it('should show the owner input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.owner'))).toBeTruthy()
+  })
+
   it('should show the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
@@ -91,6 +135,9 @@ describe('Register screen', () => {
   it('should register the item when pressing the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
+
+    const idInput = component.queryByText(translate('registerScreen.itemID'))
+    fireEvent.changeText(idInput, 'id')
 
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, 'category')
@@ -104,6 +151,21 @@ describe('Register screen', () => {
     const supplierInput = component.queryByText(translate('registerScreen.supplier'))
     fireEvent.changeText(supplierInput, 'supplier')
 
+    const originLocationInput = component.queryByText(translate('registerScreen.originLocation'))
+    fireEvent.changeText(originLocationInput, 'origin')
+
+    const currentLocationInput = component.queryByText(translate('registerScreen.currentLocation'))
+    fireEvent.changeText(currentLocationInput, 'currentLocation')
+
+    const roomInput = component.queryByText(translate('registerScreen.room'))
+    fireEvent.changeText(roomInput, 'room')
+
+    const contactInput = component.queryByText(translate('registerScreen.contact'))
+    fireEvent.changeText(contactInput, 'contact')
+
+    const ownerInput = component.queryByText(translate('registerScreen.owner'))
+    fireEvent.changeText(ownerInput, 'owner')
+
     const registerItemButton = component.queryByText(translate('registerScreen.register'))
     fireEvent.press(registerItemButton)
 
@@ -112,7 +174,7 @@ describe('Register screen', () => {
     expect(mockRegisterItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
   })
 
-  it('should show four warnings when registering an item with empty fields', () => {
+  it('should show ten warnings when registering an item with empty fields', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
@@ -120,11 +182,8 @@ describe('Register screen', () => {
     fireEvent.press(registerItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
-    expect(warnings).toHaveLength(4)
-    expect(warnings[0]).toBeTruthy()
-    expect(warnings[1]).toBeTruthy()
-    expect(warnings[2]).toBeTruthy()
-    expect(warnings[3]).toBeTruthy()
+    expect(warnings).toHaveLength(10)
+    warnings.forEach((w) => expect(w).toBeTruthy())
   })
 
   it('should match snapshot', () => {

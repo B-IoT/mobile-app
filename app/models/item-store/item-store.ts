@@ -12,10 +12,16 @@ export enum GetItemResult {
 }
 
 export enum DataType {
+  ITEM_ID,
   CATEGORY,
   BRAND,
   MODEL,
   SUPPLIER,
+  ORIGIN,
+  LOCATION,
+  ROOM,
+  CONTACT,
+  OWNER
 }
 
 export const ItemStoreModel = types
