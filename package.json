@@ -84,6 +84,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-react-native": "3.10.0",
     "expo-detox-hook": "1.0.10",
     "jest": "25.5.4",
@@ -182,12 +183,14 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:react/recommended",
       "plugin:react-native/all",
+      "plugin:react-hooks/recommended",
       "standard"
     ],
     "plugins": [
       "@typescript-eslint",
       "react",
-      "react-native"
+      "react-native",
+      "react-hooks"
     ],
     "parserOptions": {
       "ecmaFeatures": {
