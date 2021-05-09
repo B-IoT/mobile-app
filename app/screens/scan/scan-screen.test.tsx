@@ -13,6 +13,8 @@ import renderer from 'react-test-renderer'
 import { render } from '@testing-library/react-native'
 import { translate } from '../../i18n'
 
+jest.useFakeTimers()
+
 describe('Scan screen', () => {
   function buildScanScreen() {
     const itemStore = ItemStoreModel.create()

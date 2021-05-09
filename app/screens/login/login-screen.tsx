@@ -7,7 +7,8 @@ import { useStores } from '../../models'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { AsyncButton } from '../../components/async-button/async-button'
-import isEmpty from '../../utils/function-utils/function-utils'
+import { isEmpty } from '../../utils/function-utils/function-utils'
+import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '..'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -57,9 +58,9 @@ const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
 
-const TIMEOUT = 2000 // milliseconds
-const LOGIN_TIMEOUT = 1000
-
+/**
+ * Login screen.
+ */
 export const LoginScreen = observer(function LoginScreen() {
   const { itemStore } = useStores()
 
@@ -140,12 +141,12 @@ export const LoginScreen = observer(function LoginScreen() {
 
           if (emptyEmail) {
             setEmailStatus('danger')
-            setTimeout(() => setEmailStatus('basic'), TIMEOUT)
+            setTimeout(() => setEmailStatus('basic'), ERROR_TIMEOUT)
           }
 
           if (emptyPassword) {
             setPasswordStatus('danger')
-            setTimeout(() => setPasswordStatus('basic'), TIMEOUT)
+            setTimeout(() => setPasswordStatus('basic'), ERROR_TIMEOUT)
           }
 
           if (!emptyEmail && !emptyPassword) {
@@ -155,10 +156,10 @@ export const LoginScreen = observer(function LoginScreen() {
             if (!isSuccessful) {
               setSuccess(false)
               itemStore.setAuthenticated(false)
-              setTimeout(() => setSuccess(undefined), TIMEOUT)
+              setTimeout(() => setSuccess(undefined), ERROR_TIMEOUT)
             } else {
               setSuccess(true)
-              setTimeout(() => itemStore.setAuthenticated(true), LOGIN_TIMEOUT)
+              setTimeout(() => itemStore.setAuthenticated(true), OPERATION_TIMEOUT)
             }
           }
         }}

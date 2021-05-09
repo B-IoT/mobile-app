@@ -1,37 +1,48 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle } from 'react-native'
-import { Screen } from '../../components'
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "../../models"
-import { color } from '../../theme'
-import { Button, Text } from '@ui-kitten/components'
-import { useNavigation } from '@react-navigation/native'
+import { ItemScreen } from '../../components'
+import { useStores } from '../../models'
+import { translate } from '../../i18n'
 
-const ROOT: ViewStyle = {
-  backgroundColor: color.palette.black,
-  flex: 1,
+const strings = {
+  update: translate('infoScreen.update'),
+  title: translate('infoScreen.title'),
 }
 
+/**
+ * Screen that allows to see an item's information and update it.
+ */
 export const InfoScreen = observer(function InfoScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { itemStore } = useStores()
 
-  // Pull in navigation via hook
-  const navigation = useNavigation()
+  const {
+    itemID,
+    category,
+    brand,
+    model,
+    supplier,
+    originLocation,
+    currentLocation,
+    room,
+    contact,
+    owner
+  } = itemStore.item
+
   return (
-    <Screen style={ROOT} preset="scroll">
-      <Text>Info</Text>
-      <Button
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'scan' }],
-          })
-        }
-      >
-        Back
-      </Button>
-    </Screen>
+    <ItemScreen
+      asyncOperation={itemStore.updateItem}
+      initialItemID={itemID}
+      initialCategory={category}
+      initialBrand={brand}
+      initialModel={model}
+      initialSupplier={supplier}
+      initialOriginLocation={originLocation}
+      initialCurrentLocation={currentLocation}
+      initialRoom={room}
+      initialContact={contact}
+      initialOwner={owner}
+      buttonText={strings.update}
+      title={strings.title}
+    />
   )
 })

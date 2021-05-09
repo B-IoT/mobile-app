@@ -11,7 +11,7 @@ import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { GetItemResult } from '../../models/item-store/item-store'
 import { resetAndNavigateTo } from '../../navigators'
-import { InfoPopup } from './info-popup'
+import { InfoPopup } from './info-popup/info-popup'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -80,6 +80,9 @@ const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} na
 
 const TIMEOUT = 2000
 
+/**
+ * Screen that displays a QR code scanner.
+ */
 export const ScanScreen = observer(function ScanScreen() {
   const windowHeight = useWindowDimensions().height
 

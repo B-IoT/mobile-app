@@ -2,9 +2,9 @@ import React from 'react'
 import Constants from 'expo-constants'
 import { Button, Layout, Modal, Text } from '@ui-kitten/components'
 import { ViewStyle } from 'react-native'
-import { spacing } from '../../theme'
-import { translate } from '../../i18n'
-import { useStores } from '../../models'
+import { spacing } from '../../../theme'
+import { translate } from '../../../i18n'
+import { useStores } from '../../../models'
 import { InfoPopupProps } from './info-popup.props'
 
 const LAYOUT: ViewStyle = {
@@ -29,8 +29,8 @@ const VERSION: ViewStyle = {
 }
 
 const LOGOUT = translate('scanScreen.logout')
-const COPYRIGHT = 'Copyright © 2021 BIoT.'
-const ALL_RIGHTS_RESERVED = 'All Rights Reserved.'
+export const COPYRIGHT = 'Copyright © 2021 BIoT.'
+export const ALL_RIGHTS_RESERVED = 'All Rights Reserved.'
 
 /**
  * A popup component with logout button and app information.

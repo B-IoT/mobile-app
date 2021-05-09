@@ -1,4 +1,4 @@
-import isEmpty from './function-utils'
+import { isEmpty } from './function-utils'
 
 describe('Function utils', () => {
   it('should return true for non-empty string', () => {
@@ -7,5 +7,13 @@ describe('Function utils', () => {
 
   it('should return false for empty string', () => {
     expect(isEmpty('')).toBeTruthy()
+  })
+
+  it('should return false for undefined string', () => {
+    expect(isEmpty(undefined)).toBeTruthy()
+  })
+
+  it('should return false for null string', () => {
+    expect(isEmpty(null)).toBeTruthy()
   })
 })

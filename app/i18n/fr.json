@@ -26,6 +26,8 @@
   "registerScreen": {
     "register": "Enregistrer",
     "title": "Enregister un objet",
+    "itemID": "ID de l'objet",
+    "itemIDPlaceholder": "Entre l'ID de l'objet",
     "category": "Catégorie",
     "categoryPlaceholder": "Entre la catégorie",
     "brand": "Marque",
@@ -33,6 +35,20 @@
     "model": "Modèle",
     "modelPlaceholder": "Entre le modèle",
     "supplier": "Fournisseur",
-    "supplierPlaceholder": "Entre le fournisseur"
+    "supplierPlaceholder": "Entre le fournisseur",
+    "originLocation": "Lieu d'origine",
+    "originLocationPlaceholder": "Entre le lieu d'origine",
+    "currentLocation": "Lieu actuel",
+    "currentLocationPlaceholder": "Entre le lieu actuel",
+    "room": "Chambre/pièce",
+    "roomPlaceholder": "Entre la pièce",
+    "contact": "Personne de contact",
+    "contactPlaceholder": "Entre la personne de contact",
+    "owner": "Proprietaire",
+    "ownerPlaceholder": "Entre le proprietaire"
+  },
+  "infoScreen": {
+    "update": "Mettre à jour",
+    "title": "Mettre à jour un objet"
   }
 }

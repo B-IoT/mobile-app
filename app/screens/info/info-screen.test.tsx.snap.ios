@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Register screen should match snapshot 1`] = `
+exports[`Info screen should match snapshot 1`] = `
 <RNCSafeAreaProvider
   onInsetsChange={[Function]}
   style={
@@ -26,6 +26,112 @@ exports[`Register screen should match snapshot 1`] = `
         }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": Object {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "marginHorizontal": 16,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  info
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
       <View
         onLayout={[Function]}
         style={
@@ -83,34 +189,30 @@ exports[`Register screen should match snapshot 1`] = `
             transitionSpec={
               Object {
                 "close": Object {
-                  "animation": "timing",
+                  "animation": "spring",
                   "config": Object {
-                    "duration": 150,
-                    "easing": [Function],
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
                   },
                 },
                 "open": Object {
-                  "animation": "timing",
+                  "animation": "spring",
                   "config": Object {
-                    "duration": 350,
-                    "easing": [Function],
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
                   },
                 },
               }
             }
           >
-            <View
-              pointerEvents="box-none"
-              style={
-                Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            />
             <View
               needsOffscreenAlphaCompositing={false}
               pointerEvents="box-none"
@@ -128,15 +230,37 @@ exports[`Register screen should match snapshot 1`] = `
                 style={
                   Object {
                     "flex": 1,
-                    "opacity": 1,
                     "transform": Array [
                       Object {
-                        "translateY": 0,
+                        "translateX": 0,
+                      },
+                      Object {
+                        "translateX": 0,
                       },
                     ],
                   }
                 }
               >
+                <View
+                  pointerEvents="none"
+                  style={
+                    Object {
+                      "backgroundColor": "rgb(242, 242, 242)",
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "shadowColor": "#000",
+                      "shadowOffset": Object {
+                        "height": 1,
+                        "width": -1,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 5,
+                      "top": 0,
+                      "width": 3,
+                    }
+                  }
+                />
                 <View
                   style={
                     Array [
@@ -172,12 +296,17 @@ exports[`Register screen should match snapshot 1`] = `
                         onLayout={[Function]}
                         style={
                           Array [
+                            Array [
+                              Object {
+                                "backgroundColor": "#ffffff",
+                                "flex": 1,
+                                "height": "100%",
+                              },
+                              Object {},
+                            ],
                             Object {
-                              "backgroundColor": "#ffffff",
-                              "flex": 1,
-                              "height": "100%",
+                              "paddingBottom": 0,
                             },
-                            Object {},
                           ]
                         }
                       >
@@ -313,7 +442,7 @@ exports[`Register screen should match snapshot 1`] = `
                                           fill={
                                             Array [
                                               0,
-                                              -14537915,
+                                              4280429381,
                                             ]
                                           }
                                           fillOpacity={1}
@@ -358,7 +487,7 @@ exports[`Register screen should match snapshot 1`] = `
                                             fill={
                                               Array [
                                                 0,
-                                                -16777216,
+                                                4278190080,
                                               ]
                                             }
                                             fillOpacity={1}
@@ -399,7 +528,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               fill={
                                                 Array [
                                                   0,
-                                                  -16777216,
+                                                  4278190080,
                                                 ]
                                               }
                                               fillOpacity={1}
@@ -440,7 +569,7 @@ exports[`Register screen should match snapshot 1`] = `
                                                 fill={
                                                   Array [
                                                     0,
-                                                    -16777216,
+                                                    4278190080,
                                                   ]
                                                 }
                                                 fillOpacity={1}
@@ -483,7 +612,7 @@ exports[`Register screen should match snapshot 1`] = `
                                                 fill={
                                                   Array [
                                                     0,
-                                                    -16777216,
+                                                    4278190080,
                                                   ]
                                                 }
                                                 fillOpacity={1}
@@ -548,7 +677,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Register an item
+                                    Update an item
                                   </Text>
                                 </View>
                                 <View
@@ -688,10 +817,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -802,16 +928,282 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
                                         underlineColorAndroid="transparent"
-                                        value=""
+                                        value="Lit"
                                       />
+                                      <View
+                                        style={
+                                          Object {
+                                            "transform": Array [
+                                              Object {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          }
+                                        }
+                                      >
+                                        <RNSVGSvgView
+                                          accessible={true}
+                                          align="xMidYMid"
+                                          bbHeight={24}
+                                          bbWidth={24}
+                                          fill="#8F9BB3"
+                                          focusable={true}
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          onClick={[Function]}
+                                          onResponderGrant={[Function]}
+                                          onResponderMove={[Function]}
+                                          onResponderRelease={[Function]}
+                                          onResponderTerminate={[Function]}
+                                          onResponderTerminationRequest={[Function]}
+                                          onStartShouldSetResponder={[Function]}
+                                          responsible={true}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              Object {
+                                                "height": 24,
+                                                "marginHorizontal": 8,
+                                                "tintColor": "#8F9BB3",
+                                                "width": 24,
+                                              },
+                                              Object {
+                                                "opacity": 1,
+                                              },
+                                              Object {
+                                                "flex": 0,
+                                                "height": 24,
+                                                "width": 24,
+                                              },
+                                            ]
+                                          }
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                        >
+                                          <RNSVGGroup
+                                            fill={
+                                              Array [
+                                                0,
+                                                4287601587,
+                                              ]
+                                            }
+                                            fillOpacity={1}
+                                            fillRule={1}
+                                            font={Object {}}
+                                            matrix={
+                                              Array [
+                                                1,
+                                                0,
+                                                0,
+                                                1,
+                                                0,
+                                                0,
+                                              ]
+                                            }
+                                            opacity={1}
+                                            originX={0}
+                                            originY={0}
+                                            propList={
+                                              Array [
+                                                "fill",
+                                              ]
+                                            }
+                                            rotation={0}
+                                            scaleX={1}
+                                            scaleY={1}
+                                            skewX={0}
+                                            skewY={0}
+                                            stroke={null}
+                                            strokeDasharray={null}
+                                            strokeDashoffset={null}
+                                            strokeLinecap={0}
+                                            strokeLinejoin={0}
+                                            strokeMiterlimit={4}
+                                            strokeOpacity={1}
+                                            strokeWidth={1}
+                                            vectorEffect={0}
+                                            x={0}
+                                            y={0}
+                                          >
+                                            <RNSVGGroup
+                                              fill={
+                                                Array [
+                                                  0,
+                                                  4278190080,
+                                                ]
+                                              }
+                                              fillOpacity={1}
+                                              fillRule={1}
+                                              font={Object {}}
+                                              matrix={
+                                                Array [
+                                                  1,
+                                                  0,
+                                                  0,
+                                                  1,
+                                                  0,
+                                                  0,
+                                                ]
+                                              }
+                                              opacity={1}
+                                              originX={0}
+                                              originY={0}
+                                              propList={Array []}
+                                              rotation={0}
+                                              scaleX={1}
+                                              scaleY={1}
+                                              skewX={0}
+                                              skewY={0}
+                                              stroke={null}
+                                              strokeDasharray={null}
+                                              strokeDashoffset={null}
+                                              strokeLinecap={0}
+                                              strokeLinejoin={0}
+                                              strokeMiterlimit={4}
+                                              strokeOpacity={1}
+                                              strokeWidth={1}
+                                              vectorEffect={0}
+                                              x={0}
+                                              y={0}
+                                            >
+                                              <RNSVGGroup
+                                                fill={
+                                                  Array [
+                                                    0,
+                                                    4278190080,
+                                                  ]
+                                                }
+                                                fillOpacity={1}
+                                                fillRule={1}
+                                                font={Object {}}
+                                                matrix={
+                                                  Array [
+                                                    1,
+                                                    0,
+                                                    0,
+                                                    1,
+                                                    0,
+                                                    0,
+                                                  ]
+                                                }
+                                                opacity={1}
+                                                originX={0}
+                                                originY={0}
+                                                propList={Array []}
+                                                rotation={0}
+                                                scaleX={1}
+                                                scaleY={1}
+                                                skewX={0}
+                                                skewY={0}
+                                                stroke={null}
+                                                strokeDasharray={null}
+                                                strokeDashoffset={null}
+                                                strokeLinecap={0}
+                                                strokeLinejoin={0}
+                                                strokeMiterlimit={4}
+                                                strokeOpacity={1}
+                                                strokeWidth={1}
+                                                vectorEffect={0}
+                                                x={0}
+                                                y={0}
+                                              >
+                                                <RNSVGRect
+                                                  fill={
+                                                    Array [
+                                                      0,
+                                                      4278190080,
+                                                    ]
+                                                  }
+                                                  fillOpacity={1}
+                                                  fillRule={1}
+                                                  height="24"
+                                                  matrix={
+                                                    Array [
+                                                      -1,
+                                                      1.2246467991473532e-16,
+                                                      -1.2246467991473532e-16,
+                                                      -1,
+                                                      24,
+                                                      24,
+                                                    ]
+                                                  }
+                                                  opacity={0}
+                                                  originX={0}
+                                                  originY={0}
+                                                  propList={Array []}
+                                                  rotation={0}
+                                                  scaleX={1}
+                                                  scaleY={1}
+                                                  skewX={0}
+                                                  skewY={0}
+                                                  stroke={null}
+                                                  strokeDasharray={null}
+                                                  strokeDashoffset={null}
+                                                  strokeLinecap={0}
+                                                  strokeLinejoin={0}
+                                                  strokeMiterlimit={4}
+                                                  strokeOpacity={1}
+                                                  strokeWidth={1}
+                                                  vectorEffect={0}
+                                                  width="24"
+                                                  x={0}
+                                                  y={0}
+                                                />
+                                                <RNSVGPath
+                                                  d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"
+                                                  fill={
+                                                    Array [
+                                                      0,
+                                                      4278190080,
+                                                    ]
+                                                  }
+                                                  fillOpacity={1}
+                                                  fillRule={1}
+                                                  matrix={
+                                                    Array [
+                                                      1,
+                                                      0,
+                                                      0,
+                                                      1,
+                                                      0,
+                                                      0,
+                                                    ]
+                                                  }
+                                                  opacity={1}
+                                                  originX={0}
+                                                  originY={0}
+                                                  propList={Array []}
+                                                  rotation={0}
+                                                  scaleX={1}
+                                                  scaleY={1}
+                                                  skewX={0}
+                                                  skewY={0}
+                                                  stroke={null}
+                                                  strokeDasharray={null}
+                                                  strokeDashoffset={null}
+                                                  strokeLinecap={0}
+                                                  strokeLinejoin={0}
+                                                  strokeMiterlimit={4}
+                                                  strokeOpacity={1}
+                                                  strokeWidth={1}
+                                                  vectorEffect={0}
+                                                  x={0}
+                                                  y={0}
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
                                     </View>
                                     <View
                                       style={
@@ -916,10 +1308,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1030,10 +1419,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1144,10 +1530,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1258,10 +1641,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1372,10 +1752,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1486,10 +1863,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1600,10 +1974,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1714,10 +2085,7 @@ exports[`Register screen should match snapshot 1`] = `
                                               "flexGrow": 1,
                                               "flexShrink": 1,
                                             },
-                                            Object {
-                                              "marginVertical": -2,
-                                              "paddingVertical": 0,
-                                            },
+                                            null,
                                             undefined,
                                           ]
                                         }
@@ -1789,109 +2157,12 @@ exports[`Register screen should match snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Register
+                                    Update
                                   </Text>
                                 </View>
                               </View>
                             </View>
                           </RCTScrollView>
-                        </View>
-                      </View>
-                    </View>
-                    <View
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
-                        onLayout={[Function]}
-                        pointerEvents="box-none"
-                        style={null}
-                      >
-                        <View
-                          pointerEvents="box-none"
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                              "zIndex": 0,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              Object {
-                                "backgroundColor": "rgb(255, 255, 255)",
-                                "borderBottomColor": "rgb(216, 216, 216)",
-                                "elevation": 4,
-                                "flex": 1,
-                                "shadowColor": "rgb(216, 216, 216)",
-                              }
-                            }
-                          />
-                        </View>
-                        <View
-                          pointerEvents="box-none"
-                          style={
-                            Object {
-                              "height": 56,
-                              "maxHeight": undefined,
-                              "minHeight": undefined,
-                              "opacity": undefined,
-                              "transform": undefined,
-                            }
-                          }
-                        >
-                          <View
-                            pointerEvents="none"
-                            style={
-                              Object {
-                                "height": 0,
-                              }
-                            }
-                          />
-                          <View
-                            pointerEvents="box-none"
-                            style={
-                              Object {
-                                "alignItems": "center",
-                                "flex": 1,
-                                "flexDirection": "row",
-                                "justifyContent": "center",
-                              }
-                            }
-                          >
-                            <View
-                              pointerEvents="box-none"
-                              style={
-                                Object {
-                                  "left": 16,
-                                  "position": "absolute",
-                                  "right": 16,
-                                }
-                              }
-                            >
-                              <Text
-                                accessibilityRole="header"
-                                aria-level="1"
-                                numberOfLines={1}
-                                onLayout={[Function]}
-                                style={
-                                  Object {
-                                    "color": "rgb(28, 28, 30)",
-                                    "fontFamily": "sans-serif-medium",
-                                    "fontSize": 20,
-                                    "fontWeight": "normal",
-                                  }
-                                }
-                              >
-                                register
-                              </Text>
-                            </View>
-                          </View>
                         </View>
                       </View>
                     </View>
