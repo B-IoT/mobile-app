@@ -61,6 +61,7 @@ exports[`Login screen should match snapshot 1`] = `
               },
             ]
           }
+          keyboardShouldPersistTaps="handled"
           style={
             Array [
               Object {

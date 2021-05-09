@@ -125,6 +125,13 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.owner'))).toBeTruthy()
   })
 
+  it('should show the purchase date picker', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
+  })
+
   it('should show the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)

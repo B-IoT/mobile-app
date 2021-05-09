@@ -50,6 +50,7 @@ exports[`Screen component should match snapshot with scroll 1`] = `
             Object {},
           ]
         }
+        keyboardShouldPersistTaps="handled"
         style={
           Array [
             Object {

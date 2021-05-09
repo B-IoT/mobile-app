@@ -45,7 +45,9 @@
     "contact": "Contact (person)",
     "contactPlaceholder": "Enter the contact",
     "owner": "Owner",
-    "ownerPlaceholder": "Enter the owner"
+    "ownerPlaceholder": "Enter the owner",
+    "purchaseDate": "Purchase date",
+    "purchaseDatePlaceholder": "Enter the purchase date"
   },
   "infoScreen": {
     "update": "Update",

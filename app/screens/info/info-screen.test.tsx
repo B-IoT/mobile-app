@@ -142,6 +142,13 @@ describe('Info screen', () => {
     // expect(component.queryByText(initialItem.owner)).toBeTruthy()
   })
 
+  it('should show the purchase date picker', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
+  })
+
   it('should show the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)

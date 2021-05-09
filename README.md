@@ -1,4 +1,4 @@
-# BIoT mobile app
+# BioT mobile app
 
 [![CircleCI](https://circleci.com/gh/B-IoT/mobile-app.svg?style=svg&circle-token=b35bec0e14f0006328c68b47829a5fa53efec6dc)](https://app.circleci.com/pipelines/github/B-IoT) [![codecov](https://codecov.io/gh/B-IoT/mobile-app/branch/main/graph/badge.svg?token=jI0TLUXYqG)](https://codecov.io/gh/B-IoT/mobile-app)
 

@@ -4,7 +4,14 @@ import { ViewStyle } from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
-import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from '@ui-kitten/components'
+import {
+  Datepicker,
+  Divider,
+  Icon,
+  Layout,
+  TopNavigation,
+  TopNavigationAction,
+} from '@ui-kitten/components'
 import { AsyncButton } from '../../components/async-button/async-button'
 import { translate } from '../../i18n'
 import { resetAndNavigateTo } from '../../navigators'
@@ -65,6 +72,8 @@ const strings = {
   contactPlaceholder: translate('registerScreen.contactPlaceholder'),
   owner: translate('registerScreen.owner'),
   ownerPlaceholder: translate('registerScreen.ownerPlaceholder'),
+  purchaseDate: translate('registerScreen.purchaseDate'),
+  purchaseDatePlaceholder: translate('registerScreen.purchaseDatePlaceholder'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
@@ -87,6 +96,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialRoom,
     initialContact,
     initialOwner,
+    initialPurchaseDate,
     buttonText,
     title,
   } = props
@@ -115,6 +125,9 @@ export function ItemScreen(props: ItemScreenProps) {
   const [contactStatus, setContactStatus] = useState<AutocompleteStatus>('basic')
   const [owner, setOwner] = useState(initialOwner ? initialOwner : '')
   const [ownerStatus, setOwnerStatus] = useState<AutocompleteStatus>('basic')
+  const [purchaseDate, setPurchaseDate] = useState(
+    initialPurchaseDate ? initialPurchaseDate : new Date(),
+  )
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
@@ -238,6 +251,12 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.OWNER}
           value={owner}
           setValue={setOwner}
+        />
+        <Datepicker
+          date={purchaseDate}
+          onSelect={setPurchaseDate}
+          label={strings.purchaseDate}
+          placeholder={strings.purchaseDatePlaceholder}
         />
         <AsyncButton
           style={BUTTON}

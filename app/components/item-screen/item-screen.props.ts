@@ -57,6 +57,11 @@ export interface ItemScreenProps {
   initialOwner?: string
 
   /**
+   * The initial purchase date value. If not specified, defaults to today.
+   */
+   initialPurchaseDate?: Date
+
+  /**
    * The text displayed by the button
    */
   buttonText: string

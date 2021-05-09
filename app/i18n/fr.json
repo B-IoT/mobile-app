@@ -45,7 +45,9 @@
     "contact": "Personne de contact",
     "contactPlaceholder": "Entre la personne de contact",
     "owner": "Proprietaire",
-    "ownerPlaceholder": "Entre le proprietaire"
+    "ownerPlaceholder": "Entre le proprietaire",
+    "purchaseDate": "Date d'achat",
+    "purchaseDatePlaceholder": "Entre la date d'achat"
   },
   "infoScreen": {
     "update": "Mettre à jour",
