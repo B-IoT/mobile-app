@@ -35,7 +35,7 @@
     "@ui-kitten/eva-icons": "^5.0.0",
     "@unimodules/core": "6.0.0",
     "apisauce": "2.0.0",
-    "expo": "40.0.1",
+    "expo": "41.0.1",
     "expo-barcode-scanner": "~9.1.0",
     "expo-constants": "~9.3.3",
     "expo-localization": "9.1.0",
