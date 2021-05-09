@@ -5,7 +5,8 @@
     "back": "Back",
     "retry": "Retry",
     "error": "Error, try again!",
-    "shouldNotBeEmpty": "Should not be empty"
+    "shouldNotBeEmpty": "Should not be empty",
+    "shouldBeValidPrice": "Should be a number greater than zero"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -47,7 +48,9 @@
     "owner": "Owner",
     "ownerPlaceholder": "Enter the owner",
     "purchaseDate": "Purchase date",
-    "purchaseDatePlaceholder": "Enter the purchase date"
+    "purchaseDatePlaceholder": "Enter the purchase date",
+    "purchasePrice": "Purchase price (CHF)",
+    "purchasePricePlaceholder": "Enter the purchase price"
   },
   "infoScreen": {
     "update": "Update",

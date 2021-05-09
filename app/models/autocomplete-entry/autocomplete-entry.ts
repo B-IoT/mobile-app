@@ -9,7 +9,7 @@ export const AutocompleteEntryModel = types
   .actions((self) => ({
     /**
      * Returns true if the entry includes the given query in its name, false otherwise.
-     * 
+     *
      * @param query the potential substring
      * @returns true if the entry includes the given query in its name, false otherwise.
      */

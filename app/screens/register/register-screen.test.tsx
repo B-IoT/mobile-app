@@ -132,6 +132,13 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
   })
 
+  it('should show the purchase price input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+  })
+
   it('should show the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
@@ -173,6 +180,9 @@ describe('Register screen', () => {
     const ownerInput = component.queryByText(translate('registerScreen.owner'))
     fireEvent.changeText(ownerInput, 'owner')
 
+    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    fireEvent.changeText(purchasePriceInput, '25')
+
     const registerItemButton = component.queryByText(translate('registerScreen.register'))
     fireEvent.press(registerItemButton)
 
@@ -181,7 +191,7 @@ describe('Register screen', () => {
     expect(mockRegisterItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
   })
 
-  it('should show ten warnings when registering an item with empty fields', () => {
+  it('should show warnings when registering an item with empty fields', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
@@ -189,8 +199,11 @@ describe('Register screen', () => {
     fireEvent.press(registerItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
+    const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
+
     expect(warnings).toHaveLength(10)
     warnings.forEach((w) => expect(w).toBeTruthy())
+    expect(priceWarning).toBeTruthy()
   })
 
   it('should match snapshot', () => {

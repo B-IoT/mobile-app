@@ -48,7 +48,7 @@ const INPUT: ViewStyle = {
 }
 
 const BUTTON: ViewStyle = {
-  marginTop: spacing[8],
+  marginTop: spacing[6],
 }
 
 const strings = {
@@ -74,6 +74,9 @@ const strings = {
   ownerPlaceholder: translate('registerScreen.ownerPlaceholder'),
   purchaseDate: translate('registerScreen.purchaseDate'),
   purchaseDatePlaceholder: translate('registerScreen.purchaseDatePlaceholder'),
+  purchasePrice: translate('registerScreen.purchasePrice'),
+  purchasePricePlaceholder: translate('registerScreen.purchasePricePlaceholder'),
+  shouldBeValidPrice: translate('common.shouldBeValidPrice'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
 
@@ -97,6 +100,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialContact,
     initialOwner,
     initialPurchaseDate,
+    initialPurchasePrice,
     buttonText,
     title,
   } = props
@@ -128,6 +132,10 @@ export function ItemScreen(props: ItemScreenProps) {
   const [purchaseDate, setPurchaseDate] = useState(
     initialPurchaseDate ? initialPurchaseDate : new Date(),
   )
+  const [purchasePrice, setPurchasePrice] = useState(
+    initialPurchasePrice ? initialPurchasePrice.toString() : '',
+  )
+  const [purchasePriceStatus, setPurchasePriceStatus] = useState<AutocompleteStatus>('basic')
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
@@ -253,10 +261,22 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setOwner}
         />
         <Datepicker
+          style={INPUT}
           date={purchaseDate}
           onSelect={setPurchaseDate}
           label={strings.purchaseDate}
           placeholder={strings.purchaseDatePlaceholder}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.purchasePrice}
+          status={purchasePriceStatus}
+          placeholder={strings.purchasePricePlaceholder}
+          errorCaption={strings.shouldBeValidPrice}
+          dataType={DataType.PRICE}
+          keyboardType="number-pad"
+          value={purchasePrice}
+          setValue={setPurchasePrice}
         />
         <AsyncButton
           style={BUTTON}
@@ -275,13 +295,14 @@ export function ItemScreen(props: ItemScreenProps) {
               [isEmpty(currentLocation), setCurrentLocationStatus],
               [isEmpty(room), setRoomStatus],
               [isEmpty(contact), setContactStatus],
-              [isEmpty(owner), setOwnerStatus]
+              [isEmpty(owner), setOwnerStatus],
+              [isEmpty(purchasePrice) || !Number(purchasePrice) || Number(purchasePrice) <= 0, setPurchasePriceStatus]
             ]
 
-            const noErrors = statusSetters.reduce((noErrors, [currEmpty, currSetter]) => {
+            const noErrors = statusSetters.reduce((noErrors, [isInvalid, currSetter]) => {
               // Show error if empty
-              currEmpty && showError(currSetter)
-              return noErrors && !currEmpty
+              isInvalid && showError(currSetter)
+              return noErrors && !isInvalid
             }, true)
 
             if (noErrors) {
@@ -305,6 +326,7 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.ROOM, room],
                   [DataType.CONTACT, contact],
                   [DataType.OWNER, owner],
+                  [DataType.PRICE, purchasePrice],
                 ]
                 newAutocompleteEntries.forEach(([dataType, entry]) =>
                   itemStore.addAutocompleteEntryData(dataType, entry),

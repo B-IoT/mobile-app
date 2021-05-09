@@ -26,7 +26,8 @@ export const InfoScreen = observer(function InfoScreen() {
     room,
     contact,
     owner,
-    purchaseDate
+    purchaseDate,
+    purchasePrice,
   } = itemStore.item
 
   return (
@@ -43,6 +44,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialContact={contact}
       initialOwner={owner}
       initialPurchaseDate={purchaseDate}
+      initialPurchasePrice={purchasePrice}
       buttonText={strings.update}
       title={strings.title}
     />

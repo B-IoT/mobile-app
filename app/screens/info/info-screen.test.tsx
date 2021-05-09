@@ -149,6 +149,13 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
   })
 
+  it('should show the purchase price input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+  })
+
   it('should show the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -190,6 +197,9 @@ describe('Info screen', () => {
     const ownerInput = component.queryByText(translate('registerScreen.owner'))
     fireEvent.changeText(ownerInput, 'owner')
 
+    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    fireEvent.changeText(purchasePriceInput, '25')
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
@@ -198,7 +208,7 @@ describe('Info screen', () => {
     expect(mockUpdateItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
   })
 
-  it('should show ten warnings when updating an item with empty fields', () => {
+  it('should show warnings when updating an item with empty fields', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
@@ -232,12 +242,18 @@ describe('Info screen', () => {
     const ownerInput = component.queryByText(translate('registerScreen.owner'))
     fireEvent.changeText(ownerInput, '')
 
+    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    fireEvent.changeText(purchasePriceInput, '')
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
+    const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
+
     expect(warnings).toHaveLength(10)
     warnings.forEach((w) => expect(w).toBeTruthy())
+    expect(priceWarning).toBeTruthy()
   })
 
   it('should match snapshot', () => {
