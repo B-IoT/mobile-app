@@ -132,7 +132,7 @@ exports[`Register screen should match snapshot 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -140,7 +140,9 @@ exports[`Register screen should match snapshot 1`] = `
           }
         }
       >
-        <View
+        <RNSScreen
+          activityState={2}
+          forwardedRef={[Function]}
           pointerEvents="box-none"
           style={
             Object {
@@ -656,7 +658,14 @@ exports[`Register screen should match snapshot 1`] = `
                                     </View>
                                   </View>
                                 </View>
-                                <View>
+                                <View
+                                  style={
+                                    Object {
+                                      "flex": 1,
+                                      "flexDirection": "row",
+                                    }
+                                  }
+                                >
                                   <Text
                                     appearance="default"
                                     category="p1"
@@ -689,7 +698,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         "zIndex": 1,
                                       },
                                       Object {
-                                        "flex": 1,
+                                        "flex": 0,
                                         "justifyContent": "flex-end",
                                       },
                                     ]
@@ -734,9 +743,19 @@ exports[`Register screen should match snapshot 1`] = `
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -791,6 +810,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -826,28 +846,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -902,6 +919,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -937,28 +955,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1013,6 +1028,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1048,28 +1064,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1124,6 +1137,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1159,28 +1173,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1235,6 +1246,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1270,28 +1282,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1346,6 +1355,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1381,28 +1391,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1457,6 +1464,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1492,28 +1500,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1568,6 +1573,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1603,28 +1609,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1679,6 +1682,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1714,28 +1718,25 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -1790,6 +1791,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
@@ -1825,19 +1827,6 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
@@ -1929,27 +1918,24 @@ exports[`Register screen should match snapshot 1`] = `
                                       09/05/2021
                                     </Text>
                                   </View>
-                                  <View
-                                    style={
-                                      Array [
-                                        Object {
-                                          "marginTop": undefined,
-                                        },
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        },
-                                      ]
-                                    }
-                                  />
                                 </View>
                                 <View
                                   onLayout={[Function]}
                                 >
                                   <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
                                       Object {
                                         "marginVertical": 12,
+                                        "opacity": 1,
                                       }
                                     }
                                   >
@@ -2004,6 +1990,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
+                                        captionIcon={null}
                                         editable={true}
                                         keyboardType="number-pad"
                                         onBlur={[Function]}
@@ -2040,19 +2027,6 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
-                                    <View
-                                      style={
-                                        Array [
-                                          Object {
-                                            "marginTop": undefined,
-                                          },
-                                          Object {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                          },
-                                        ]
-                                      }
-                                    />
                                   </View>
                                 </View>
                                 <View
@@ -2118,8 +2092,8 @@ exports[`Register screen should match snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSScreen>
+      </RNSScreenContainer>
     </View>
   </View>
 </RNCSafeAreaProvider>

@@ -114,9 +114,19 @@ exports[`Login screen should match snapshot 1`] = `
               Sign in to continue!
             </Text>
             <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
                   "marginVertical": 12,
+                  "opacity": 1,
                 }
               }
             >
@@ -433,6 +443,7 @@ exports[`Login screen should match snapshot 1`] = `
                   appearance="default"
                   autoCapitalize="none"
                   autoCompleteType="email"
+                  captionIcon={null}
                   editable={true}
                   onBlur={[Function]}
                   onChangeText={[Function]}
@@ -469,24 +480,21 @@ exports[`Login screen should match snapshot 1`] = `
                   value=""
                 />
               </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "marginTop": undefined,
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                  ]
-                }
-              />
             </View>
             <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
                   "marginVertical": 12,
+                  "opacity": 1,
                 }
               }
             >
@@ -843,6 +851,7 @@ exports[`Login screen should match snapshot 1`] = `
                   allowFontScaling={true}
                   appearance="default"
                   autoCompleteType="password"
+                  captionIcon={null}
                   editable={true}
                   onBlur={[Function]}
                   onChangeText={[Function]}
@@ -1274,19 +1283,6 @@ exports[`Login screen should match snapshot 1`] = `
                   </RNSVGSvgView>
                 </View>
               </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "marginTop": undefined,
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                  ]
-                }
-              />
             </View>
             <View
               accessible={true}
