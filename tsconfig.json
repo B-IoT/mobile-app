@@ -25,5 +25,6 @@
     "App.js",
     "app",
     "test"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }
