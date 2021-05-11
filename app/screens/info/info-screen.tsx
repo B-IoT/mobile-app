@@ -44,7 +44,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialContact={contact}
       initialOwner={owner}
       initialPurchaseDate={purchaseDate}
-      initialPurchasePrice={purchasePrice}
+      initialPurchasePrice={purchasePrice.toString()}
       buttonText={strings.update}
       title={strings.title}
     />

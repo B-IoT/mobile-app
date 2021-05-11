@@ -88,11 +88,11 @@ export const ItemStoreModel = types
     /**
      * Saves the given item in the store. It also saves the item's id.
      *
-     * @param itemSnapshot the item snapshot
+     * @param item the item snapshot
      */
-    saveItem: (itemSnapshot: ItemSnapshot) => {
-      self.item = itemSnapshot
-      self.itemId = itemSnapshot.id
+    saveItem: (item: Item) => {
+      self.item = item
+      self.itemId = item.id
     },
 
     /**
@@ -170,7 +170,7 @@ export const ItemStoreModel = types
       self.environment.api.setAuthToken(self.authToken)
 
       const itemApi = new ItemApi(self.environment.api)
-      const result = yield itemApi.registerItem(item)
+      const result = yield itemApi.registerItem({ ...item, id: self.itemId })
 
       if (result.kind === 'ok') {
         self.saveItem(result.item)
@@ -192,7 +192,7 @@ export const ItemStoreModel = types
       self.environment.api.setAuthToken(self.authToken)
 
       const itemApi = new ItemApi(self.environment.api)
-      const result = yield itemApi.updateItem(item)
+      const result = yield itemApi.updateItem({ ...self.item, ...item })
 
       if (result.kind === 'ok') {
         self.saveItem(item)

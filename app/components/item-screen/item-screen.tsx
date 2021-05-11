@@ -307,7 +307,23 @@ export function ItemScreen(props: ItemScreenProps) {
 
             if (noErrors) {
               setExecuting(true)
-              const item: Item = {} // TODO:
+              const item: Item = {
+                id: null,
+                beacon: null,
+                service: null,
+                itemID,
+                category,
+                brand,
+                model,
+                supplier,
+                originLocation,
+                currentLocation,
+                room,
+                contact,
+                owner,
+                purchaseDate,
+                purchasePrice: Number(purchasePrice),
+              }
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
               if (!isSuccessful) {

@@ -38,6 +38,17 @@ export class ItemApi {
           beacon: rawItem.beacon,
           category: rawItem.category,
           service: rawItem.service,
+          itemID: rawItem.itemID,
+          brand: rawItem.brand,
+          model: rawItem.model,
+          supplier: rawItem.supplier,
+          originLocation: rawItem.originLocation,
+          currentLocation: rawItem.currentLocation,
+          room: rawItem.room,
+          contact: rawItem.contact,
+          owner: rawItem.owner,
+          purchaseDate: rawItem.purchaseDate,
+          purchasePrice: rawItem.purchasePrice,
         }
         return { kind: 'ok', item }
       } catch {
@@ -57,9 +68,12 @@ export class ItemApi {
    */
   async registerItem(item: Item): Promise<RegisterItemResult> {
     try {
+      const cleanItem: Item = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
+      // cleanItem.purchaseDate = `${cleanItem.purchaseDate.getFullYear()}-${cleanItem.purchaseDate.getMonth()}-${cleanItem.purchaseDate.getDate()}`
+      console.log(cleanItem)
       const response: ApiResponse<any> = await this.api.apisauce.post(
         `${this.api.config.url}/api/items`,
-        item,
+        cleanItem,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
@@ -85,9 +99,11 @@ export class ItemApi {
    */
   async updateItem(item: Item): Promise<UpdateItemResult> {
     try {
+      const cleanItem = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
+      console.log(cleanItem)
       const response: ApiResponse<any> = await this.api.apisauce.put(
         `${this.api.config.url}/api/items/${item.id}`,
-        item,
+        cleanItem,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
