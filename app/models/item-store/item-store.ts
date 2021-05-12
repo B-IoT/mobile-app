@@ -168,12 +168,13 @@ export const ItemStoreModel = types
     registerItem: flow(function* (item: Item) {
       // First we update the auth token with the one stored, which is not volatile
       self.environment.api.setAuthToken(self.authToken)
-
       const itemApi = new ItemApi(self.environment.api)
-      const result = yield itemApi.registerItem({ ...item, id: self.itemId })
+
+      const itemToRegister = { ...item, id: self.itemId }
+      const result = yield itemApi.registerItem(itemToRegister)
 
       if (result.kind === 'ok') {
-        self.saveItem(result.item)
+        self.saveItem(itemToRegister)
         return true
       } else {
         __DEV__ && console.log(`Register item failed, ${result.kind} error`)
@@ -190,12 +191,16 @@ export const ItemStoreModel = types
     updateItem: flow(function* (item: Item) {
       // First we update the auth token with the one stored, which is not volatile
       self.environment.api.setAuthToken(self.authToken)
-
       const itemApi = new ItemApi(self.environment.api)
-      const result = yield itemApi.updateItem({ ...self.item, ...item })
+
+      const itemWithoutNulls = Object.fromEntries(
+        Object.entries(item).filter(([_, v]) => v != null),
+      )
+      const updatedItem = { ...self.item, ...itemWithoutNulls }
+      const result = yield itemApi.updateItem(updatedItem)
 
       if (result.kind === 'ok') {
-        self.saveItem(item)
+        self.saveItem(updatedItem)
         return true
       } else {
         __DEV__ && console.log(`Update item failed, ${result.kind} error`)

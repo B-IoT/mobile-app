@@ -16,7 +16,7 @@ it('can be created', () => {
     contact: 'contact',
     owner: 'own',
     purchaseDate: new Date(),
-    purchasePrice: 42.3,
+    purchasePrice: '42.3',
   })
 
   expect(instance).toBeTruthy()

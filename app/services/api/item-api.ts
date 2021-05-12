@@ -19,18 +19,16 @@ export class ItemApi {
    */
   async getItem(id: number): Promise<GetItemResult> {
     try {
-      // make the api call
       const response: ApiResponse<any> = await this.api.apisauce.get(
         `${this.api.config.url}/api/items/${id}`,
       )
 
-      // the typical ways to die when calling an api
       if (!response.ok) {
         const problem = getGeneralApiProblem(response)
         if (problem) return problem
       }
 
-      // transform the data into the format we are expecting
+      // Transform the data into the format we are expecting
       try {
         const rawItem = response.data
         const item: Item = {
@@ -47,8 +45,8 @@ export class ItemApi {
           room: rawItem.room,
           contact: rawItem.contact,
           owner: rawItem.owner,
-          purchaseDate: rawItem.purchaseDate,
-          purchasePrice: rawItem.purchasePrice,
+          purchaseDate: new Date(rawItem.purchaseDate),
+          purchasePrice: rawItem.purchasePrice.toString(),
         }
         return { kind: 'ok', item }
       } catch {
@@ -68,12 +66,12 @@ export class ItemApi {
    */
   async registerItem(item: Item): Promise<RegisterItemResult> {
     try {
-      const cleanItem: Item = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
-      // cleanItem.purchaseDate = `${cleanItem.purchaseDate.getFullYear()}-${cleanItem.purchaseDate.getMonth()}-${cleanItem.purchaseDate.getDate()}`
-      console.log(cleanItem)
+      const itemCleaned = cleanItem(item)
+      console.log(itemCleaned)
+
       const response: ApiResponse<any> = await this.api.apisauce.post(
         `${this.api.config.url}/api/items`,
-        cleanItem,
+        itemCleaned,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
@@ -99,11 +97,11 @@ export class ItemApi {
    */
   async updateItem(item: Item): Promise<UpdateItemResult> {
     try {
-      const cleanItem = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
-      console.log(cleanItem)
+      const itemCleaned = cleanItem(item)
+      console.log(itemCleaned)
       const response: ApiResponse<any> = await this.api.apisauce.put(
         `${this.api.config.url}/api/items/${item.id}`,
-        cleanItem,
+        itemCleaned,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
@@ -118,4 +116,31 @@ export class ItemApi {
       return { kind: 'bad-data' }
     }
   }
+}
+
+/**
+ * Cleans the given item, removing null fields and formatting purchaseDate and purchasePrice.
+ *
+ * @param item the item to clean
+ * @returns the item cleaned
+ */
+function cleanItem(item: Item): Record<string, unknown> {
+  // Remove null fields
+  const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
+
+  if (clean.purchaseDate) {
+    // Extract date-only ISO string
+    clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
+  }
+
+  if (clean.purchasePrice) {
+    // Extract purchasePrice as float (was already validated before)
+    const purchasePrice = clean.purchasePrice
+
+    // Make sure that the price contains decimals (required by server)
+    const price = purchasePrice.includes('.') ? purchasePrice : `${purchasePrice}.00`
+    clean.purchasePrice = parseFloat(price)
+  }
+
+  return clean
 }

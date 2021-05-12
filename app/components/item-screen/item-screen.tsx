@@ -274,9 +274,9 @@ export function ItemScreen(props: ItemScreenProps) {
           placeholder={strings.purchasePricePlaceholder}
           errorCaption={strings.shouldBeValidPrice}
           dataType={DataType.PRICE}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           value={purchasePrice}
-          setValue={setPurchasePrice}
+          setValue={(val) => setPurchasePrice(val.replace(',', '.'))}
         />
         <AsyncButton
           style={BUTTON}
@@ -322,7 +322,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 contact,
                 owner,
                 purchaseDate,
-                purchasePrice: Number(purchasePrice),
+                purchasePrice: parseFloat(purchasePrice).toFixed(2),
               }
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
