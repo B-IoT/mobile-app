@@ -46,7 +46,7 @@ export class ItemApi {
           contact: rawItem.contact,
           owner: rawItem.owner,
           purchaseDate: new Date(rawItem.purchaseDate),
-          purchasePrice: rawItem.purchasePrice.toString(),
+          purchasePrice: rawItem.purchasePrice,
         }
         return { kind: 'ok', item }
       } catch {
@@ -67,8 +67,6 @@ export class ItemApi {
   async registerItem(item: Item): Promise<RegisterItemResult> {
     try {
       const itemCleaned = cleanItem(item)
-      console.log(itemCleaned)
-
       const response: ApiResponse<any> = await this.api.apisauce.post(
         `${this.api.config.url}/api/items`,
         itemCleaned,
@@ -98,7 +96,6 @@ export class ItemApi {
   async updateItem(item: Item): Promise<UpdateItemResult> {
     try {
       const itemCleaned = cleanItem(item)
-      console.log(itemCleaned)
       const response: ApiResponse<any> = await this.api.apisauce.put(
         `${this.api.config.url}/api/items/${item.id}`,
         itemCleaned,
@@ -124,7 +121,7 @@ export class ItemApi {
  * @param item the item to clean
  * @returns the item cleaned
  */
-function cleanItem(item: Item): Record<string, unknown> {
+export function cleanItem(item: Item): Record<string, unknown> {
   // Remove null fields
   const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
 
@@ -135,11 +132,7 @@ function cleanItem(item: Item): Record<string, unknown> {
 
   if (clean.purchasePrice) {
     // Extract purchasePrice as float (was already validated before)
-    const purchasePrice = clean.purchasePrice
-
-    // Make sure that the price contains decimals (required by server)
-    const price = purchasePrice.includes('.') ? purchasePrice : `${purchasePrice}.00`
-    clean.purchasePrice = parseFloat(price)
+    clean.purchasePrice = parseFloat(clean.purchasePrice)
   }
 
   return clean

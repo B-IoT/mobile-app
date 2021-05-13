@@ -10,10 +10,10 @@ jest.mock('../../services/api/item-api')
 jest.mock('../../services/api/api')
 
 describe('Item store', () => {
-  afterEach(() => jest.resetAllMocks())
+  let itemStore
 
-  it('can be created', () => {
-    const instance = ItemStoreModel.create({
+  beforeEach(() => {
+    itemStore = {
       isAuthenticated: false,
       itemId: 1,
       item: ItemModel.create({
@@ -21,27 +21,32 @@ describe('Item store', () => {
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
         service: 'Bloc 1',
+        itemID: 'id',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        owner: 'own',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
       }),
       authToken: 'token',
       autocompleteDataMap: {},
-    })
+    }
+  })
+  afterEach(() => jest.resetAllMocks())
+
+  it('can be created', () => {
+    const instance = ItemStoreModel.create(itemStore)
 
     expect(instance).toBeTruthy()
   })
 
   it('should return empty autocomplete data', () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     expect(instance.getAutocompleteData(DataType.BRAND)).toHaveLength(0)
   })
@@ -55,6 +60,17 @@ describe('Item store', () => {
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
         service: 'Bloc 1',
+        itemID: 'id',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        owner: 'own',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -81,18 +97,7 @@ describe('Item store', () => {
   })
 
   it('should add autocomplete entry data', () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     instance.addAutocompleteEntryData(DataType.BRAND, 'brand')
 
@@ -113,6 +118,17 @@ describe('Item store', () => {
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
         service: 'Bloc 1',
+        itemID: 'id',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        owner: 'own',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -139,6 +155,17 @@ describe('Item store', () => {
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
         service: 'Bloc 1',
+        itemID: 'id',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        owner: 'own',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -159,24 +186,24 @@ describe('Item store', () => {
   })
 
   it('should save an item', () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     const item = {
       id: 2,
-      beacon: 'ab:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
       service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
     instance.saveItem(item)
@@ -186,21 +213,7 @@ describe('Item store', () => {
   })
 
   it('should set the authentication token', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockSetAuthToken = jest.spyOn(Api.prototype, 'setAuthToken')
 
@@ -213,18 +226,7 @@ describe('Item store', () => {
   })
 
   it('should set isAuthenticated', () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     instance.setAuthenticated(true)
 
@@ -232,18 +234,7 @@ describe('Item store', () => {
   })
 
   it('should store credentials', async () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     save.mockResolvedValue(true)
 
@@ -254,18 +245,7 @@ describe('Item store', () => {
   })
 
   it('should remove credentials', async () => {
-    const instance = ItemStoreModel.create({
-      isAuthenticated: false,
-      itemId: 1,
-      item: ItemModel.create({
-        id: 1,
-        beacon: 'aa:aa:aa:aa:aa:aa',
-        category: 'Lit',
-        service: 'Bloc 1',
-      }),
-      authToken: 'token',
-      autocompleteDataMap: {},
-    })
+    const instance = ItemStoreModel.create(itemStore)
 
     reset.mockResolvedValue(true)
 
@@ -277,26 +257,23 @@ describe('Item store', () => {
   it('should get an item', async () => {
     const expectedItem = {
       id: 2,
-      beacon: 'bb:aa:aa:aa:aa:aa',
-      category: 'ECG',
-      service: 'Bloc 3',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockGetItem = jest.fn()
     mockGetItem.mockResolvedValue({ kind: 'ok', item: expectedItem })
@@ -312,21 +289,7 @@ describe('Item store', () => {
   })
 
   it('should return NOT_FOUND when getting a non-existent item', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockGetItem = jest.fn()
     mockGetItem.mockResolvedValue({ kind: 'not-found' })
@@ -342,21 +305,7 @@ describe('Item store', () => {
   })
 
   it('should fail getting an item', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockGetItem = jest.fn()
     mockGetItem.mockResolvedValue({ kind: 'server' })
@@ -372,26 +321,23 @@ describe('Item store', () => {
   it('should register an item', async () => {
     const expectedItem = {
       id: 2,
-      beacon: 'bb:aa:aa:aa:aa:aa',
-      category: 'ECG',
-      service: 'Bloc 3',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockRegisterItem = jest.fn()
     mockRegisterItem.mockResolvedValue({ kind: 'ok', item: expectedItem })
@@ -401,34 +347,33 @@ describe('Item store', () => {
 
     expect(result).toBeTruthy()
     expect(mockRegisterItem).toHaveBeenCalledTimes(1)
-    expect(mockRegisterItem).toHaveBeenCalledWith(expectedItem)
-    expect(instance.item).toEqual(expectedItem)
-    expect(instance.itemId).toEqual(expectedItem.id)
+
+    const finalItem = { ...expectedItem, id: itemStore.itemId }
+    expect(mockRegisterItem).toHaveBeenCalledWith(finalItem)
+    expect(instance.item).toEqual(finalItem)
+    expect(instance.itemId).toEqual(finalItem.id)
   })
 
   it('should fail registering an item', async () => {
     const expectedItem = {
       id: 2,
-      beacon: 'bb:aa:aa:aa:aa:aa',
-      category: 'ECG',
-      service: 'Bloc 3',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockRegisterItem = jest.fn()
     mockRegisterItem.mockResolvedValue({ kind: 'server' })
@@ -438,32 +383,29 @@ describe('Item store', () => {
 
     expect(result).toBeFalsy()
     expect(mockRegisterItem).toHaveBeenCalledTimes(1)
-    expect(mockRegisterItem).toHaveBeenCalledWith(expectedItem)
+    expect(mockRegisterItem).toHaveBeenCalledWith({ ...expectedItem, id: itemStore.itemId })
   })
 
   it('should update an item', async () => {
     const expectedItem = {
       id: 2,
-      beacon: 'bb:aa:aa:aa:aa:aa',
-      category: 'ECG',
-      service: 'Bloc 3',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockUpdateItem = jest.fn()
     mockUpdateItem.mockResolvedValue({ kind: 'ok' })
@@ -481,26 +423,23 @@ describe('Item store', () => {
   it('should fail updating an item', async () => {
     const expectedItem = {
       id: 2,
-      beacon: 'bb:aa:aa:aa:aa:aa',
-      category: 'ECG',
-      service: 'Bloc 3',
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 2',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
 
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockUpdateItem = jest.fn()
     mockUpdateItem.mockResolvedValue({ kind: 'server' })
@@ -514,21 +453,7 @@ describe('Item store', () => {
   })
 
   it('should login', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     save.mockResolvedValue(true)
     const token = 'newToken'
@@ -543,21 +468,7 @@ describe('Item store', () => {
   })
 
   it('should fail logging in', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     jest.spyOn(Api.prototype, 'login').mockResolvedValue({ kind: 'server' })
 
@@ -567,21 +478,7 @@ describe('Item store', () => {
   })
 
   it('should fail logging in because of exceptions', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     jest.spyOn(Api.prototype, 'login').mockImplementation(() => {
       throw new Error('')
@@ -593,21 +490,7 @@ describe('Item store', () => {
   })
 
   it('should logout', async () => {
-    const instance = ItemStoreModel.create(
-      {
-        isAuthenticated: false,
-        itemId: 1,
-        item: ItemModel.create({
-          id: 1,
-          beacon: 'aa:aa:aa:aa:aa:aa',
-          category: 'Lit',
-          service: 'Bloc 1',
-        }),
-        authToken: 'token',
-        autocompleteDataMap: {},
-      },
-      await createEnvironment(),
-    )
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     reset.mockResolvedValue(true)
     const mockSetAuthToken = jest.spyOn(Api.prototype, 'setAuthToken')

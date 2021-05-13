@@ -46,15 +46,6 @@ exports[`Screen component should match snapshot with scroll 1`] = `
       }
     >
       <RCTScrollView
-        contentContainerStyle={
-          Array [
-            Object {
-              "alignItems": "stretch",
-              "justifyContent": "flex-start",
-            },
-            Object {},
-          ]
-        }
         keyboardShouldPersistTaps="handled"
         style={
           Array [

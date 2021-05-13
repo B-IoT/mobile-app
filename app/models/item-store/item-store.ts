@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
-import { Item, ItemModel, ItemSnapshot } from '../item/item'
+import { Item, ItemModel } from '../item/item'
 import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
 import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'

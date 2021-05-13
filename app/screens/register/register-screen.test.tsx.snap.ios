@@ -328,18 +328,6 @@ exports[`Register screen should match snapshot 1`] = `
                           }
                         >
                           <RCTScrollView
-                            contentContainerStyle={
-                              Array [
-                                Object {
-                                  "alignItems": "stretch",
-                                  "justifyContent": "flex-start",
-                                },
-                                Object {
-                                  "flex": 1,
-                                  "flexDirection": "column",
-                                },
-                              ]
-                            }
                             keyboardShouldPersistTaps="handled"
                             style={
                               Array [
@@ -1915,7 +1903,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      09/05/2021
+                                      13/05/2021
                                     </Text>
                                   </View>
                                 </View>
@@ -1992,7 +1980,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         appearance="default"
                                         captionIcon={null}
                                         editable={true}
-                                        keyboardType="number-pad"
+                                        keyboardType="numeric"
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
                                         onFocus={[Function]}

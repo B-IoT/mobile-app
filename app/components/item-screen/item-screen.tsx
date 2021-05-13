@@ -322,7 +322,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 contact,
                 owner,
                 purchaseDate,
-                purchasePrice: parseFloat(purchasePrice).toFixed(2),
+                purchasePrice: parseFloat(purchasePrice),
               }
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
@@ -342,7 +342,7 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.ROOM, room],
                   [DataType.CONTACT, contact],
                   [DataType.OWNER, owner],
-                  [DataType.PRICE, purchasePrice],
+                  [DataType.PRICE, purchasePrice.toString()],
                 ]
                 newAutocompleteEntries.forEach(([dataType, entry]) =>
                   itemStore.addAutocompleteEntryData(dataType, entry),
