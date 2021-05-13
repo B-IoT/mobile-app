@@ -19,18 +19,16 @@ export class ItemApi {
    */
   async getItem(id: number): Promise<GetItemResult> {
     try {
-      // make the api call
       const response: ApiResponse<any> = await this.api.apisauce.get(
         `${this.api.config.url}/api/items/${id}`,
       )
 
-      // the typical ways to die when calling an api
       if (!response.ok) {
         const problem = getGeneralApiProblem(response)
         if (problem) return problem
       }
 
-      // transform the data into the format we are expecting
+      // Transform the data into the format we are expecting
       try {
         const rawItem = response.data
         const item: Item = {
@@ -38,6 +36,17 @@ export class ItemApi {
           beacon: rawItem.beacon,
           category: rawItem.category,
           service: rawItem.service,
+          itemID: rawItem.itemID,
+          brand: rawItem.brand,
+          model: rawItem.model,
+          supplier: rawItem.supplier,
+          originLocation: rawItem.originLocation,
+          currentLocation: rawItem.currentLocation,
+          room: rawItem.room,
+          contact: rawItem.contact,
+          owner: rawItem.owner,
+          purchaseDate: new Date(rawItem.purchaseDate),
+          purchasePrice: rawItem.purchasePrice,
         }
         return { kind: 'ok', item }
       } catch {
@@ -57,9 +66,10 @@ export class ItemApi {
    */
   async registerItem(item: Item): Promise<RegisterItemResult> {
     try {
+      const itemCleaned = cleanItem(item)
       const response: ApiResponse<any> = await this.api.apisauce.post(
         `${this.api.config.url}/api/items`,
-        item,
+        itemCleaned,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
@@ -85,9 +95,10 @@ export class ItemApi {
    */
   async updateItem(item: Item): Promise<UpdateItemResult> {
     try {
+      const itemCleaned = cleanItem(item)
       const response: ApiResponse<any> = await this.api.apisauce.put(
         `${this.api.config.url}/api/items/${item.id}`,
-        item,
+        itemCleaned,
         { headers: { 'Content-Type': 'application/json' } },
       )
 
@@ -102,4 +113,27 @@ export class ItemApi {
       return { kind: 'bad-data' }
     }
   }
+}
+
+/**
+ * Cleans the given item, removing null fields and formatting purchaseDate and purchasePrice.
+ *
+ * @param item the item to clean
+ * @returns the item cleaned
+ */
+export function cleanItem(item: Item): Record<string, unknown> {
+  // Remove null fields
+  const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
+
+  if (clean.purchaseDate) {
+    // Extract date-only ISO string
+    clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
+  }
+
+  if (clean.purchasePrice) {
+    // Extract purchasePrice as float (was already validated before)
+    clean.purchasePrice = parseFloat(clean.purchasePrice)
+  }
+
+  return clean
 }

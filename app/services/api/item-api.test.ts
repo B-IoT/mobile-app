@@ -1,6 +1,6 @@
 import { SERVER_ERROR } from 'apisauce'
 import { Api } from './api'
-import { ItemApi } from './item-api'
+import { cleanItem, ItemApi } from './item-api'
 
 describe('Item Api', () => {
   it('should be constructed', () => {
@@ -16,8 +16,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: true,
@@ -42,8 +53,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: false,
@@ -66,8 +88,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
       throw new Error('')
@@ -88,8 +121,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: true,
@@ -101,7 +145,7 @@ describe('Item Api', () => {
     const result = await itemApi.registerItem(item)
 
     expect(mockPost).toHaveBeenCalledTimes(1)
-    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, item, {
+    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, cleanItem(item), {
       headers: { 'Content-Type': 'application/json' },
     })
     expect(result.kind).toEqual('ok')
@@ -116,8 +160,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: false,
@@ -128,7 +183,7 @@ describe('Item Api', () => {
     const result = await itemApi.registerItem(item)
 
     expect(mockPost).toHaveBeenCalledTimes(1)
-    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, item, {
+    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, cleanItem(item), {
       headers: { 'Content-Type': 'application/json' },
     })
     expect(result.kind).toEqual('server')
@@ -142,8 +197,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockImplementation(() => {
       throw new Error('')
@@ -152,7 +218,7 @@ describe('Item Api', () => {
     const result = await itemApi.registerItem(item)
 
     expect(mockPost).toHaveBeenCalledTimes(1)
-    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, item, {
+    expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/api/items`, cleanItem(item), {
       headers: { 'Content-Type': 'application/json' },
     })
     expect(result.kind).toEqual('bad-data')
@@ -166,8 +232,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: true,
@@ -178,9 +255,13 @@ describe('Item Api', () => {
     const result = await itemApi.updateItem(item)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
-    expect(mockPut).toHaveBeenCalledWith(`${api.config.url}/api/items/${item.id}`, item, {
-      headers: { 'Content-Type': 'application/json' },
-    })
+    expect(mockPut).toHaveBeenCalledWith(
+      `${api.config.url}/api/items/${item.id}`,
+      cleanItem(item),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
     expect(result.kind).toEqual('ok')
   })
 
@@ -192,8 +273,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: false,
@@ -204,9 +296,13 @@ describe('Item Api', () => {
     const result = await itemApi.updateItem(item)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
-    expect(mockPut).toHaveBeenCalledWith(`${api.config.url}/api/items/${item.id}`, item, {
-      headers: { 'Content-Type': 'application/json' },
-    })
+    expect(mockPut).toHaveBeenCalledWith(
+      `${api.config.url}/api/items/${item.id}`,
+      cleanItem(item),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
     expect(result.kind).toEqual('server')
   })
 
@@ -218,8 +314,19 @@ describe('Item Api', () => {
     const item = {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'ECG',
+      category: 'Lit',
       service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      owner: 'own',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockImplementation(() => {
       throw new Error('')
@@ -228,9 +335,13 @@ describe('Item Api', () => {
     const result = await itemApi.updateItem(item)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
-    expect(mockPut).toHaveBeenCalledWith(`${api.config.url}/api/items/${item.id}`, item, {
-      headers: { 'Content-Type': 'application/json' },
-    })
+    expect(mockPut).toHaveBeenCalledWith(
+      `${api.config.url}/api/items/${item.id}`,
+      cleanItem(item),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
     expect(result.kind).toEqual('bad-data')
   })
 })

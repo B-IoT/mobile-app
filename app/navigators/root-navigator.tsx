@@ -47,7 +47,7 @@ const RootStack = observer(() => {
     if (!isAuthenticated) {
       loginIfCredentials()
     }
-  }, [])
+  }, [isAuthenticated, itemStore])
 
   return (
     <Stack.Navigator

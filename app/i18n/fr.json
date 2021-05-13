@@ -5,7 +5,8 @@
     "back": "Retourner",
     "retry": "Réessayer",
     "error": "Erreur, réessaye!",
-    "shouldNotBeEmpty": "Ne devrait pas être vide"
+    "shouldNotBeEmpty": "Ne devrait pas être vide",
+    "shouldBeValidPrice": "Devrait être plus un nombre plus grand que zéro"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -45,7 +46,11 @@
     "contact": "Personne de contact",
     "contactPlaceholder": "Entre la personne de contact",
     "owner": "Proprietaire",
-    "ownerPlaceholder": "Entre le proprietaire"
+    "ownerPlaceholder": "Entre le proprietaire",
+    "purchaseDate": "Date d'achat",
+    "purchaseDatePlaceholder": "Entre la date d'achat",
+    "purchasePrice": "Prix d'achat (CHF)",
+    "purchasePricePlaceholder": "Entre le prix d'achat"
   },
   "infoScreen": {
     "update": "Mettre à jour",

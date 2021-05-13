@@ -17,12 +17,22 @@ jest.useFakeTimers()
 
 describe('Info screen', () => {
   const mockUpdateItem = jest.fn().mockResolvedValue(true)
-  // TODO: update with real parameters
   const initialItem = {
     id: 1,
     beacon: 'aa:aa:aa:aa:aa:aa',
     category: 'Lit',
     service: 'Bloc 1',
+    itemID: 'id',
+    brand: 'br',
+    model: 'mod',
+    supplier: 'supp',
+    originLocation: 'origin',
+    currentLocation: 'current',
+    room: 'room',
+    contact: 'contact',
+    owner: 'own',
+    purchaseDate: new Date(),
+    purchasePrice: 42.3,
   }
 
   function buildInfoScreen() {
@@ -142,6 +152,20 @@ describe('Info screen', () => {
     // expect(component.queryByText(initialItem.owner)).toBeTruthy()
   })
 
+  it('should show the purchase date picker', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
+  })
+
+  it('should show the purchase price input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+  })
+
   it('should show the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -153,45 +177,75 @@ describe('Info screen', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
+    const itemID = 'itemID'
     const idInput = component.queryByText(translate('registerScreen.itemID'))
-    fireEvent.changeText(idInput, 'id')
+    fireEvent.changeText(idInput, itemID)
 
+    const category = 'category'
     const categoryInput = component.queryByText(translate('registerScreen.category'))
-    fireEvent.changeText(categoryInput, 'category')
+    fireEvent.changeText(categoryInput, category)
 
+    const brand = 'brand'
     const brandInput = component.queryByText(translate('registerScreen.brand'))
-    fireEvent.changeText(brandInput, 'brand')
+    fireEvent.changeText(brandInput, brand)
 
+    const model = 'model'
     const modelInput = component.queryByText(translate('registerScreen.model'))
-    fireEvent.changeText(modelInput, 'model')
+    fireEvent.changeText(modelInput, model)
 
+    const supplier = 'supplier'
     const supplierInput = component.queryByText(translate('registerScreen.supplier'))
-    fireEvent.changeText(supplierInput, 'supplier')
+    fireEvent.changeText(supplierInput, supplier)
 
+    const originLocation = 'origin'
     const originLocationInput = component.queryByText(translate('registerScreen.originLocation'))
-    fireEvent.changeText(originLocationInput, 'origin')
+    fireEvent.changeText(originLocationInput, originLocation)
 
+    const currentLocation = 'current'
     const currentLocationInput = component.queryByText(translate('registerScreen.currentLocation'))
-    fireEvent.changeText(currentLocationInput, 'currentLocation')
+    fireEvent.changeText(currentLocationInput, currentLocation)
 
+    const room = 'room'
     const roomInput = component.queryByText(translate('registerScreen.room'))
-    fireEvent.changeText(roomInput, 'room')
+    fireEvent.changeText(roomInput, room)
 
+    const contact = 'contact'
     const contactInput = component.queryByText(translate('registerScreen.contact'))
-    fireEvent.changeText(contactInput, 'contact')
+    fireEvent.changeText(contactInput, contact)
 
+    const owner = 'owner'
     const ownerInput = component.queryByText(translate('registerScreen.owner'))
-    fireEvent.changeText(ownerInput, 'owner')
+    fireEvent.changeText(ownerInput, owner)
+
+    const purchasePrice = '25'
+    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    fireEvent.changeText(purchasePriceInput, purchasePrice)
 
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
     expect(component.queryByText(translate('common.error'))).toBeFalsy() // the error is not shown
     expect(mockUpdateItem).toHaveBeenCalledTimes(1)
-    expect(mockUpdateItem).toHaveBeenCalledWith({}) // TODO: change when item is correctly built
+    expect(mockUpdateItem).toHaveBeenCalledWith({
+      beacon: null,
+      brand: brand,
+      category: category,
+      contact: contact,
+      currentLocation: currentLocation,
+      id: null,
+      itemID: itemID,
+      model: model,
+      originLocation: originLocation,
+      owner: owner,
+      purchaseDate: jasmine.any(Date),
+      purchasePrice: 25,
+      room: room,
+      service: null,
+      supplier: supplier,
+    })
   })
 
-  it('should show ten warnings when updating an item with empty fields', () => {
+  it('should show warnings when updating an item with empty fields', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
@@ -225,12 +279,18 @@ describe('Info screen', () => {
     const ownerInput = component.queryByText(translate('registerScreen.owner'))
     fireEvent.changeText(ownerInput, '')
 
+    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    fireEvent.changeText(purchasePriceInput, '')
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
+    const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
+
     expect(warnings).toHaveLength(10)
     warnings.forEach((w) => expect(w).toBeTruthy())
+    expect(priceWarning).toBeTruthy()
   })
 
   it('should match snapshot', () => {

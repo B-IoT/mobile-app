@@ -86,7 +86,7 @@ export const LoginScreen = observer(function LoginScreen() {
   )
 
   return (
-    <Screen style={ROOT} preset="scroll" statusBar="dark-content">
+    <Screen style={ROOT} preset="fixed" statusBar="dark-content">
       <Text category="h3" style={TITLE}>
         {strings.welcome}
       </Text>

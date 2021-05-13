@@ -57,7 +57,7 @@ workflows:
       - publish_to_expo_dev:
           filters:
             branches:
-              only: dev
+              ignore: main
       - publish_to_expo_dependabot:
           filters:
             branches:
