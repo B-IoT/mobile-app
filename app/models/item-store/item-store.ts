@@ -88,7 +88,7 @@ export const ItemStoreModel = types
     /**
      * Saves the given item in the store. It also saves the item's id.
      *
-     * @param item the item snapshot
+     * @param item the item
      */
     saveItem: (item: Item) => {
       self.item = item
