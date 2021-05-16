@@ -18,6 +18,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
 import CustomTheme from './theme/theme.json'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context'
+import * as Sentry from 'sentry-expo'
 import { initFonts } from './theme/fonts' // expo
 import * as storage from './utils/storage'
 import {
@@ -34,6 +35,21 @@ import { RootStore, RootStoreProvider, setupRootStore } from './models'
 // https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
 import { enableScreens } from 'react-native-screens'
 enableScreens()
+
+const routingInstrumentation = new Sentry.Native.ReactNavigationV5Instrumentation()
+Sentry.init({
+  dsn: 'https://b6b21ede17bf4b30bf251a303b351d21@o674721.ingest.sentry.io/5768616',
+  integrations: (oldIntegrations) => [
+    ...oldIntegrations,
+    new Sentry.Native.ReactNativeTracing({
+      tracingOrigins: ['localhost', 'api.b-iot.ch:8080', /^\//],
+      routingInstrumentation,
+    }),
+  ],
+  tracesSampleRate: 0.5,
+  enableInExpoDevelopment: true,
+  debug: __DEV__, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
+})
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -75,6 +91,10 @@ function App() {
             ref={navigationRef}
             initialState={initialNavigationState}
             onStateChange={onNavigationStateChange}
+            onReady={() => {
+              // Register the navigation container with the instrumentation
+              routingInstrumentation.registerNavigationContainer(navigationRef)
+            }}
           />
         </ApplicationProvider>
       </SafeAreaProvider>

@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry-expo'
 import { ApisauceInstance, create, ApiResponse } from 'apisauce'
 import { getGeneralApiProblem } from './api-problem'
 import { ApiConfig, DEFAULT_API_CONFIG } from './api-config'
@@ -79,6 +80,7 @@ export class Api {
       return { kind: 'ok', token }
     } catch (e) {
       __DEV__ && console.log(`Bad login request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
       return { kind: 'bad-data' }
     }
   }

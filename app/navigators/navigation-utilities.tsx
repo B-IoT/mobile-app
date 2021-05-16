@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { BackHandler } from 'react-native'
 import { PartialState, NavigationState, NavigationContainerRef } from '@react-navigation/native'
+import * as Sentry from 'sentry-expo'
 
 export const RootNavigation = {
   navigate(name: string) {
@@ -99,8 +100,13 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
     const currentRouteName = getActiveRouteName(state)
 
     if (previousRouteName !== currentRouteName) {
-      // track screens.
+      // Track screens
       __DEV__ && console.log(currentRouteName)
+      Sentry.Native.addBreadcrumb({
+        category: 'navigation',
+        message: `Current screen: ${currentRouteName}`,
+        level: Sentry.Native.Severity.Info,
+      })
     }
 
     // Save the current route name for later comparison
