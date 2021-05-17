@@ -47,7 +47,7 @@ Sentry.init({
     }),
   ],
   tracesSampleRate: 0.5,
-  enableInExpoDevelopment: true,
+  enableInExpoDevelopment: false,
   debug: __DEV__, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
 })
 

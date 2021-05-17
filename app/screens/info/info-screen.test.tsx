@@ -30,9 +30,15 @@ describe('Info screen', () => {
     currentLocation: 'current',
     room: 'room',
     contact: 'contact',
-    owner: 'own',
-    purchaseDate: new Date(),
+    currentOwner: 'own',
+    previousOwner: 'prev',
+    purchaseDate: null,
     purchasePrice: 42.3,
+    orderNumber: 'aasas',
+    color: 'blue',
+    serialNumber: 'sdsd',
+    expiryDate: null,
+    status: 'status',
   }
 
   function buildInfoScreen() {
@@ -85,7 +91,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.category'))).toBeTruthy()
-    // expect(await component.findByText(initialItem.category)).toBeTruthy()
   })
 
   it('should show the brand input', () => {
@@ -93,7 +98,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.brand'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.brand)).toBeTruthy()
   })
 
   it('should show the model input', () => {
@@ -101,7 +105,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.model'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.model)).toBeTruthy()
   })
 
   it('should show the supplier input', () => {
@@ -109,7 +112,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.supplier'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.supplier)).toBeTruthy()
   })
 
   it('should show the origin location input', () => {
@@ -117,7 +119,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.originLocation'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.originLocation)).toBeTruthy()
   })
 
   it('should show the current location input', () => {
@@ -125,7 +126,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.currentLocation'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.currentLocation)).toBeTruthy()
   })
 
   it('should show the room input', () => {
@@ -133,7 +133,6 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.room'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.room)).toBeTruthy()
   })
 
   it('should show the contact input', () => {
@@ -141,15 +140,20 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.contact'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.contact)).toBeTruthy()
   })
 
-  it('should show the owner input', () => {
+  it('should show the current owner input', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.owner'))).toBeTruthy()
-    // expect(component.queryByText(initialItem.owner)).toBeTruthy()
+    expect(component.queryByText(translate('registerScreen.currentOwner'))).toBeTruthy()
+  })
+
+  it('should show the previous owner input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.previousOwner'))).toBeTruthy()
   })
 
   it('should show the purchase date picker', () => {
@@ -164,6 +168,41 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+  })
+
+  it('should show the order number input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.orderNumber'))).toBeTruthy()
+  })
+
+  it('should show the color input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.color'))).toBeTruthy()
+  })
+
+  it('should show the serial number input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.serialNumber'))).toBeTruthy()
+  })
+
+  it('should show the expiry date picker', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.expiryDate'))).toBeTruthy()
+  })
+
+  it('should show the status input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.status'))).toBeTruthy()
   })
 
   it('should show the update item button', () => {
@@ -213,13 +252,33 @@ describe('Info screen', () => {
     const contactInput = component.queryByText(translate('registerScreen.contact'))
     fireEvent.changeText(contactInput, contact)
 
-    const owner = 'owner'
-    const ownerInput = component.queryByText(translate('registerScreen.owner'))
-    fireEvent.changeText(ownerInput, owner)
+    const currentOwner = 'currentOwner'
+    const currentOwnerInput = component.queryByText(translate('registerScreen.currentOwner'))
+    fireEvent.changeText(currentOwnerInput, currentOwner)
+
+    const previousOwner = 'previousOwner'
+    const previousOwnerInput = component.queryByText(translate('registerScreen.previousOwner'))
+    fireEvent.changeText(previousOwnerInput, previousOwner)
 
     const purchasePrice = '25'
     const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
     fireEvent.changeText(purchasePriceInput, purchasePrice)
+
+    const orderNumber = 'orderNumber'
+    const orderNumberInput = component.queryByText(translate('registerScreen.orderNumber'))
+    fireEvent.changeText(orderNumberInput, orderNumber)
+
+    const color = 'color'
+    const colorInput = component.queryByText(translate('registerScreen.color'))
+    fireEvent.changeText(colorInput, color)
+
+    const serialNumber = 'serialNumber'
+    const serialNumberInput = component.queryByText(translate('registerScreen.serialNumber'))
+    fireEvent.changeText(serialNumberInput, serialNumber)
+
+    const status = 'status'
+    const statusInput = component.queryByText(translate('registerScreen.status'))
+    fireEvent.changeText(statusInput, status)
 
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
@@ -236,12 +295,18 @@ describe('Info screen', () => {
       itemID: itemID,
       model: model,
       originLocation: originLocation,
-      owner: owner,
+      currentOwner,
+      previousOwner,
       purchaseDate: jasmine.any(Date),
       purchasePrice: 25,
       room: room,
       service: null,
       supplier: supplier,
+      orderNumber,
+      color,
+      serialNumber,
+      expiryDate: null,
+      status,
     })
   })
 
@@ -276,11 +341,20 @@ describe('Info screen', () => {
     const contactInput = component.queryByText(translate('registerScreen.contact'))
     fireEvent.changeText(contactInput, '')
 
-    const ownerInput = component.queryByText(translate('registerScreen.owner'))
-    fireEvent.changeText(ownerInput, '')
+    const currentOwnerInput = component.queryByText(translate('registerScreen.currentOwner'))
+    fireEvent.changeText(currentOwnerInput, '')
+
+    const previousOwnerInput = component.queryByText(translate('registerScreen.previousOwner'))
+    fireEvent.changeText(previousOwnerInput, '')
 
     const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
     fireEvent.changeText(purchasePriceInput, '')
+
+    const orderNumberInput = component.queryByText(translate('registerScreen.orderNumber'))
+    fireEvent.changeText(orderNumberInput, '')
+
+    const serialNumberInput = component.queryByText(translate('registerScreen.serialNumber'))
+    fireEvent.changeText(serialNumberInput, '')
 
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
@@ -288,7 +362,7 @@ describe('Info screen', () => {
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
 
-    expect(warnings).toHaveLength(10)
+    expect(warnings).toHaveLength(13)
     warnings.forEach((w) => expect(w).toBeTruthy())
     expect(priceWarning).toBeTruthy()
   })

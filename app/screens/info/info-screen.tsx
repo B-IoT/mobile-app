@@ -34,9 +34,15 @@ export const InfoScreen = observer(function InfoScreen() {
     currentLocation,
     room,
     contact,
-    owner,
+    currentOwner,
+    previousOwner,
     purchaseDate,
     purchasePrice,
+    orderNumber,
+    color,
+    serialNumber,
+    expiryDate,
+    status,
   } = itemStore.item
 
   return (
@@ -51,9 +57,15 @@ export const InfoScreen = observer(function InfoScreen() {
       initialCurrentLocation={currentLocation}
       initialRoom={room}
       initialContact={contact}
-      initialOwner={owner}
+      initialCurrentOwner={currentOwner}
+      initialPreviousOwner={previousOwner}
       initialPurchaseDate={purchaseDate}
       initialPurchasePrice={purchasePrice.toString()}
+      initialOrderNumber={orderNumber}
+      initialColor={color}
+      initialSerialNumber={serialNumber}
+      initialExpiryDate={expiryDate}
+      initialStatus={status}
       buttonText={strings.update}
       title={strings.title}
     />

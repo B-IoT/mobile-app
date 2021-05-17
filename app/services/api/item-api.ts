@@ -45,9 +45,15 @@ export class ItemApi {
           currentLocation: rawItem.currentLocation,
           room: rawItem.room,
           contact: rawItem.contact,
-          owner: rawItem.owner,
+          currentOwner: rawItem.currentOwner,
+          previousOwner: rawItem.previousOwner,
           purchaseDate: new Date(rawItem.purchaseDate),
           purchasePrice: rawItem.purchasePrice,
+          orderNumber: rawItem.orderNumber,
+          color: rawItem.color,
+          serialNumber: rawItem.serialNumber,
+          expiryDate: rawItem.expiryDate,
+          status: rawItem.status
         }
         return { kind: 'ok', item }
       } catch {
@@ -132,6 +138,11 @@ export function cleanItem(item: Item): Record<string, unknown> {
   if (clean.purchaseDate) {
     // Extract date-only ISO string
     clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
+  }
+
+  if (clean.expiryDate) {
+    // Extract date-only ISO string
+    clean.expiryDate = clean.expiryDate.toISOString().split('T')[0]
   }
 
   if (clean.purchasePrice) {

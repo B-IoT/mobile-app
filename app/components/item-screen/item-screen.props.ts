@@ -52,9 +52,14 @@ export interface ItemScreenProps {
   initialContact?: string
 
   /**
-   * The initial owner value. If not specified, defaults to ''.
+   * The initial current owner value. If not specified, defaults to ''.
    */
-  initialOwner?: string
+  initialCurrentOwner?: string
+
+  /**
+   * The initial previous owner value. If not specified, defaults to ''.
+   */
+  initialPreviousOwner?: string
 
   /**
    * The initial purchase date value. If not specified, defaults to today.
@@ -65,6 +70,31 @@ export interface ItemScreenProps {
    * The initial purchase price value. If not specified, defaults to ''.
    */
   initialPurchasePrice?: string
+
+  /**
+   * The initial order number value. If not specified, defaults to ''.
+   */
+  initialOrderNumber?: string
+
+  /**
+   * The initial color value. If not specified, defaults to ''.
+   */
+  initialColor?: string
+
+  /**
+   * The initial serial number value. If not specified, defaults to ''.
+   */
+  initialSerialNumber?: string
+
+  /**
+   * The initial expiry date value. If not specified, defaults to today.
+   */
+  initialExpiryDate?: Date
+
+  /**
+   * The initial status value. If not specified, defaults to ''.
+   */
+  initialStatus?: string
 
   /**
    * The text displayed by the button

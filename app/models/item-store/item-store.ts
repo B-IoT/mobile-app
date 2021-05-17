@@ -22,8 +22,13 @@ export enum DataType {
   LOCATION,
   ROOM,
   CONTACT,
-  OWNER,
+  CURRENT_OWNER,
+  PREVIOUS_OWNER,
   PRICE,
+  ORDER_NUMBER,
+  COLOR,
+  SERIAL_NUMBER,
+  STATUS,
 }
 
 export const ItemStoreModel = types

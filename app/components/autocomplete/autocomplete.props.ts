@@ -29,7 +29,7 @@ export interface AutocompleteProps extends UIAutocompleteProps {
   /**
    * The status
    */
-  status: AutocompleteStatus
+  status?: AutocompleteStatus
 
   /**
    * The placeholder displayed inside the input
@@ -39,7 +39,7 @@ export interface AutocompleteProps extends UIAutocompleteProps {
   /**
    * The caption displayed in case of error
    */
-  errorCaption: string
+  errorCaption?: string
 
   /**
    * The value setter

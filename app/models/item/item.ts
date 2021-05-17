@@ -1,6 +1,5 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-// TODO: update with new item schema when known
 export const ItemModel = types.model('Item').props({
   id: types.identifierNumber,
   beacon: types.maybeNull(types.string),
@@ -14,9 +13,15 @@ export const ItemModel = types.model('Item').props({
   currentLocation: types.maybeNull(types.string),
   room: types.maybeNull(types.string),
   contact: types.maybeNull(types.string),
-  owner: types.maybeNull(types.string),
+  currentOwner: types.maybeNull(types.string),
+  previousOwner: types.maybeNull(types.string),
   purchaseDate: types.maybeNull(types.Date),
   purchasePrice: types.maybeNull(types.number),
+  orderNumber: types.maybeNull(types.string),
+  color: types.maybeNull(types.string),
+  serialNumber: types.maybeNull(types.string),
+  expiryDate: types.maybeNull(types.Date),
+  status: types.maybeNull(types.string),
 })
 
 type ItemType = Instance<typeof ItemModel>

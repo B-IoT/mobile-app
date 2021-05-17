@@ -70,12 +70,24 @@ const strings = {
   roomPlaceholder: translate('registerScreen.roomPlaceholder'),
   contact: translate('registerScreen.contact'),
   contactPlaceholder: translate('registerScreen.contactPlaceholder'),
-  owner: translate('registerScreen.owner'),
-  ownerPlaceholder: translate('registerScreen.ownerPlaceholder'),
+  currentOwner: translate('registerScreen.currentOwner'),
+  currentOwnerPlaceholder: translate('registerScreen.currentOwnerPlaceholder'),
+  previousOwner: translate('registerScreen.previousOwner'),
+  previousOwnerPlaceholder: translate('registerScreen.previousOwnerPlaceholder'),
   purchaseDate: translate('registerScreen.purchaseDate'),
   purchaseDatePlaceholder: translate('registerScreen.purchaseDatePlaceholder'),
   purchasePrice: translate('registerScreen.purchasePrice'),
   purchasePricePlaceholder: translate('registerScreen.purchasePricePlaceholder'),
+  orderNumber: translate('registerScreen.orderNumber'),
+  orderNumberPlaceholder: translate('registerScreen.orderNumberPlaceholder'),
+  color: translate('registerScreen.color'),
+  colorPlaceholder: translate('registerScreen.colorPlaceholder'),
+  serialNumber: translate('registerScreen.serialNumber'),
+  serialNumberPlaceholder: translate('registerScreen.serialNumberPlaceholder'),
+  expiryDate: translate('registerScreen.expiryDate'),
+  expiryDatePlaceholder: translate('registerScreen.expiryDatePlaceholder'),
+  status: translate('registerScreen.status'),
+  statusPlaceholder: translate('registerScreen.statusPlaceholder'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
@@ -98,9 +110,15 @@ export function ItemScreen(props: ItemScreenProps) {
     initialCurrentLocation,
     initialRoom,
     initialContact,
-    initialOwner,
+    initialCurrentOwner,
+    initialPreviousOwner,
     initialPurchaseDate,
     initialPurchasePrice,
+    initialOrderNumber,
+    initialColor,
+    initialSerialNumber,
+    initialExpiryDate,
+    initialStatus,
     buttonText,
     title,
   } = props
@@ -127,8 +145,12 @@ export function ItemScreen(props: ItemScreenProps) {
   const [roomStatus, setRoomStatus] = useState<AutocompleteStatus>('basic')
   const [contact, setContact] = useState(initialContact ? initialContact : '')
   const [contactStatus, setContactStatus] = useState<AutocompleteStatus>('basic')
-  const [owner, setOwner] = useState(initialOwner ? initialOwner : '')
-  const [ownerStatus, setOwnerStatus] = useState<AutocompleteStatus>('basic')
+  const [currentOwner, setCurrentOwner] = useState(initialCurrentOwner ? initialCurrentOwner : '')
+  const [currentOwnerStatus, setCurrentOwnerStatus] = useState<AutocompleteStatus>('basic')
+  const [previousOwner, setPreviousOwner] = useState(
+    initialPreviousOwner ? initialPreviousOwner : '',
+  )
+  const [previousOwnerStatus, setPreviousOwnerStatus] = useState<AutocompleteStatus>('basic')
   const [purchaseDate, setPurchaseDate] = useState(
     initialPurchaseDate ? initialPurchaseDate : new Date(),
   )
@@ -136,6 +158,13 @@ export function ItemScreen(props: ItemScreenProps) {
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
   )
   const [purchasePriceStatus, setPurchasePriceStatus] = useState<AutocompleteStatus>('basic')
+  const [orderNumber, setOrderNumber] = useState(initialOrderNumber ? initialOrderNumber : '')
+  const [orderNumberStatus, setOrderNumberStatus] = useState<AutocompleteStatus>('basic')
+  const [color, setColor] = useState(initialColor ? initialColor : '')
+  const [serialNumber, setSerialNumber] = useState(initialSerialNumber ? initialSerialNumber : '')
+  const [serialNumberStatus, setSerialNumberStatus] = useState<AutocompleteStatus>('basic')
+  const [expiryDate, setExpiryDate] = useState(initialExpiryDate ? initialExpiryDate : null)
+  const [status, setStatus] = useState(initialStatus ? initialStatus : '')
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
@@ -179,6 +208,16 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.CATEGORY}
           value={category}
           setValue={setCategory}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.serialNumber}
+          status={serialNumberStatus}
+          placeholder={strings.serialNumberPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.SERIAL_NUMBER}
+          value={serialNumber}
+          setValue={setSerialNumber}
         />
         <Autocomplete
           style={INPUT}
@@ -252,13 +291,23 @@ export function ItemScreen(props: ItemScreenProps) {
         />
         <Autocomplete
           style={INPUT}
-          label={strings.owner}
-          status={ownerStatus}
-          placeholder={strings.ownerPlaceholder}
+          label={strings.currentOwner}
+          status={currentOwnerStatus}
+          placeholder={strings.currentOwnerPlaceholder}
           errorCaption={strings.shouldNotBeEmpty}
-          dataType={DataType.OWNER}
-          value={owner}
-          setValue={setOwner}
+          dataType={DataType.CURRENT_OWNER}
+          value={currentOwner}
+          setValue={setCurrentOwner}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.previousOwner}
+          status={previousOwnerStatus}
+          placeholder={strings.previousOwnerPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.PREVIOUS_OWNER}
+          value={previousOwner}
+          setValue={setPreviousOwner}
         />
         <Datepicker
           style={INPUT}
@@ -278,6 +327,39 @@ export function ItemScreen(props: ItemScreenProps) {
           value={purchasePrice}
           setValue={(val) => setPurchasePrice(val.replace(',', '.'))}
         />
+        <Autocomplete
+          style={INPUT}
+          label={strings.orderNumber}
+          status={orderNumberStatus}
+          placeholder={strings.orderNumberPlaceholder}
+          errorCaption={strings.shouldNotBeEmpty}
+          dataType={DataType.ORDER_NUMBER}
+          value={orderNumber}
+          setValue={setOrderNumber}
+        />
+        <Datepicker
+          style={INPUT}
+          date={expiryDate}
+          onSelect={setExpiryDate}
+          label={strings.expiryDate}
+          placeholder={strings.expiryDatePlaceholder}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.color}
+          placeholder={strings.colorPlaceholder}
+          dataType={DataType.COLOR}
+          value={color}
+          setValue={setColor}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.status}
+          placeholder={strings.statusPlaceholder}
+          dataType={DataType.STATUS}
+          value={status}
+          setValue={setStatus}
+        />
         <AsyncButton
           style={BUTTON}
           loading={executing}
@@ -295,8 +377,11 @@ export function ItemScreen(props: ItemScreenProps) {
               [isEmpty(currentLocation), setCurrentLocationStatus],
               [isEmpty(room), setRoomStatus],
               [isEmpty(contact), setContactStatus],
-              [isEmpty(owner), setOwnerStatus],
-              [isEmpty(purchasePrice) || !Number(purchasePrice) || Number(purchasePrice) <= 0, setPurchasePriceStatus]
+              [isEmpty(currentOwner), setCurrentOwnerStatus],
+              [isEmpty(previousOwner), setPreviousOwnerStatus],
+              [isEmpty(purchasePrice) || !Number(purchasePrice) || Number(purchasePrice) <= 0, setPurchasePriceStatus],
+              [isEmpty(orderNumber), setOrderNumberStatus],
+              [isEmpty(serialNumber), setSerialNumberStatus],
             ]
 
             const noErrors = statusSetters.reduce((noErrors, [isInvalid, currSetter]) => {
@@ -320,9 +405,15 @@ export function ItemScreen(props: ItemScreenProps) {
                 currentLocation,
                 room,
                 contact,
-                owner,
+                currentOwner,
+                previousOwner,
                 purchaseDate,
                 purchasePrice: parseFloat(purchasePrice),
+                orderNumber,
+                serialNumber,
+                expiryDate,
+                status,
+                color,
               }
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
@@ -341,8 +432,13 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.LOCATION, currentLocation],
                   [DataType.ROOM, room],
                   [DataType.CONTACT, contact],
-                  [DataType.OWNER, owner],
+                  [DataType.CURRENT_OWNER, currentOwner],
+                  [DataType.PREVIOUS_OWNER, previousOwner],
                   [DataType.PRICE, purchasePrice.toString()],
+                  [DataType.ORDER_NUMBER, orderNumber],
+                  [DataType.COLOR, color],
+                  [DataType.SERIAL_NUMBER, serialNumber],
+                  [DataType.STATUS, status],
                 ]
                 newAutocompleteEntries.forEach(([dataType, entry]) =>
                   itemStore.addAutocompleteEntryData(dataType, entry),
