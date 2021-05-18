@@ -396,6 +396,10 @@ export function ItemScreen(props: ItemScreenProps) {
 
             if (noErrors) {
               setExecuting(true)
+
+              const correctPurchaseDate = purchaseDate ? new Date(purchaseDate.getDate() + 1) : purchaseDate // needed since the picker chooses the previous day at midnight
+              const correctExpiryDate = expiryDate ? new Date(expiryDate.getDate() + 1) : expiryDate // needed since the picker chooses the previous day at midnight
+
               const item: Item = {
                 id: null,
                 beacon: null,
@@ -411,11 +415,11 @@ export function ItemScreen(props: ItemScreenProps) {
                 contact,
                 currentOwner,
                 previousOwner,
-                purchaseDate,
+                purchaseDate: correctPurchaseDate,
                 purchasePrice: parseFloat(purchasePrice),
                 orderNumber,
                 serialNumber,
-                expiryDate,
+                expiryDate: correctExpiryDate,
                 status,
                 color,
               }
