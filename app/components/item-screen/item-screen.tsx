@@ -94,6 +94,8 @@ const strings = {
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
+const MAX_DATE = new Date('2025-12-31')
+
 /**
  * A screen displaying various information related to an item, with a button that executes an operation
  * (either register or update).
@@ -315,6 +317,7 @@ export function ItemScreen(props: ItemScreenProps) {
           onSelect={setPurchaseDate}
           label={strings.purchaseDate}
           placeholder={strings.purchaseDatePlaceholder}
+          max={MAX_DATE}
         />
         <Autocomplete
           style={INPUT}
@@ -343,6 +346,7 @@ export function ItemScreen(props: ItemScreenProps) {
           onSelect={setExpiryDate}
           label={strings.expiryDate}
           placeholder={strings.expiryDatePlaceholder}
+          max={MAX_DATE}
         />
         <Autocomplete
           style={INPUT}

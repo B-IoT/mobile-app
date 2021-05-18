@@ -52,8 +52,8 @@ export class ItemApi {
           orderNumber: rawItem.orderNumber,
           color: rawItem.color,
           serialNumber: rawItem.serialNumber,
-          expiryDate: rawItem.expiryDate,
-          status: rawItem.status
+          expiryDate: new Date(rawItem.expiryDate),
+          status: rawItem.status,
         }
         return { kind: 'ok', item }
       } catch {
@@ -137,11 +137,13 @@ export function cleanItem(item: Item): Record<string, unknown> {
 
   if (clean.purchaseDate) {
     // Extract date-only ISO string
+    clean.purchaseDate.setDate(clean.purchaseDate.getDate() + 1) // needed since the picker chooses the previous day at midnight
     clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
   }
 
   if (clean.expiryDate) {
     // Extract date-only ISO string
+    clean.expiryDate.setDate(clean.expiryDate.getDate() + 1) // needed since the picker chooses the previous day at midnight
     clean.expiryDate = clean.expiryDate.toISOString().split('T')[0]
   }
 

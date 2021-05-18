@@ -134,6 +134,7 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
 
 /**
  * Resets the stack and navigates to the given route.
+ * 
  * @param navigation the navigation prop
  * @param destination the destination route name
  */
