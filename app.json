@@ -5,9 +5,9 @@
     "version": "1.0.0",
     "owner": "biot",
     "orientation": "portrait",
-    "icon": "./assets/biot-square.png",
+    "icon": "./assets/biot-shape-square.png",
     "splash": {
-      "image": "./assets/biot.png",
+      "image": "./assets/biot-square.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
