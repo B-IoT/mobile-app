@@ -26,9 +26,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: true,
@@ -63,9 +69,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: false,
@@ -98,9 +110,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
       throw new Error('')
@@ -131,9 +149,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: true,
@@ -170,9 +194,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: false,
@@ -207,9 +237,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockImplementation(() => {
       throw new Error('')
@@ -242,9 +278,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: true,
@@ -283,9 +325,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: false,
@@ -324,9 +372,15 @@ describe('Item Api', () => {
       currentLocation: 'current',
       room: 'room',
       contact: 'contact',
-      owner: 'own',
+      currentOwner: 'own',
+      previousOwner: 'prev',
       purchaseDate: new Date(),
       purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      expiryDate: new Date(),
+      status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockImplementation(() => {
       throw new Error('')

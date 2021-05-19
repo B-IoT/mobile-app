@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry-expo'
 import { ApiResponse } from 'apisauce'
 import { Api } from './api'
 import { GetItemResult, RegisterItemResult, UpdateItemResult } from './api.types'
@@ -44,9 +45,15 @@ export class ItemApi {
           currentLocation: rawItem.currentLocation,
           room: rawItem.room,
           contact: rawItem.contact,
-          owner: rawItem.owner,
+          currentOwner: rawItem.currentOwner,
+          previousOwner: rawItem.previousOwner,
           purchaseDate: new Date(rawItem.purchaseDate),
           purchasePrice: rawItem.purchasePrice,
+          orderNumber: rawItem.orderNumber,
+          color: rawItem.color,
+          serialNumber: rawItem.serialNumber,
+          expiryDate: new Date(rawItem.expiryDate),
+          status: rawItem.status,
         }
         return { kind: 'ok', item }
       } catch {
@@ -54,6 +61,7 @@ export class ItemApi {
       }
     } catch (e) {
       __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
       return { kind: 'bad-data' }
     }
   }
@@ -83,6 +91,7 @@ export class ItemApi {
       return { kind: 'ok', id }
     } catch (e) {
       __DEV__ && console.log(`Bad registerItem request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
       return { kind: 'bad-data' }
     }
   }
@@ -110,6 +119,7 @@ export class ItemApi {
       return { kind: 'ok' }
     } catch (e) {
       __DEV__ && console.log(`Bad updateItem request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
       return { kind: 'bad-data' }
     }
   }
@@ -128,6 +138,11 @@ export function cleanItem(item: Item): Record<string, unknown> {
   if (clean.purchaseDate) {
     // Extract date-only ISO string
     clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
+  }
+
+  if (clean.expiryDate) {
+    // Extract date-only ISO string
+    clean.expiryDate = clean.expiryDate.toISOString().split('T')[0]
   }
 
   if (clean.purchasePrice) {

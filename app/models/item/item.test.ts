@@ -14,9 +14,15 @@ it('can be created', () => {
     currentLocation: 'current',
     room: 'room',
     contact: 'contact',
-    owner: 'own',
+    currentOwner: 'own',
+    previousOwner: 'prev',
     purchaseDate: new Date(),
     purchasePrice: 42.3,
+    orderNumber: 'aasas',
+    color: 'blue',
+    serialNumber: 'sdsd',
+    expiryDate: new Date(),
+    status: 'status'
   })
 
   expect(instance).toBeTruthy()

@@ -118,11 +118,18 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.contact'))).toBeTruthy()
   })
 
-  it('should show the owner input', () => {
+  it('should show the current owner input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.owner'))).toBeTruthy()
+    expect(component.queryByText(translate('registerScreen.currentOwner'))).toBeTruthy()
+  })
+
+  it('should show the previous owner input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.previousOwner'))).toBeTruthy()
   })
 
   it('should show the purchase date picker', () => {
@@ -137,6 +144,41 @@ describe('Register screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+  })
+
+  it('should show the order number input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.orderNumber'))).toBeTruthy()
+  })
+
+  it('should show the color input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.color'))).toBeTruthy()
+  })
+
+  it('should show the serial number input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.serialNumber'))).toBeTruthy()
+  })
+
+  it('should show the expiry date picker', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.expiryDate'))).toBeTruthy()
+  })
+
+  it('should show the status input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.status'))).toBeTruthy()
   })
 
   it('should show the register item button', () => {
@@ -186,13 +228,33 @@ describe('Register screen', () => {
     const contactInput = component.queryByText(translate('registerScreen.contact'))
     fireEvent.changeText(contactInput, contact)
 
-    const owner = 'owner'
-    const ownerInput = component.queryByText(translate('registerScreen.owner'))
-    fireEvent.changeText(ownerInput, owner)
+    const currentOwner = 'currentOwner'
+    const currentOwnerInput = component.queryByText(translate('registerScreen.currentOwner'))
+    fireEvent.changeText(currentOwnerInput, currentOwner)
+
+    const previousOwner = 'previousOwner'
+    const previousOwnerInput = component.queryByText(translate('registerScreen.previousOwner'))
+    fireEvent.changeText(previousOwnerInput, previousOwner)
 
     const purchasePrice = '25'
     const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
     fireEvent.changeText(purchasePriceInput, purchasePrice)
+
+    const orderNumber = 'orderNumber'
+    const orderNumberInput = component.queryByText(translate('registerScreen.orderNumber'))
+    fireEvent.changeText(orderNumberInput, orderNumber)
+
+    const color = 'color'
+    const colorInput = component.queryByText(translate('registerScreen.color'))
+    fireEvent.changeText(colorInput, color)
+
+    const serialNumber = 'serialNumber'
+    const serialNumberInput = component.queryByText(translate('registerScreen.serialNumber'))
+    fireEvent.changeText(serialNumberInput, serialNumber)
+
+    const status = 'status'
+    const statusInput = component.queryByText(translate('registerScreen.status'))
+    fireEvent.changeText(statusInput, status)
 
     const registerItemButton = component.queryByText(translate('registerScreen.register'))
     fireEvent.press(registerItemButton)
@@ -209,12 +271,18 @@ describe('Register screen', () => {
       itemID: itemID,
       model: model,
       originLocation: originLocation,
-      owner: owner,
+      currentOwner,
+      previousOwner,
       purchaseDate: jasmine.any(Date),
       purchasePrice: 25,
       room: room,
       service: null,
       supplier: supplier,
+      orderNumber,
+      color,
+      serialNumber,
+      expiryDate: null,
+      status,
     })
   })
 
@@ -228,7 +296,7 @@ describe('Register screen', () => {
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
 
-    expect(warnings).toHaveLength(10)
+    expect(warnings).toHaveLength(13)
     warnings.forEach((w) => expect(w).toBeTruthy())
     expect(priceWarning).toBeTruthy()
   })

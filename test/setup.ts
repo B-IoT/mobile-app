@@ -5,6 +5,11 @@ import 'react-native'
 import './mock-async-storage'
 import './mock-i18n'
 
+import * as Sentry from 'sentry-expo'
+
+global.Sentry = Sentry
+jest.mock('sentry-expo')
+
 declare global {
   let __TEST__
 }

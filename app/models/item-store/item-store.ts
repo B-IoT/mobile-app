@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry-expo'
 import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
 import { Item, ItemModel } from '../item/item'
 import { withEnvironment } from '../extensions/with-environment'
@@ -21,8 +22,13 @@ export enum DataType {
   LOCATION,
   ROOM,
   CONTACT,
-  OWNER,
+  CURRENT_OWNER,
+  PREVIOUS_OWNER,
   PRICE,
+  ORDER_NUMBER,
+  COLOR,
+  SERIAL_NUMBER,
+  STATUS,
 }
 
 export const ItemStoreModel = types
@@ -221,6 +227,11 @@ export const ItemStoreModel = types
       try {
         const result = yield self.environment.api.login(username, password)
         if (result.kind === 'ok') {
+          Sentry.Native.addBreadcrumb({
+            category: 'auth',
+            message: `Authenticated user: ${username}`,
+            level: Sentry.Native.Severity.Info,
+          })
           self.setAuthToken(result.token)
           if (remember) {
             yield self.storeCredentials(username, password)
