@@ -1,6 +1,6 @@
 /* eslint-disable no-unneeded-ternary */
 import React, { useState } from 'react'
-import { ViewStyle } from 'react-native'
+import { Image, ImageStyle, Platform, ViewStyle } from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
@@ -22,6 +22,7 @@ import { isEmpty } from '../../utils/function-utils/function-utils'
 import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
+const image = require('../../../assets/biot-shape-square.png')
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -49,6 +50,13 @@ const INPUT: ViewStyle = {
 
 const BUTTON: ViewStyle = {
   marginTop: spacing[6],
+}
+
+const IMAGE: ImageStyle = {
+  width: 32,
+  height: 32,
+  marginEnd: spacing[4],
+  marginTop: spacing[1]
 }
 
 const strings = {
@@ -94,7 +102,11 @@ const strings = {
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 
+const Shape = () => <Image style={IMAGE} source={image} />
+
 const MAX_DATE = new Date('2025-12-31')
+
+const isIos = Platform.OS === 'ios'
 
 /**
  * A screen displaying various information related to an item, with a button that executes an operation
@@ -187,8 +199,8 @@ export function ItemScreen(props: ItemScreenProps) {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll" statusBar="dark-content">
-      <TopNavigation accessoryLeft={BackAction} title={title} />
+    <Screen style={ROOT} preset="scroll" statusBar={isIos ? 'dark-content' : 'light-content'}>
+      <TopNavigation accessoryLeft={BackAction} accessoryRight={Shape} title={title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
         <Autocomplete
@@ -397,7 +409,9 @@ export function ItemScreen(props: ItemScreenProps) {
             if (noErrors) {
               setExecuting(true)
 
-              const correctPurchaseDate = purchaseDate ? new Date(purchaseDate.getDate() + 1) : purchaseDate // needed since the picker chooses the previous day at midnight
+              const correctPurchaseDate = purchaseDate
+                ? new Date(purchaseDate.getDate() + 1)
+                : purchaseDate // needed since the picker chooses the previous day at midnight
               const correctExpiryDate = expiryDate ? new Date(expiryDate.getDate() + 1) : expiryDate // needed since the picker chooses the previous day at midnight
 
               const item: Item = {

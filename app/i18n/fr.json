@@ -1,4 +1,5 @@
 {
+  "NSCameraUsageDescription": "BioT Mobile utilise ta caméra pour scanner le QR code d'un objet.",
   "common": {
     "ok": "OK",
     "cancel": "Effacer",

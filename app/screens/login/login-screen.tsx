@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { ViewStyle, TouchableWithoutFeedback } from 'react-native'
+import {
+  ViewStyle,
+  TouchableWithoutFeedback,
+  Platform,
+  Image,
+  ImageStyle,
+  TouchableOpacity,
+} from 'react-native'
+import * as WebBrowser from 'expo-web-browser'
 import { Text, Input, CheckBox, Icon } from '@ui-kitten/components'
 import { Screen } from '../../components'
 import { useStores } from '../../models'
@@ -9,6 +17,7 @@ import { spacing } from '../../theme'
 import { AsyncButton } from '../../components/async-button/async-button'
 import { isEmpty } from '../../utils/function-utils/function-utils'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '..'
+const image = require('../../../assets/biot.png')
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -37,7 +46,14 @@ const CHECKBOX: ViewStyle = {
 }
 
 const BUTTON: ViewStyle = {
-  marginTop: spacing[8],
+  marginVertical: spacing[8],
+}
+
+const IMAGE: ImageStyle = {
+  marginVertical: spacing[8],
+  width: 150,
+  height: 150,
+  alignSelf: 'center',
 }
 
 const strings = {
@@ -57,6 +73,8 @@ const EmailIcon = (props) => <Icon {...props} name="email-outline" />
 const LockIcon = (props) => <Icon {...props} name="lock-outline" />
 
 const AlertIcon = (props) => <Icon {...props} name="alert-triangle-outline" />
+
+const isIos = Platform.OS === 'ios'
 
 /**
  * Login screen.
@@ -86,7 +104,7 @@ export const LoginScreen = observer(function LoginScreen() {
   )
 
   return (
-    <Screen style={ROOT} preset="fixed" statusBar="dark-content">
+    <Screen style={ROOT} preset="fixed" statusBar={isIos ? 'dark-content' : 'light-content'}>
       <Text category="h3" style={TITLE}>
         {strings.welcome}
       </Text>
@@ -122,6 +140,7 @@ export const LoginScreen = observer(function LoginScreen() {
         secureTextEntry={secureTextEntry}
         onChangeText={(nextValue) => setPassword(nextValue)}
         autoCompleteType="password"
+        autoCapitalize="none"
       />
       <CheckBox
         style={CHECKBOX}
@@ -164,6 +183,9 @@ export const LoginScreen = observer(function LoginScreen() {
           }
         }}
       />
+      <TouchableOpacity onPress={() => WebBrowser.openBrowserAsync('https://biot.webflow.io')}>
+        <Image style={IMAGE} source={image} />
+      </TouchableOpacity>
     </Screen>
   )
 })

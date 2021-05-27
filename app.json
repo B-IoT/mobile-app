@@ -17,6 +17,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true,
         "NSCameraUsageDescription": "BioT Mobile uses your camera to scan an item's QR code."
       },
       "supportsTablet": true,
@@ -28,8 +29,11 @@
       "package": "ch.biot.mobile",
       "versionCode": 1
     },
+    "locales": {
+      "fr": "./app/i18n/fr.json"
+    },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/biot-shape-square.png"
     },
     "plugins": ["sentry-expo"],
     "hooks": {

@@ -1,11 +1,12 @@
 import React from 'react'
 import Constants from 'expo-constants'
 import { Button, Layout, Modal, Text } from '@ui-kitten/components'
-import { ViewStyle } from 'react-native'
+import { Image, ImageStyle, ViewStyle } from 'react-native'
 import { spacing } from '../../../theme'
 import { translate } from '../../../i18n'
 import { useStores } from '../../../models'
 import { InfoPopupProps } from './info-popup.props'
+const image = require('../../../../assets/biot-shape-square.png')
 
 const LAYOUT: ViewStyle = {
   flexDirection: 'column',
@@ -28,8 +29,15 @@ const VERSION: ViewStyle = {
   margin: spacing[2],
 }
 
+const IMAGE: ImageStyle = {
+  marginTop: spacing[2],
+  width: 32,
+  height: 32,
+  alignSelf: 'center',
+}
+
 const LOGOUT = translate('scanScreen.logout')
-export const COPYRIGHT = 'Copyright © 2021 BIoT.'
+export const COPYRIGHT = 'Copyright © 2021 BioT.'
 export const ALL_RIGHTS_RESERVED = 'All Rights Reserved.'
 
 /**
@@ -51,6 +59,7 @@ export function InfoPopup(props: InfoPopupProps) {
         </Text>
         <Text category="c1">{COPYRIGHT}</Text>
         <Text category="c1">{ALL_RIGHTS_RESERVED}</Text>
+        <Image style={IMAGE} source={image} />
       </Layout>
     </Modal>
   )

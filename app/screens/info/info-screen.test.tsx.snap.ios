@@ -691,7 +691,19 @@ exports[`Info screen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                />
+                                >
+                                  <Image
+                                    source={1}
+                                    style={
+                                      Object {
+                                        "height": 32,
+                                        "marginEnd": 16,
+                                        "marginTop": 4,
+                                        "width": 32,
+                                      }
+                                    }
+                                  />
+                                </View>
                               </View>
                               <View
                                 appearance="default"
@@ -5349,7 +5361,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      19/05/2021
+                                      28/05/2021
                                     </Text>
                                   </View>
                                 </View>
