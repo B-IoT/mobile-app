@@ -7,7 +7,7 @@
     "retry": "Réessayer",
     "error": "Erreur, réessaye!",
     "shouldNotBeEmpty": "Ne devrait pas être vide",
-    "shouldBeValidPrice": "Devrait être plus un nombre plus grand que zéro"
+    "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -20,14 +20,14 @@
     "login": "Se connecter"
   },
   "scanScreen": {
-    "scan": "Scannes ton QR code",
+    "scan": "Scanne ton QR code",
     "logout": "Se déconnecter",
     "whyCamera": "Caméra pas disponible.\nLa caméra est nécessaire pour scanner les QR codes",
     "requestingCamera": "En train de demander les permissions pour la caméra..."
   },
   "registerScreen": {
     "register": "Enregistrer",
-    "title": "Enregister un objet",
+    "title": "Enregistrer un objet",
     "itemID": "ID de l'objet",
     "itemIDPlaceholder": "Entre l'ID de l'objet",
     "category": "Catégorie",

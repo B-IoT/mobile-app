@@ -43,8 +43,7 @@
           "config": {
             "organization": "biot",
             "project": "biot-mobile",
-            "authToken": "3e80afec77814981942cc3bfde3373fb6bdd0b6134974575885fd4aa6c1b8c5b",
-            "setCommits": "true"
+            "authToken": "3e80afec77814981942cc3bfde3373fb6bdd0b6134974575885fd4aa6c1b8c5b"
           }
         }
       ]
