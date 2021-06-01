@@ -36,7 +36,7 @@ describe('Item store', () => {
         orderNumber: 'aasas',
         color: 'blue',
         serialNumber: 'sdsd',
-        expiryDate: new Date(),
+        maintenanceDate: new Date(),
         status: 'status',
       }),
       authToken: 'token',
@@ -81,7 +81,7 @@ describe('Item store', () => {
         orderNumber: 'aasas',
         color: 'blue',
         serialNumber: 'sdsd',
-        expiryDate: new Date(),
+        maintenanceDate: new Date(),
         status: 'status',
       }),
       authToken: 'token',
@@ -145,7 +145,7 @@ describe('Item store', () => {
         orderNumber: 'aasas',
         color: 'blue',
         serialNumber: 'sdsd',
-        expiryDate: new Date(),
+        maintenanceDate: new Date(),
         status: 'status',
       }),
       authToken: 'token',
@@ -188,7 +188,7 @@ describe('Item store', () => {
         orderNumber: 'aasas',
         color: 'blue',
         serialNumber: 'sdsd',
-        expiryDate: new Date(),
+        maintenanceDate: new Date(),
         status: 'status',
       }),
       authToken: 'token',
@@ -232,7 +232,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 
@@ -305,7 +305,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 
@@ -375,7 +375,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 
@@ -417,7 +417,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 
@@ -455,7 +455,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 
@@ -495,7 +495,7 @@ describe('Item store', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
 

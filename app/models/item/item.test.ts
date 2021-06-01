@@ -21,7 +21,7 @@ it('can be created', () => {
     orderNumber: 'aasas',
     color: 'blue',
     serialNumber: 'sdsd',
-    expiryDate: new Date(),
+    maintenanceDate: new Date(),
     status: 'status'
   })
 

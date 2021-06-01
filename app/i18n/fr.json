@@ -60,8 +60,8 @@
     "colorPlaceholder": "Entre la couleur",
     "serialNumber": "Numéro de série",
     "serialNumberPlaceholder": "Entre le numéro de série",
-    "expiryDate": "Date d'échéance",
-    "expiryDatePlaceholder": "Entre la date d'échéance",
+    "maintenanceDate": "Date de maintenance",
+    "maintenanceDatePlaceholder": "Entre la date de maintenance",
     "status": "Statut",
     "statusPlaceholder": "Entre le statut"
   },

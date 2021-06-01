@@ -56,7 +56,7 @@ const IMAGE: ImageStyle = {
   width: 32,
   height: 32,
   marginEnd: spacing[4],
-  marginTop: spacing[1]
+  marginTop: spacing[1],
 }
 
 const strings = {
@@ -92,8 +92,8 @@ const strings = {
   colorPlaceholder: translate('registerScreen.colorPlaceholder'),
   serialNumber: translate('registerScreen.serialNumber'),
   serialNumberPlaceholder: translate('registerScreen.serialNumberPlaceholder'),
-  expiryDate: translate('registerScreen.expiryDate'),
-  expiryDatePlaceholder: translate('registerScreen.expiryDatePlaceholder'),
+  maintenanceDate: translate('registerScreen.maintenanceDate'),
+  maintenanceDatePlaceholder: translate('registerScreen.maintenanceDatePlaceholder'),
   status: translate('registerScreen.status'),
   statusPlaceholder: translate('registerScreen.statusPlaceholder'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
@@ -131,7 +131,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialOrderNumber,
     initialColor,
     initialSerialNumber,
-    initialExpiryDate,
+    initialMaintenanceDate,
     initialStatus,
     buttonText,
     title,
@@ -177,7 +177,9 @@ export function ItemScreen(props: ItemScreenProps) {
   const [color, setColor] = useState(initialColor ? initialColor : '')
   const [serialNumber, setSerialNumber] = useState(initialSerialNumber ? initialSerialNumber : '')
   const [serialNumberStatus, setSerialNumberStatus] = useState<AutocompleteStatus>('basic')
-  const [expiryDate, setExpiryDate] = useState(initialExpiryDate ? initialExpiryDate : null)
+  const [maintenanceDate, setMaintenanceDate] = useState(
+    initialMaintenanceDate ? initialMaintenanceDate : null,
+  )
   const [status, setStatus] = useState(initialStatus ? initialStatus : '')
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
@@ -354,10 +356,10 @@ export function ItemScreen(props: ItemScreenProps) {
         />
         <Datepicker
           style={INPUT}
-          date={expiryDate}
-          onSelect={setExpiryDate}
-          label={strings.expiryDate}
-          placeholder={strings.expiryDatePlaceholder}
+          date={maintenanceDate}
+          onSelect={setMaintenanceDate}
+          label={strings.maintenanceDate}
+          placeholder={strings.maintenanceDatePlaceholder}
           max={MAX_DATE}
         />
         <Autocomplete
@@ -412,7 +414,9 @@ export function ItemScreen(props: ItemScreenProps) {
               const correctPurchaseDate = purchaseDate
                 ? new Date(purchaseDate.getDate() + 1)
                 : purchaseDate // needed since the picker chooses the previous day at midnight
-              const correctExpiryDate = expiryDate ? new Date(expiryDate.getDate() + 1) : expiryDate // needed since the picker chooses the previous day at midnight
+              const correctMaintenanceDate = maintenanceDate
+                ? new Date(maintenanceDate.getDate() + 1)
+                : maintenanceDate // needed since the picker chooses the previous day at midnight
 
               const item: Item = {
                 id: null,
@@ -433,7 +437,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 purchasePrice: parseFloat(purchasePrice),
                 orderNumber,
                 serialNumber,
-                expiryDate: correctExpiryDate,
+                maintenanceDate: correctMaintenanceDate,
                 status,
                 color,
               }

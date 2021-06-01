@@ -33,7 +33,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
@@ -76,7 +76,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
@@ -117,7 +117,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
@@ -156,7 +156,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
@@ -201,7 +201,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
@@ -244,7 +244,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockImplementation(() => {
@@ -285,7 +285,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
@@ -332,7 +332,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
@@ -379,7 +379,7 @@ describe('Item Api', () => {
       orderNumber: 'aasas',
       color: 'blue',
       serialNumber: 'sdsd',
-      expiryDate: new Date(),
+      maintenanceDate: new Date(),
       status: 'status',
     }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockImplementation(() => {

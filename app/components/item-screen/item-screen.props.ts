@@ -87,9 +87,9 @@ export interface ItemScreenProps {
   initialSerialNumber?: string
 
   /**
-   * The initial expiry date value. If not specified, defaults to today.
+   * The initial maintenance date value. If not specified, defaults to today.
    */
-  initialExpiryDate?: Date
+  initialMaintenanceDate?: Date
 
   /**
    * The initial status value. If not specified, defaults to ''.

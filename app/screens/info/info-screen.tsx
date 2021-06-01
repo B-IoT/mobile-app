@@ -41,7 +41,7 @@ export const InfoScreen = observer(function InfoScreen() {
     orderNumber,
     color,
     serialNumber,
-    expiryDate,
+    maintenanceDate,
     status,
   } = itemStore.item
 
@@ -64,7 +64,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialOrderNumber={orderNumber}
       initialColor={color}
       initialSerialNumber={serialNumber}
-      initialExpiryDate={expiryDate}
+      initialMaintenanceDate={maintenanceDate}
       initialStatus={status}
       buttonText={strings.update}
       title={strings.title}
