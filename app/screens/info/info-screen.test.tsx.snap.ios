@@ -5361,7 +5361,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      30/05/2021
+                                      01/06/2021
                                     </Text>
                                   </View>
                                 </View>
@@ -6156,7 +6156,7 @@ exports[`Info screen should match snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Expiry date
+                                    Maintenance date
                                   </Text>
                                   <View
                                     accessible={true}
@@ -6208,7 +6208,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Enter the expiry date
+                                      Enter the maintenance date
                                     </Text>
                                   </View>
                                 </View>

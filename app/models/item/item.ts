@@ -20,7 +20,7 @@ export const ItemModel = types.model('Item').props({
   orderNumber: types.maybeNull(types.string),
   color: types.maybeNull(types.string),
   serialNumber: types.maybeNull(types.string),
-  expiryDate: types.maybeNull(types.Date),
+  maintenanceDate: types.maybeNull(types.Date),
   status: types.maybeNull(types.string),
 })
 

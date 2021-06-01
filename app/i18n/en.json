@@ -59,8 +59,8 @@
     "colorPlaceholder": "Enter the color",
     "serialNumber": "Serial number",
     "serialNumberPlaceholder": "Enter the serial number",
-    "expiryDate": "Expiry date",
-    "expiryDatePlaceholder": "Enter the expiry date",
+    "maintenanceDate": "Maintenance date",
+    "maintenanceDatePlaceholder": "Enter the maintenance date",
     "status": "Status",
     "statusPlaceholder": "Enter the status"
   },

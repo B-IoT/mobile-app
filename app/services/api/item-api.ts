@@ -52,7 +52,7 @@ export class ItemApi {
           orderNumber: rawItem.orderNumber,
           color: rawItem.color,
           serialNumber: rawItem.serialNumber,
-          expiryDate: new Date(rawItem.expiryDate),
+          maintenanceDate: new Date(rawItem.maintenanceDate),
           status: rawItem.status,
         }
         return { kind: 'ok', item }
@@ -140,9 +140,9 @@ export function cleanItem(item: Item): Record<string, unknown> {
     clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
   }
 
-  if (clean.expiryDate) {
+  if (clean.maintenanceDate) {
     // Extract date-only ISO string
-    clean.expiryDate = clean.expiryDate.toISOString().split('T')[0]
+    clean.maintenanceDate = clean.maintenanceDate.toISOString().split('T')[0]
   }
 
   if (clean.purchasePrice) {

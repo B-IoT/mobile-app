@@ -37,7 +37,7 @@ describe('Info screen', () => {
     orderNumber: 'aasas',
     color: 'blue',
     serialNumber: 'sdsd',
-    expiryDate: null,
+    maintenanceDate: null,
     status: 'status',
   }
 
@@ -191,11 +191,11 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('registerScreen.serialNumber'))).toBeTruthy()
   })
 
-  it('should show the expiry date picker', () => {
+  it('should show the maintenance date picker', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.expiryDate'))).toBeTruthy()
+    expect(component.queryByText(translate('registerScreen.maintenanceDate'))).toBeTruthy()
   })
 
   it('should show the status input', () => {
@@ -305,7 +305,7 @@ describe('Info screen', () => {
       orderNumber,
       color,
       serialNumber,
-      expiryDate: null,
+      maintenanceDate: null,
       status,
     })
   })
