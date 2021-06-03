@@ -39,6 +39,9 @@ describe('Info screen', () => {
     serialNumber: 'sdsd',
     maintenanceDate: null,
     status: 'status',
+    comments: 'A comment',
+    lastModifiedDate: null,
+    lastModifiedBy: 'Antoine',
   }
 
   function buildInfoScreen() {
@@ -205,6 +208,27 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('registerScreen.status'))).toBeTruthy()
   })
 
+  it('should show the comments input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.comments'))).toBeTruthy()
+  })
+
+  it('should show the last modified date picker', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.lastModifiedDate'))).toBeTruthy()
+  })
+
+  it('should show the last modified by input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.lastModifiedBy'))).toBeTruthy()
+  })
+
   it('should show the update item button', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -280,6 +304,14 @@ describe('Info screen', () => {
     const statusInput = component.queryByText(translate('registerScreen.status'))
     fireEvent.changeText(statusInput, status)
 
+    const comments = 'comments'
+    const commentsInput = component.queryByText(translate('registerScreen.comments'))
+    fireEvent.changeText(commentsInput, comments)
+
+    const lastModifiedBy = 'lastModifiedBy'
+    const lastModifiedByInput = component.queryByText(translate('registerScreen.lastModifiedBy'))
+    fireEvent.changeText(lastModifiedByInput, lastModifiedBy)
+
     const updateItemButton = component.queryByText(translate('infoScreen.update'))
     fireEvent.press(updateItemButton)
 
@@ -307,6 +339,9 @@ describe('Info screen', () => {
       serialNumber,
       maintenanceDate: null,
       status,
+      comments,
+      lastModifiedDate: jasmine.any(Date),
+      lastModifiedBy,
     })
   })
 

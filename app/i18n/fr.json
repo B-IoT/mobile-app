@@ -63,7 +63,12 @@
     "maintenanceDate": "Date de maintenance",
     "maintenanceDatePlaceholder": "Entre la date de maintenance",
     "status": "Statut",
-    "statusPlaceholder": "Entre le statut"
+    "statusPlaceholder": "Entre le statut",
+    "comments": "Commentaires",
+    "commentsPlaceholder": "Entre les commentaires",
+    "lastModifiedDate": "Dernière modification le",
+    "lastModifiedBy": "Dernière modification par",
+    "lastModifiedByPlaceholder": "Entre le dernier modificateur"
   },
   "infoScreen": {
     "update": "Mettre à jour",

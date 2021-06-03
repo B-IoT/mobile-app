@@ -22,7 +22,10 @@ it('can be created', () => {
     color: 'blue',
     serialNumber: 'sdsd',
     maintenanceDate: new Date(),
-    status: 'status'
+    status: 'status',
+    comments: 'A comment',
+    lastModifiedDate: new Date(),
+    lastModifiedBy: 'Antoine'
   })
 
   expect(instance).toBeTruthy()

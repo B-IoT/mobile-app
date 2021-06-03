@@ -8,6 +8,7 @@ import {
   Datepicker,
   Divider,
   Icon,
+  Input,
   Layout,
   TopNavigation,
   TopNavigationAction,
@@ -96,6 +97,11 @@ const strings = {
   maintenanceDatePlaceholder: translate('registerScreen.maintenanceDatePlaceholder'),
   status: translate('registerScreen.status'),
   statusPlaceholder: translate('registerScreen.statusPlaceholder'),
+  comments: translate('registerScreen.comments'),
+  commentsPlaceholder: translate('registerScreen.commentsPlaceholder'),
+  lastModifiedDate: translate('registerScreen.lastModifiedDate'),
+  lastModifiedBy: translate('registerScreen.lastModifiedBy'),
+  lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
 }
@@ -133,9 +139,15 @@ export function ItemScreen(props: ItemScreenProps) {
     initialSerialNumber,
     initialMaintenanceDate,
     initialStatus,
+    initialComments,
+    initialLastModifiedDate,
+    initialLastModifiedBy,
     buttonText,
     title,
   } = props
+
+  // Cannot be modified by the user, it is a constant that defaults to to day
+  const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date()
 
   const [itemID, setItemID] = useState(initialItemID ? initialItemID : '')
   const [itemIDStatus, setItemIDStatus] = useState<AutocompleteStatus>('basic')
@@ -181,6 +193,10 @@ export function ItemScreen(props: ItemScreenProps) {
     initialMaintenanceDate ? initialMaintenanceDate : null,
   )
   const [status, setStatus] = useState(initialStatus ? initialStatus : '')
+  const [comments, setComments] = useState(initialComments ? initialComments : '')
+  const [lastModifiedBy, setLastModifiedBy] = useState(
+    initialLastModifiedBy ? initialLastModifiedBy : '',
+  )
   const [executing, setExecuting] = useState(false)
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
@@ -193,12 +209,20 @@ export function ItemScreen(props: ItemScreenProps) {
 
   /**
    * Shows an error using the given setter, highlighting the right field and showing a message.
+   *
    * @param setStatus the statusSetter
    */
   const showError = (setStatus: (s: AutocompleteStatus) => void) => {
     setStatus('danger')
     setTimeout(() => setStatus('basic'), ERROR_TIMEOUT)
   }
+
+  /**
+   * Increments the given date by one day, if defined.
+   *
+   * @param date the date to fix
+   */
+  const fixDate = (date: Date) => (date ? new Date(date.getDate() + 1) : date)
 
   return (
     <Screen style={ROOT} preset="scroll" statusBar={isIos ? 'dark-content' : 'light-content'}>
@@ -378,6 +402,27 @@ export function ItemScreen(props: ItemScreenProps) {
           value={status}
           setValue={setStatus}
         />
+        <Input
+          style={INPUT}
+          label={strings.comments}
+          placeholder={strings.commentsPlaceholder}
+          value={comments}
+          onChangeText={setComments}
+        />
+        <Datepicker
+          style={INPUT}
+          date={lastModifiedDate}
+          label={strings.lastModifiedDate}
+          disabled={true}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.lastModifiedBy}
+          placeholder={strings.lastModifiedByPlaceholder}
+          dataType={DataType.LAST_MODIFIED_BY}
+          value={lastModifiedBy}
+          setValue={setLastModifiedBy}
+        />
         <AsyncButton
           style={BUTTON}
           loading={executing}
@@ -411,12 +456,10 @@ export function ItemScreen(props: ItemScreenProps) {
             if (noErrors) {
               setExecuting(true)
 
-              const correctPurchaseDate = purchaseDate
-                ? new Date(purchaseDate.getDate() + 1)
-                : purchaseDate // needed since the picker chooses the previous day at midnight
-              const correctMaintenanceDate = maintenanceDate
-                ? new Date(maintenanceDate.getDate() + 1)
-                : maintenanceDate // needed since the picker chooses the previous day at midnight
+              // Needed since the picker chooses the previous day at midnight
+              const correctPurchaseDate = fixDate(purchaseDate)
+              const correctMaintenanceDate = fixDate(maintenanceDate)
+              const correctLastModifiedDate = fixDate(lastModifiedDate)
 
               const item: Item = {
                 id: null,
@@ -440,6 +483,9 @@ export function ItemScreen(props: ItemScreenProps) {
                 maintenanceDate: correctMaintenanceDate,
                 status,
                 color,
+                comments,
+                lastModifiedDate: correctLastModifiedDate,
+                lastModifiedBy,
               }
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
@@ -465,6 +511,7 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.COLOR, color],
                   [DataType.SERIAL_NUMBER, serialNumber],
                   [DataType.STATUS, status],
+                  [DataType.LAST_MODIFIED_BY, lastModifiedBy],
                 ]
                 newAutocompleteEntries.forEach(([dataType, entry]) =>
                   itemStore.addAutocompleteEntryData(dataType, entry),

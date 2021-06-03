@@ -54,6 +54,9 @@ export class ItemApi {
           serialNumber: rawItem.serialNumber,
           maintenanceDate: new Date(rawItem.maintenanceDate),
           status: rawItem.status,
+          comments: rawItem.comments,
+          lastModifiedDate: new Date(rawItem.lastModifiedDate),
+          lastModifiedBy: rawItem.lastModifiedBy,
         }
         return { kind: 'ok', item }
       } catch {
@@ -132,17 +135,24 @@ export class ItemApi {
  * @returns the item cleaned
  */
 export function cleanItem(item: Item): Record<string, unknown> {
+  const cleanDate = (date: Date) => date.toISOString().split('T')[0]
+
   // Remove null fields
   const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
 
   if (clean.purchaseDate) {
     // Extract date-only ISO string
-    clean.purchaseDate = clean.purchaseDate.toISOString().split('T')[0]
+    clean.purchaseDate = cleanDate(clean.purchaseDate)
   }
 
   if (clean.maintenanceDate) {
     // Extract date-only ISO string
-    clean.maintenanceDate = clean.maintenanceDate.toISOString().split('T')[0]
+    clean.maintenanceDate = cleanDate(clean.maintenanceDate)
+  }
+
+  if (clean.lastModifiedDate) {
+    // Extract date-only ISO string
+    clean.lastModifiedDate = cleanDate(clean.lastModifiedDate)
   }
 
   if (clean.purchasePrice) {

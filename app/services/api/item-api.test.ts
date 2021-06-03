@@ -3,6 +3,33 @@ import { Api } from './api'
 import { cleanItem, ItemApi } from './item-api'
 
 describe('Item Api', () => {
+  const item = {
+    id: 1,
+    beacon: 'aa:aa:aa:aa:aa:aa',
+    category: 'Lit',
+    service: 'Bloc 1',
+    itemID: 'id',
+    brand: 'br',
+    model: 'mod',
+    supplier: 'supp',
+    originLocation: 'origin',
+    currentLocation: 'current',
+    room: 'room',
+    contact: 'contact',
+    currentOwner: 'own',
+    previousOwner: 'prev',
+    purchaseDate: new Date(),
+    purchasePrice: 42.3,
+    orderNumber: 'aasas',
+    color: 'blue',
+    serialNumber: 'sdsd',
+    maintenanceDate: new Date(),
+    status: 'status',
+    comments: 'A comment',
+    lastModifiedDate: new Date(),
+    lastModifiedBy: 'Antoine',
+  }
+
   it('should be constructed', () => {
     const itemApi = new ItemApi(new Api())
     expect(itemApi).toBeTruthy()
@@ -13,29 +40,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: true,
       problem: null,
@@ -56,29 +60,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
       ok: false,
       problem: SERVER_ERROR,
@@ -97,29 +78,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
       throw new Error('')
     })
@@ -136,29 +94,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: true,
       problem: null,
@@ -181,29 +116,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockResolvedValue({
       ok: false,
       problem: SERVER_ERROR,
@@ -224,29 +136,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPost = jest.spyOn(api.apisauce, 'post').mockImplementation(() => {
       throw new Error('')
     })
@@ -265,29 +154,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: true,
       problem: null,
@@ -312,29 +178,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockResolvedValue({
       ok: false,
       problem: SERVER_ERROR,
@@ -359,29 +202,6 @@ describe('Item Api', () => {
     api.setup()
     const itemApi = new ItemApi(api)
 
-    const item = {
-      id: 1,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      itemID: 'id',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-    }
     const mockPut = jest.spyOn(api.apisauce, 'put').mockImplementation(() => {
       throw new Error('')
     })

@@ -62,7 +62,12 @@
     "maintenanceDate": "Maintenance date",
     "maintenanceDatePlaceholder": "Enter the maintenance date",
     "status": "Status",
-    "statusPlaceholder": "Enter the status"
+    "statusPlaceholder": "Enter the status",
+    "comments": "Comments",
+    "commentsPlaceholder": "Enter the comments",
+    "lastModifiedDate": "Last modified",
+    "lastModifiedBy": "Last modified by",
+    "lastModifiedByPlaceholder": "Enter the last modifier"
   },
   "infoScreen": {
     "update": "Update",

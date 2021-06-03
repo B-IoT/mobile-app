@@ -181,6 +181,27 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.status'))).toBeTruthy()
   })
 
+  it('should show the comments input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.comments'))).toBeTruthy()
+  })
+
+  it('should show the last modified date picker', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.lastModifiedDate'))).toBeTruthy()
+  })
+
+  it('should show the last modified by input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.lastModifiedBy'))).toBeTruthy()
+  })
+
   it('should show the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
@@ -256,6 +277,14 @@ describe('Register screen', () => {
     const statusInput = component.queryByText(translate('registerScreen.status'))
     fireEvent.changeText(statusInput, status)
 
+    const comments = 'comments'
+    const commentsInput = component.queryByText(translate('registerScreen.comments'))
+    fireEvent.changeText(commentsInput, comments)
+
+    const lastModifiedBy = 'lastModifiedBy'
+    const lastModifiedByInput = component.queryByText(translate('registerScreen.lastModifiedBy'))
+    fireEvent.changeText(lastModifiedByInput, lastModifiedBy)
+
     const registerItemButton = component.queryByText(translate('registerScreen.register'))
     fireEvent.press(registerItemButton)
 
@@ -283,6 +312,9 @@ describe('Register screen', () => {
       serialNumber,
       maintenanceDate: null,
       status,
+      comments,
+      lastModifiedDate: jasmine.any(Date),
+      lastModifiedBy,
     })
   })
 

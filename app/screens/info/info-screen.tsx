@@ -43,6 +43,9 @@ export const InfoScreen = observer(function InfoScreen() {
     serialNumber,
     maintenanceDate,
     status,
+    comments,
+    lastModifiedDate,
+    lastModifiedBy,
   } = itemStore.item
 
   return (
@@ -66,6 +69,9 @@ export const InfoScreen = observer(function InfoScreen() {
       initialSerialNumber={serialNumber}
       initialMaintenanceDate={maintenanceDate}
       initialStatus={status}
+      initialComments={comments}
+      initialLastModifiedDate={lastModifiedDate}
+      initialLastModifiedBy={lastModifiedBy}
       buttonText={strings.update}
       title={strings.title}
     />

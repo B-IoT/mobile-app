@@ -97,6 +97,21 @@ export interface ItemScreenProps {
   initialStatus?: string
 
   /**
+   * The initial last modified date value. If not specified, defaults to today.
+   */
+  initialLastModifiedDate?: Date
+
+  /**
+   * The initial comments value. If not specified, defaults to ''.
+   */
+  initialComments?: string
+
+  /**
+   * The initial last modified by value. If not specified, defaults to ''.
+   */
+  initialLastModifiedBy?: string
+
+  /**
    * The text displayed by the button
    */
   buttonText: string
