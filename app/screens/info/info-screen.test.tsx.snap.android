@@ -694,7 +694,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1075,7 +1074,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1456,7 +1454,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1837,7 +1834,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2218,7 +2214,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2599,7 +2594,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2980,7 +2974,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -3361,7 +3354,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -3742,7 +3734,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -4123,7 +4114,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -4504,7 +4494,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -4885,7 +4874,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -5268,7 +5256,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      03/06/2021
+                                      05/06/2021
                                     </Text>
                                   </View>
                                 </View>
@@ -5738,7 +5726,6 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
-                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -7076,7 +7063,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      03/06/2021
+                                      05/06/2021
                                     </Text>
                                   </View>
                                 </View>

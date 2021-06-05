@@ -47,15 +47,15 @@ export class ItemApi {
           contact: rawItem.contact,
           currentOwner: rawItem.currentOwner,
           previousOwner: rawItem.previousOwner,
-          purchaseDate: new Date(rawItem.purchaseDate),
+          purchaseDate: rawItem.purchaseDate && new Date(rawItem.purchaseDate),
           purchasePrice: rawItem.purchasePrice,
           orderNumber: rawItem.orderNumber,
           color: rawItem.color,
           serialNumber: rawItem.serialNumber,
-          maintenanceDate: new Date(rawItem.maintenanceDate),
+          maintenanceDate: rawItem.maintenanceDate && new Date(rawItem.maintenanceDate),
           status: rawItem.status,
           comments: rawItem.comments,
-          lastModifiedDate: new Date(rawItem.lastModifiedDate),
+          lastModifiedDate: rawItem.lastModifiedDate && new Date(rawItem.lastModifiedDate),
           lastModifiedBy: rawItem.lastModifiedBy,
         }
         return { kind: 'ok', item }

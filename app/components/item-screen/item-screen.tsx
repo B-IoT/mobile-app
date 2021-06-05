@@ -19,7 +19,6 @@ import { resetAndNavigateTo } from '../../navigators'
 import { DataType } from '../../models/item-store/item-store'
 import { ItemScreenProps } from './item-screen.props'
 import { AutocompleteStatus } from '../autocomplete/autocomplete.props'
-import { isEmpty } from '../../utils/function-utils/function-utils'
 import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
@@ -102,8 +101,7 @@ const strings = {
   lastModifiedDate: translate('registerScreen.lastModifiedDate'),
   lastModifiedBy: translate('registerScreen.lastModifiedBy'),
   lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
-  shouldBeValidPrice: translate('common.shouldBeValidPrice'),
-  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
+  shouldBeValidPrice: translate('common.shouldBeValidPrice')
 }
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
@@ -146,37 +144,26 @@ export function ItemScreen(props: ItemScreenProps) {
     title,
   } = props
 
-  // Cannot be modified by the user, it is a constant that defaults to to day
+  // Cannot be modified by the user, it is a constant that defaults to today
   const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date()
 
   const [itemID, setItemID] = useState(initialItemID ? initialItemID : '')
-  const [itemIDStatus, setItemIDStatus] = useState<AutocompleteStatus>('basic')
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
-  const [categoryStatus, setCategoryStatus] = useState<AutocompleteStatus>('basic')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
-  const [brandStatus, setBrandStatus] = useState<AutocompleteStatus>('basic')
   const [model, setModel] = useState(initialModel ? initialModel : '')
-  const [modelStatus, setModelStatus] = useState<AutocompleteStatus>('basic')
   const [supplier, setSupplier] = useState(initialSupplier ? initialSupplier : '')
-  const [supplierStatus, setSupplierStatus] = useState<AutocompleteStatus>('basic')
   const [originLocation, setOriginLocation] = useState(
     initialOriginLocation ? initialOriginLocation : '',
   )
-  const [originLocationStatus, setOriginLocationStatus] = useState<AutocompleteStatus>('basic')
   const [currentLocation, setCurrentLocation] = useState(
     initialCurrentLocation ? initialCurrentLocation : '',
   )
-  const [currentLocationStatus, setCurrentLocationStatus] = useState<AutocompleteStatus>('basic')
   const [room, setRoom] = useState(initialRoom ? initialRoom : '')
-  const [roomStatus, setRoomStatus] = useState<AutocompleteStatus>('basic')
   const [contact, setContact] = useState(initialContact ? initialContact : '')
-  const [contactStatus, setContactStatus] = useState<AutocompleteStatus>('basic')
   const [currentOwner, setCurrentOwner] = useState(initialCurrentOwner ? initialCurrentOwner : '')
-  const [currentOwnerStatus, setCurrentOwnerStatus] = useState<AutocompleteStatus>('basic')
   const [previousOwner, setPreviousOwner] = useState(
     initialPreviousOwner ? initialPreviousOwner : '',
   )
-  const [previousOwnerStatus, setPreviousOwnerStatus] = useState<AutocompleteStatus>('basic')
   const [purchaseDate, setPurchaseDate] = useState(
     initialPurchaseDate ? initialPurchaseDate : new Date(),
   )
@@ -185,10 +172,8 @@ export function ItemScreen(props: ItemScreenProps) {
   )
   const [purchasePriceStatus, setPurchasePriceStatus] = useState<AutocompleteStatus>('basic')
   const [orderNumber, setOrderNumber] = useState(initialOrderNumber ? initialOrderNumber : '')
-  const [orderNumberStatus, setOrderNumberStatus] = useState<AutocompleteStatus>('basic')
   const [color, setColor] = useState(initialColor ? initialColor : '')
   const [serialNumber, setSerialNumber] = useState(initialSerialNumber ? initialSerialNumber : '')
-  const [serialNumberStatus, setSerialNumberStatus] = useState<AutocompleteStatus>('basic')
   const [maintenanceDate, setMaintenanceDate] = useState(
     initialMaintenanceDate ? initialMaintenanceDate : null,
   )
@@ -218,11 +203,19 @@ export function ItemScreen(props: ItemScreenProps) {
   }
 
   /**
-   * Increments the given date by one day, if defined.
+   * Makes sure the date refers to the right day, if defined.
    *
    * @param date the date to fix
    */
-  const fixDate = (date: Date) => (date ? new Date(date.getDate() + 1) : date)
+  const fixDate = (date: Date) => {
+    const d = new Date()
+    if (date) {
+      d.setDate(date.getDate())
+      return d
+    } else {
+      return date
+    }
+  }
 
   return (
     <Screen style={ROOT} preset="scroll" statusBar={isIos ? 'dark-content' : 'light-content'}>
@@ -232,9 +225,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.itemID}
-          status={itemIDStatus}
           placeholder={strings.itemIDPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.ITEM_ID}
           value={itemID}
           setValue={setItemID}
@@ -242,9 +233,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.category}
-          status={categoryStatus}
           placeholder={strings.categoryPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.CATEGORY}
           value={category}
           setValue={setCategory}
@@ -252,9 +241,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.serialNumber}
-          status={serialNumberStatus}
           placeholder={strings.serialNumberPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.SERIAL_NUMBER}
           value={serialNumber}
           setValue={setSerialNumber}
@@ -262,9 +249,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.brand}
-          status={brandStatus}
           placeholder={strings.brandPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.BRAND}
           value={brand}
           setValue={setBrand}
@@ -272,9 +257,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.model}
-          status={modelStatus}
           placeholder={strings.modelPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.MODEL}
           value={model}
           setValue={setModel}
@@ -282,9 +265,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.supplier}
-          status={supplierStatus}
           placeholder={strings.supplierPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.SUPPLIER}
           value={supplier}
           setValue={setSupplier}
@@ -292,9 +273,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.originLocation}
-          status={originLocationStatus}
           placeholder={strings.originLocationPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.ORIGIN}
           value={originLocation}
           setValue={setOriginLocation}
@@ -302,9 +281,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.currentLocation}
-          status={currentLocationStatus}
           placeholder={strings.currentLocationPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.LOCATION}
           value={currentLocation}
           setValue={setCurrentLocation}
@@ -312,9 +289,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.room}
-          status={roomStatus}
           placeholder={strings.roomPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.ROOM}
           value={room}
           setValue={setRoom}
@@ -322,9 +297,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.contact}
-          status={contactStatus}
           placeholder={strings.contactPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.CONTACT}
           value={contact}
           setValue={setContact}
@@ -332,9 +305,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.currentOwner}
-          status={currentOwnerStatus}
           placeholder={strings.currentOwnerPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.CURRENT_OWNER}
           value={currentOwner}
           setValue={setCurrentOwner}
@@ -342,9 +313,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.previousOwner}
-          status={previousOwnerStatus}
           placeholder={strings.previousOwnerPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.PREVIOUS_OWNER}
           value={previousOwner}
           setValue={setPreviousOwner}
@@ -371,9 +340,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.orderNumber}
-          status={orderNumberStatus}
           placeholder={strings.orderNumberPlaceholder}
-          errorCaption={strings.shouldNotBeEmpty}
           dataType={DataType.ORDER_NUMBER}
           value={orderNumber}
           setValue={setOrderNumber}
@@ -431,20 +398,8 @@ export function ItemScreen(props: ItemScreenProps) {
           onPress={async () => {
             // prettier-ignore
             const statusSetters: Array<[boolean, React.Dispatch<React.SetStateAction<AutocompleteStatus>>]> = [
-              [isEmpty(itemID), setItemIDStatus],
-              [isEmpty(category), setCategoryStatus],
-              [isEmpty(brand), setBrandStatus],
-              [isEmpty(model), setModelStatus],
-              [isEmpty(supplier), setSupplierStatus],
-              [isEmpty(originLocation), setOriginLocationStatus],
-              [isEmpty(currentLocation), setCurrentLocationStatus],
-              [isEmpty(room), setRoomStatus],
-              [isEmpty(contact), setContactStatus],
-              [isEmpty(currentOwner), setCurrentOwnerStatus],
-              [isEmpty(previousOwner), setPreviousOwnerStatus],
-              [isEmpty(purchasePrice) || !Number(purchasePrice) || Number(purchasePrice) <= 0, setPurchasePriceStatus],
-              [isEmpty(orderNumber), setOrderNumberStatus],
-              [isEmpty(serialNumber), setSerialNumberStatus],
+              [purchasePrice && (!Number(purchasePrice) || Number(purchasePrice) <= 0), setPurchasePriceStatus],
+              // Add more conditions here
             ]
 
             const noErrors = statusSetters.reduce((noErrors, [isInvalid, currSetter]) => {
@@ -477,7 +432,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 currentOwner,
                 previousOwner,
                 purchaseDate: correctPurchaseDate,
-                purchasePrice: parseFloat(purchasePrice),
+                purchasePrice: purchasePrice ? parseFloat(purchasePrice) : 0, // 0 needed because the server expects a number
                 orderNumber,
                 serialNumber,
                 maintenanceDate: correctMaintenanceDate,
@@ -487,6 +442,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 lastModifiedDate: correctLastModifiedDate,
                 lastModifiedBy,
               }
+
               const isSuccessful = await asyncOperation(item)
               setExecuting(false)
               if (!isSuccessful) {
@@ -513,8 +469,10 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.STATUS, status],
                   [DataType.LAST_MODIFIED_BY, lastModifiedBy],
                 ]
-                newAutocompleteEntries.forEach(([dataType, entry]) =>
-                  itemStore.addAutocompleteEntryData(dataType, entry),
+                newAutocompleteEntries.forEach(
+                  ([dataType, entry]) =>
+                    // Save the entry if defined
+                    entry && itemStore.addAutocompleteEntryData(dataType, entry),
                 )
 
                 setSuccess(true)

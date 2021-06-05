@@ -63,7 +63,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialCurrentOwner={currentOwner}
       initialPreviousOwner={previousOwner}
       initialPurchaseDate={purchaseDate}
-      initialPurchasePrice={purchasePrice.toString()}
+      initialPurchasePrice={purchasePrice === 0 ? '' : purchasePrice.toString()}
       initialOrderNumber={orderNumber}
       initialColor={color}
       initialSerialNumber={serialNumber}
