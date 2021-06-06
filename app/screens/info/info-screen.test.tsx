@@ -343,6 +343,10 @@ describe('Info screen', () => {
       lastModifiedDate: jasmine.any(Date),
       lastModifiedBy,
     })
+    const item = mockUpdateItem.mock.calls[0][0]
+    expect(item.lastModifiedDate.toISOString().split('T')[0]).toEqual(
+      new Date().toISOString().split('T')[0],
+    )
   })
 
   // it('should show warnings when updating an item with empty fields', () => {

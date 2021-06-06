@@ -316,6 +316,10 @@ describe('Register screen', () => {
       lastModifiedDate: jasmine.any(Date),
       lastModifiedBy,
     })
+    const item = mockRegisterItem.mock.calls[0][0]
+    expect(item.lastModifiedDate.toISOString().split('T')[0]).toEqual(
+      new Date().toISOString().split('T')[0],
+    )
   })
 
   // it('should show warnings when registering an item with empty fields', () => {

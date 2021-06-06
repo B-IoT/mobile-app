@@ -414,7 +414,7 @@ export function ItemScreen(props: ItemScreenProps) {
               // Needed since the picker chooses the previous day at midnight
               const correctPurchaseDate = fixDate(purchaseDate)
               const correctMaintenanceDate = fixDate(maintenanceDate)
-              const correctLastModifiedDate = fixDate(lastModifiedDate)
+              const correctLastModifiedDate = new Date() // set to today
 
               const item: Item = {
                 id: null,
