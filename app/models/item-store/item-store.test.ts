@@ -38,6 +38,9 @@ describe('Item store', () => {
         serialNumber: 'sdsd',
         maintenanceDate: new Date(),
         status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine'
       }),
       authToken: 'token',
       autocompleteDataMap: {},
@@ -83,6 +86,9 @@ describe('Item store', () => {
         serialNumber: 'sdsd',
         maintenanceDate: new Date(),
         status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine'
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -147,6 +153,9 @@ describe('Item store', () => {
         serialNumber: 'sdsd',
         maintenanceDate: new Date(),
         status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine'
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -190,6 +199,9 @@ describe('Item store', () => {
         serialNumber: 'sdsd',
         maintenanceDate: new Date(),
         status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine'
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -234,6 +246,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     instance.saveItem(item)
@@ -307,6 +322,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -377,6 +395,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -419,6 +440,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -457,6 +481,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -497,6 +524,9 @@ describe('Item store', () => {
       serialNumber: 'sdsd',
       maintenanceDate: new Date(),
       status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())

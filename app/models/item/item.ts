@@ -22,6 +22,9 @@ export const ItemModel = types.model('Item').props({
   serialNumber: types.maybeNull(types.string),
   maintenanceDate: types.maybeNull(types.Date),
   status: types.maybeNull(types.string),
+  comments: types.maybeNull(types.string),
+  lastModifiedDate: types.maybeNull(types.Date),
+  lastModifiedBy: types.maybeNull(types.string),
 })
 
 type ItemType = Instance<typeof ItemModel>
