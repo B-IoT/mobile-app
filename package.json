@@ -101,7 +101,7 @@
     "react-test-renderer": "16.13.1",
     "rimraf": "3.0.2",
     "solidarity": "2.3.1",
-    "typescript": "~4.0.0",
+    "typescript": "~4.3.2",
     "utf-8-validate": "5.0.3",
     "weak-napi": "^2.0.2"
   },
