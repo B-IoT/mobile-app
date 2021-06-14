@@ -62,9 +62,9 @@ describe('Home screen', () => {
     expect(component.queryByText(translate('listScreen.material'))).toBeTruthy()
   })
 
-  it('should match snapshot', () => {
-    const screen = buildHomeScreen()
-    const tree = renderer.create(screen).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
+  // it('should match snapshot', () => {
+  //   const screen = buildHomeScreen()
+  //   const tree = renderer.create(screen).toJSON()
+  //   expect(tree).toMatchSnapshot()
+  // })
 })
