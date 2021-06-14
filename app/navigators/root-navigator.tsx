@@ -98,5 +98,5 @@ RootNavigator.displayName = 'RootNavigator'
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ['login', 'scan']
+const exitRoutes = ['login', 'home']
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)

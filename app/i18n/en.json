@@ -6,7 +6,9 @@
     "retry": "Retry",
     "error": "Error, try again!",
     "shouldNotBeEmpty": "Should not be empty",
-    "shouldBeValidPrice": "Should be a number greater than zero"
+    "shouldBeValidPrice": "Should be a number greater than zero",
+    "scan": "Scan",
+    "list": "List"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -23,6 +25,9 @@
     "logout": "Logout",
     "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
     "requestingCamera": "Requesting camera permissions..."
+  },
+  "listScreen": {
+    "material": "Material"
   },
   "registerScreen": {
     "register": "Register",

@@ -20,7 +20,7 @@ export const InfoScreen = observer(function InfoScreen() {
 
   useEffect(() => {
     if (!itemStore.item) {
-      resetAndNavigateTo(navigation, 'scan')
+      resetAndNavigateTo(navigation, 'home')
     }
   }, [itemStore.item, navigation])
 

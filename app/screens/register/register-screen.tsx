@@ -20,7 +20,7 @@ export const RegisterScreen = observer(function RegisterScreen() {
 
   useEffect(() => {
     if (!itemStore.itemId) {
-      resetAndNavigateTo(navigation, 'scan')
+      resetAndNavigateTo(navigation, 'home')
     }
   }, [itemStore.itemId, navigation])
 

@@ -196,7 +196,7 @@ export const ScanScreen = observer(function ScanScreen() {
   )
 
   return (
-    <Screen style={ROOT} preset="fixed" >
+    <Screen style={ROOT} preset="fixed">
       <BarCodeScanner
         barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
         onBarCodeScanned={scanned ? undefined : paused ? undefined : handleBarCodeScanned}

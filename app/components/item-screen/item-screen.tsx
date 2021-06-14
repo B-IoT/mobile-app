@@ -189,7 +189,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'scan')} />
+    <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'home')} />
   )
 
   /**
@@ -476,7 +476,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 )
 
                 setSuccess(true)
-                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), OPERATION_TIMEOUT)
+                setTimeout(() => resetAndNavigateTo(navigation, 'home'), OPERATION_TIMEOUT)
               }
             }
           }}
