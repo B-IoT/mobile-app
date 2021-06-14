@@ -29,12 +29,13 @@ export enum DataType {
   COLOR,
   SERIAL_NUMBER,
   STATUS,
-  LAST_MODIFIED_BY
+  LAST_MODIFIED_BY,
 }
 
 export const ItemStoreModel = types
   .model('ItemStore')
   .props({
+    items: types.maybe(types.array(ItemModel)),
     item: types.maybe(ItemModel),
     itemId: types.maybe(types.number),
     isAuthenticated: types.optional(types.boolean, false),
@@ -103,6 +104,15 @@ export const ItemStoreModel = types
     },
 
     /**
+     * Saves all the given items in the store.
+     *
+     * @param items the items
+     */
+    saveItems: (items: Array<Item>) => {
+      self.items = items
+    },
+
+    /**
      * Sets the authentication token in the store and in the environment's API.
      *
      * @param token the authentication token
@@ -163,6 +173,28 @@ export const ItemStoreModel = types
         default:
           __DEV__ && console.log(`Get item failed, ${result.kind} error`)
           return GetItemResult.ERROR
+      }
+    }),
+
+    /**
+     * Gets all the items from the server.
+     *
+     * @returns OK if the items are retrieved, otherwise ERROR if any error occurred
+     */
+    getItems: flow(function* () {
+      // First we update the auth token with the one stored, which is not volatile
+      self.environment.api.setAuthToken(self.authToken)
+
+      const itemApi = new ItemApi(self.environment.api)
+      const result = yield itemApi.getItems()
+
+      switch (result.kind) {
+        case 'ok':
+          self.saveItems(result.items)
+          return true
+        default:
+          __DEV__ && console.log(`Get items failed, ${result.kind} error`)
+          return false
       }
     }),
 

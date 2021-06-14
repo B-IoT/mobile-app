@@ -1,7 +1,7 @@
 import * as Sentry from 'sentry-expo'
 import { ApiResponse } from 'apisauce'
 import { Api } from './api'
-import { GetItemResult, RegisterItemResult, UpdateItemResult } from './api.types'
+import { GetItemResult, GetItemsResult, RegisterItemResult, UpdateItemResult } from './api.types'
 import { getGeneralApiProblem } from './api-problem'
 import { Item } from '../../models/item/item'
 
@@ -32,33 +32,39 @@ export class ItemApi {
       // Transform the data into the format we are expecting
       try {
         const rawItem = response.data
-        const item: Item = {
-          id: rawItem.id,
-          beacon: rawItem.beacon,
-          category: rawItem.category,
-          service: rawItem.service,
-          itemID: rawItem.itemID,
-          brand: rawItem.brand,
-          model: rawItem.model,
-          supplier: rawItem.supplier,
-          originLocation: rawItem.originLocation,
-          currentLocation: rawItem.currentLocation,
-          room: rawItem.room,
-          contact: rawItem.contact,
-          currentOwner: rawItem.currentOwner,
-          previousOwner: rawItem.previousOwner,
-          purchaseDate: rawItem.purchaseDate && new Date(rawItem.purchaseDate),
-          purchasePrice: rawItem.purchasePrice,
-          orderNumber: rawItem.orderNumber,
-          color: rawItem.color,
-          serialNumber: rawItem.serialNumber,
-          maintenanceDate: rawItem.maintenanceDate && new Date(rawItem.maintenanceDate),
-          status: rawItem.status,
-          comments: rawItem.comments,
-          lastModifiedDate: rawItem.lastModifiedDate && new Date(rawItem.lastModifiedDate),
-          lastModifiedBy: rawItem.lastModifiedBy,
-        }
+        const item: Item = extractItem(rawItem)
         return { kind: 'ok', item }
+      } catch {
+        return { kind: 'bad-data' }
+      }
+    } catch (e) {
+      __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
+      return { kind: 'bad-data' }
+    }
+  }
+
+  /**
+   * Gets all the items.
+   *
+   * @returns an object storing whether the request was successful and the items
+   */
+  async getItems(): Promise<GetItemsResult> {
+    try {
+      const response: ApiResponse<any> = await this.api.apisauce.get(
+        `${this.api.config.url}/api/items`,
+      )
+
+      if (!response.ok) {
+        const problem = getGeneralApiProblem(response)
+        if (problem) return problem
+      }
+
+      // Transform the data into the format we are expecting
+      try {
+        const rawItems: Array<any> = response.data
+        const items = rawItems.map(extractItem)
+        return { kind: 'ok', items }
       } catch {
         return { kind: 'bad-data' }
       }
@@ -161,4 +167,39 @@ export function cleanItem(item: Item): Record<string, unknown> {
   }
 
   return clean
+}
+
+/**
+ * Extracts the Item from the given raw item.
+ *
+ * @param rawItem the object corresponding to a raw item
+ * @returns the corresponding Item
+ */
+function extractItem(rawItem): Item {
+  return {
+    id: rawItem.id,
+    beacon: rawItem.beacon,
+    category: rawItem.category,
+    service: rawItem.service,
+    itemID: rawItem.itemID,
+    brand: rawItem.brand,
+    model: rawItem.model,
+    supplier: rawItem.supplier,
+    originLocation: rawItem.originLocation,
+    currentLocation: rawItem.currentLocation,
+    room: rawItem.room,
+    contact: rawItem.contact,
+    currentOwner: rawItem.currentOwner,
+    previousOwner: rawItem.previousOwner,
+    purchaseDate: rawItem.purchaseDate && new Date(rawItem.purchaseDate),
+    purchasePrice: rawItem.purchasePrice,
+    orderNumber: rawItem.orderNumber,
+    color: rawItem.color,
+    serialNumber: rawItem.serialNumber,
+    maintenanceDate: rawItem.maintenanceDate && new Date(rawItem.maintenanceDate),
+    status: rawItem.status,
+    comments: rawItem.comments,
+    lastModifiedDate: rawItem.lastModifiedDate && new Date(rawItem.lastModifiedDate),
+    lastModifiedBy: rawItem.lastModifiedBy,
+  }
 }

@@ -35,6 +35,62 @@ describe('Item Api', () => {
     expect(itemApi).toBeTruthy()
   })
 
+  it('should get all items', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const items = [item, item]
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: true,
+      problem: null,
+      originalError: null,
+      data: items,
+    })
+
+    const result = await itemApi.getItems()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items`)
+    expect(result.kind).toEqual('ok')
+    expect(result.items).toEqual(items)
+  })
+
+  it('should fail getting all items', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: false,
+      problem: SERVER_ERROR,
+      originalError: null,
+    })
+
+    const result = await itemApi.getItems()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items`)
+    expect(result.kind).toEqual('server')
+  })
+
+  it('should fail getting all items because of bad data', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const result = await itemApi.getItems()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items`)
+    expect(result.kind).toEqual('bad-data')
+  })
+
   it('should get an item', async () => {
     const api = new Api()
     api.setup()

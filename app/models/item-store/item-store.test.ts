@@ -299,6 +299,60 @@ describe('Item store', () => {
     expect(reset).toHaveBeenCalledTimes(1)
   })
 
+  it('should get all items', async () => {
+    const expectedItems = [{
+      id: 2,
+      beacon: 'aa:aa:aa:aa:aa:aa',
+      category: 'Lit',
+      service: 'Bloc 1',
+      itemID: 'id',
+      brand: 'br',
+      model: 'mod',
+      supplier: 'supp',
+      originLocation: 'origin',
+      currentLocation: 'current',
+      room: 'room',
+      contact: 'contact',
+      currentOwner: 'own',
+      previousOwner: 'prev',
+      purchaseDate: new Date(),
+      purchasePrice: 42.3,
+      orderNumber: 'aasas',
+      color: 'blue',
+      serialNumber: 'sdsd',
+      maintenanceDate: new Date(),
+      status: 'status',
+      comments: 'A comment',
+      lastModifiedDate: new Date(),
+      lastModifiedBy: 'Antoine'
+    }]
+
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetItems = jest.fn()
+    mockGetItems.mockResolvedValue({ kind: 'ok', items: expectedItems })
+    ItemApi.prototype.getItems = mockGetItems
+
+    const result = await instance.getItems()
+
+    expect(mockGetItems).toHaveBeenCalledTimes(1)
+    expect(result).toBeTruthy()
+    expect(instance.items).toEqual(expectedItems)
+  })
+
+  it('should fail getting all items', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetItems = jest.fn()
+    mockGetItems.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.getItems = mockGetItems
+
+    const result = await instance.getItems()
+
+    expect(mockGetItems).toHaveBeenCalledTimes(1)
+    expect(result).toBeFalsy()
+  })
+
   it('should get an item', async () => {
     const expectedItem = {
       id: 2,

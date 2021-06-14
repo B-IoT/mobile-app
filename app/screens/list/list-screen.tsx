@@ -8,13 +8,12 @@ import { Text } from '@ui-kitten/components'
 import { translate } from '../../i18n'
 
 const ROOT: ViewStyle = {
-  flexDirection: 'column',
   flex: 1,
-  padding: spacing[5],
+  flexDirection: 'column',
 }
 
 const TITLE: ViewStyle = {
-  marginTop: spacing[6],
+  marginStart: spacing[4],
 }
 
 const isIos = Platform.OS === 'ios'
