@@ -120,4 +120,9 @@ export interface ItemScreenProps {
    * The screen title
    */
   title: string
+
+  /**
+   * True if we should navigate back in the stack, false if we should reset it before navigating
+   */
+  shouldGoBackWithoutReset: boolean
 }

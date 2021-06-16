@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/core'
+import { useRoute, RouteProp } from '@react-navigation/native'
 import { ItemScreen } from '../../components'
 import { useStores } from '../../models'
 import { translate } from '../../i18n'
-import { resetAndNavigateTo } from '../../navigators'
-import { useNavigation } from '@react-navigation/core'
+import { resetAndNavigateTo, MainPrimaryParamList } from '../../navigators'
+
+type InfoScreenNavigationProp = StackNavigationProp<MainPrimaryParamList, 'info'>
+type InfoScreenRouteProp = RouteProp<MainPrimaryParamList, 'info'>
 
 const strings = {
   update: translate('infoScreen.update'),
@@ -16,7 +21,8 @@ const strings = {
  */
 export const InfoScreen = observer(function InfoScreen() {
   const { itemStore } = useStores()
-  const navigation = useNavigation()
+  const navigation = useNavigation<InfoScreenNavigationProp>()
+  const route = useRoute<InfoScreenRouteProp>()
 
   useEffect(() => {
     if (!itemStore.item) {
@@ -63,7 +69,9 @@ export const InfoScreen = observer(function InfoScreen() {
       initialCurrentOwner={currentOwner}
       initialPreviousOwner={previousOwner}
       initialPurchaseDate={purchaseDate}
-      initialPurchasePrice={purchasePrice === 0 ? '' : purchasePrice.toString()}
+      initialPurchasePrice={
+        purchasePrice === 0 || purchasePrice === null ? '' : purchasePrice.toString()
+      }
       initialOrderNumber={orderNumber}
       initialColor={color}
       initialSerialNumber={serialNumber}
@@ -74,6 +82,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialLastModifiedBy={lastModifiedBy}
       buttonText={strings.update}
       title={strings.title}
+      shouldGoBackWithoutReset={route.params?.fromListScreen}
     />
   )
 })

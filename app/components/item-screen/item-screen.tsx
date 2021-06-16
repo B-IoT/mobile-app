@@ -101,7 +101,7 @@ const strings = {
   lastModifiedDate: translate('registerScreen.lastModifiedDate'),
   lastModifiedBy: translate('registerScreen.lastModifiedBy'),
   lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
-  shouldBeValidPrice: translate('common.shouldBeValidPrice')
+  shouldBeValidPrice: translate('common.shouldBeValidPrice'),
 }
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
@@ -142,6 +142,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy,
     buttonText,
     title,
+    shouldGoBackWithoutReset,
   } = props
 
   // Cannot be modified by the user, it is a constant that defaults to today
@@ -476,7 +477,9 @@ export function ItemScreen(props: ItemScreenProps) {
                 )
 
                 setSuccess(true)
-                setTimeout(() => resetAndNavigateTo(navigation, 'home'), OPERATION_TIMEOUT)
+                setTimeout(() => {
+                  resetAndNavigateTo(navigation, 'home', { showList: shouldGoBackWithoutReset })
+                }, OPERATION_TIMEOUT)
               }
             }
           }}

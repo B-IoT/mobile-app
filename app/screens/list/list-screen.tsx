@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Platform, ViewStyle } from 'react-native'
+import { Platform, View, ViewStyle } from 'react-native'
 import { List, ListItem, Spinner, Text } from '@ui-kitten/components'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/native'
+import { clone } from 'mobx-state-tree'
 
 import { Screen } from '../../components'
 import { spacing } from '../../theme'
 import { translate } from '../../i18n'
 import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
+import { MainPrimaryParamList } from '../../navigators'
+
+type ListScreenNavigationProp = StackNavigationProp<MainPrimaryParamList, 'home'>
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -19,10 +25,16 @@ const TITLE: ViewStyle = {
   marginBottom: spacing[2],
 }
 
-const SPINNER: ViewStyle = {
-  flex: 1,
-  alignSelf: 'center',
+const INDICATOR: ViewStyle = {
+  justifyContent: 'center',
+  alignItems: 'center',
 }
+
+const LoadingIndicator = (props) => (
+  <View style={[props.style, INDICATOR]}>
+    <Spinner />
+  </View>
+)
 
 const LIST: ViewStyle = {}
 
@@ -34,6 +46,7 @@ const strings = {
 
 export const ListScreen = observer(function ListScreen() {
   const { itemStore } = useStores()
+  const navigation = useNavigation<ListScreenNavigationProp>()
 
   const [items, setItems] = useState<Array<Item>>([])
   const [loading, setLoading] = useState(true)
@@ -51,7 +64,16 @@ export const ListScreen = observer(function ListScreen() {
     })()
   }, [itemStore])
 
-  const renderItem = ({ item, index }) => <ListItem title={`${item.category} ${index + 1}`} />
+  const renderItem = ({ item, index }) => (
+    <ListItem
+      onPress={() => {
+        // Open the Info screen
+        itemStore.saveItem(clone(item))
+        navigation.navigate('info', { fromListScreen: true })
+      }}
+      title={`${item.category} ${index + 1}`}
+    />
+  )
 
   // Can use onEnd to get more items (pagination)
   return (
@@ -59,8 +81,8 @@ export const ListScreen = observer(function ListScreen() {
       <Text category="h3" style={TITLE}>
         {strings.material}
       </Text>
-      {loading ? ( // TODO: fix spinner position, it has to be centered
-        <Spinner style={SPINNER} size="large" />
+      {loading ? (
+        <LoadingIndicator />
       ) : (
         <List
           style={LIST}

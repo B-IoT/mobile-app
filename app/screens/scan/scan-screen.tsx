@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { StyleSheet, View, ViewStyle, useWindowDimensions, TextStyle } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+import { Button, Icon, Spinner, Text, useTheme } from '@ui-kitten/components'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 import { Screen } from '../../components'
-import { Button, Icon, Spinner, Text, useTheme } from '@ui-kitten/components'
 import { useStores } from '../../models'
-import { useNavigation } from '@react-navigation/native'
 import { translate } from '../../i18n'
 import { spacing } from '../../theme'
 import { GetItemResult } from '../../models/item-store/item-store'
-import { resetAndNavigateTo } from '../../navigators'
+import { MainPrimaryParamList, resetAndNavigateTo } from '../../navigators'
 import { InfoPopup } from './info-popup/info-popup'
+
+type ScanScreenNavigationProp = StackNavigationProp<MainPrimaryParamList, 'home'>
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -88,7 +91,7 @@ export const ScanScreen = observer(function ScanScreen() {
 
   const { itemStore } = useStores()
   const theme = useTheme()
-  const navigation = useNavigation()
+  const navigation = useNavigation<ScanScreenNavigationProp>()
 
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
