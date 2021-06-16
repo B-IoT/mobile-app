@@ -53,7 +53,7 @@ export const ListScreen = observer(function ListScreen() {
 
   const renderItem = ({ item, index }) => <ListItem title={`${item.category} ${index + 1}`} />
 
-  // Can use onEnd to get more items
+  // Can use onEnd to get more items (pagination)
   return (
     <Screen style={ROOT} preset="fixed" statusBar={isIos ? 'dark-content' : 'light-content'}>
       <Text category="h3" style={TITLE}>
