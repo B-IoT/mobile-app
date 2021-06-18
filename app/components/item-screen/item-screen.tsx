@@ -1,6 +1,6 @@
 /* eslint-disable no-unneeded-ternary */
 import React, { useState } from 'react'
-import { Image, ImageStyle, Platform, ViewStyle } from 'react-native'
+import { Image, ImageStyle, Keyboard, Platform, ViewStyle } from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
@@ -190,7 +190,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'home')} />
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
   )
 
   /**
@@ -450,6 +450,8 @@ export function ItemScreen(props: ItemScreenProps) {
                 setSuccess(false)
                 setTimeout(() => setSuccess(undefined), ERROR_TIMEOUT)
               } else {
+                Keyboard.dismiss()
+
                 // Save the data inserted by the user for future autocompletion
                 const newAutocompleteEntries: Array<[DataType, string]> = [
                   [DataType.ITEM_ID, itemID],

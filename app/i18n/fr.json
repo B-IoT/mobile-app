@@ -28,7 +28,9 @@
     "requestingCamera": "En train de demander les permissions pour la caméra..."
   },
   "listScreen": {
-    "material": "Matériel"
+    "material": "Matériel",
+    "noItems": "Aucun objet trouvé",
+    "search": "Rechercher"
   },
   "registerScreen": {
     "register": "Enregistrer",

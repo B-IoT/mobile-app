@@ -27,7 +27,9 @@
     "requestingCamera": "Requesting camera permissions..."
   },
   "listScreen": {
-    "material": "Material"
+    "material": "Material",
+    "noItems": "No item found",
+    "search": "Search"
   },
   "registerScreen": {
     "register": "Register",

@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import {
   ViewStyle,
-  TouchableWithoutFeedback,
   Platform,
   Image,
   ImageStyle,
   TouchableOpacity,
+  Keyboard,
+  Pressable,
 } from 'react-native'
 import * as WebBrowser from 'expo-web-browser'
 import { Text, Input, CheckBox, Icon } from '@ui-kitten/components'
@@ -50,7 +51,6 @@ const BUTTON: ViewStyle = {
 }
 
 const IMAGE: ImageStyle = {
-  marginVertical: spacing[8],
   width: 150,
   height: 150,
   alignSelf: 'center',
@@ -92,15 +92,15 @@ export const LoginScreen = observer(function LoginScreen() {
   const [success, setSuccess] = useState<boolean>(undefined)
 
   const CloseIcon = (props) => (
-    <TouchableWithoutFeedback onPress={() => setEmail('')}>
+    <Pressable onPress={() => setEmail('')}>
       <Icon {...props} name={'close-outline'} />
-    </TouchableWithoutFeedback>
+    </Pressable>
   )
 
   const SecureIcon = (props) => (
-    <TouchableWithoutFeedback onPress={() => setSecureTextEntry(!secureTextEntry)}>
+    <Pressable onPress={() => setSecureTextEntry(!secureTextEntry)}>
       <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
-    </TouchableWithoutFeedback>
+    </Pressable>
   )
 
   return (
@@ -177,6 +177,7 @@ export const LoginScreen = observer(function LoginScreen() {
               itemStore.setAuthenticated(false)
               setTimeout(() => setSuccess(undefined), ERROR_TIMEOUT)
             } else {
+              Keyboard.dismiss()
               setSuccess(true)
               setTimeout(() => itemStore.setAuthenticated(true), OPERATION_TIMEOUT)
             }
