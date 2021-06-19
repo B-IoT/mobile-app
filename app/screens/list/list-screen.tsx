@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { GestureResponderEvent, Platform, Pressable, View, ViewStyle } from 'react-native'
-import { Divider, Icon, Input, Layout, List, ListItem, Spinner, Text } from '@ui-kitten/components'
+import {
+  Button,
+  Divider,
+  Icon,
+  Input,
+  Layout,
+  List,
+  ListItem,
+  Spinner,
+  Text,
+} from '@ui-kitten/components'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 import { clone } from 'mobx-state-tree'
@@ -13,6 +23,7 @@ import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { MainPrimaryParamList } from '../../navigators'
 import { isEmpty } from '../../utils/function-utils/function-utils'
+import { InfoPopup } from './info-popup/info-popup'
 
 type ListScreenNavigationProp = StackNavigationProp<MainPrimaryParamList, 'home'>
 
@@ -26,10 +37,28 @@ const LAYOUT: ViewStyle = {
   flexDirection: 'column',
 }
 
+const TITLE_AND_BUTTON_LAYOUT: ViewStyle = {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}
+
 const TITLE: ViewStyle = {
   marginTop: spacing[1],
   marginStart: spacing[4],
   marginBottom: spacing[1],
+}
+
+const INFO_BUTTON: ViewStyle = {
+  alignSelf: 'flex-end',
+  borderRadius: 30,
+  marginTop: -spacing[1],
+  width: 40,
+  height: 40,
+}
+
+const INFO_ICON: ViewStyle = {
+  width: 32,
+  height: 32,
 }
 
 const NO_ITEM_TEXT: ViewStyle = {
@@ -73,6 +102,7 @@ const LoadingIndicator = (props) => (
 )
 
 const SearchIcon = (style) => <Icon {...style} name="search" />
+const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} name="info" />
 
 const CloseIcon = ({ onPress, ...props }) => (
   <Pressable onPress={onPress}>
@@ -118,6 +148,7 @@ export const ListScreen = observer(function ListScreen() {
   const [searchString, setSearchString] = useState('')
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [infoPopupVisible, setInfoPopupVisible] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -161,9 +192,26 @@ export const ListScreen = observer(function ListScreen() {
   // Can use onEnd to get more items (pagination)
   return (
     <Screen style={ROOT} preset="fixed" statusBar={isIos ? 'dark-content' : 'light-content'}>
-      <Text category="h3" style={TITLE}>
-        {strings.material}
-      </Text>
+      <Layout style={TITLE_AND_BUTTON_LAYOUT}>
+        <Text category="h3" style={TITLE}>
+          {strings.material}
+        </Text>
+        <Button
+          style={INFO_BUTTON}
+          appearance="ghost"
+          size="giant"
+          accessoryLeft={InfoIcon}
+          onPress={() => {
+            setInfoPopupVisible(true)
+          }}
+        />
+      </Layout>
+      <InfoPopup
+        visible={infoPopupVisible}
+        onBackdropPress={() => {
+          setInfoPopupVisible(false)
+        }}
+      />
       {loading ? (
         <LoadingIndicator />
       ) : (
