@@ -130,6 +130,13 @@ export const ItemStoreModel = types
     setAuthenticated(value: boolean) {
       self.isAuthenticated = value
     },
+
+    /**
+     * Resets the item id in the store.
+     */
+    resetItemId: () => {
+      self.itemId = undefined
+    },
   }))
   .actions((self) => ({
     /**
@@ -213,7 +220,7 @@ export const ItemStoreModel = types
       const result = yield itemApi.registerItem(itemToRegister)
 
       if (result.kind === 'ok') {
-        self.saveItem(itemToRegister)
+        self.saveItem({ ...item, id: result.id })
         return true
       } else {
         __DEV__ && console.log(`Register item failed, ${result.kind} error`)

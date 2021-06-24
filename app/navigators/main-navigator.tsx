@@ -22,7 +22,7 @@ import { RegisterScreen, InfoScreen, HomeScreen, ListScreen } from '../screens'
  */
 export type MainPrimaryParamList = {
   home: { showList: boolean }
-  register: undefined
+  register: { fromListScreen: boolean }
   info: { fromListScreen: boolean }
   list: undefined
 }

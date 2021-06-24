@@ -428,7 +428,7 @@ describe('Item store', () => {
 
   it('should register an item', async () => {
     const expectedItem = {
-      id: 2,
+      id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
       service: 'Bloc 1',
@@ -457,7 +457,7 @@ describe('Item store', () => {
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockRegisterItem = jest.fn()
-    mockRegisterItem.mockResolvedValue({ kind: 'ok', item: expectedItem })
+    mockRegisterItem.mockResolvedValue({ kind: 'ok', id: expectedItem.id })
     ItemApi.prototype.registerItem = mockRegisterItem
 
     const result = await instance.registerItem(expectedItem)

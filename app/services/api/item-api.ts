@@ -144,7 +144,7 @@ export function cleanItem(item: Item): Record<string, unknown> {
   const cleanDate = (date: Date) => date.toISOString().split('T')[0]
 
   // Remove null fields
-  const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v != null))
+  const clean = Object.fromEntries(Object.entries(item).filter(([_, v]) => v))
 
   if (clean.purchaseDate) {
     // Extract date-only ISO string

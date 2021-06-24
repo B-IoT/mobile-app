@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { GestureResponderEvent, Platform, Pressable, View, ViewStyle } from 'react-native'
+import {
+  Dimensions,
+  GestureResponderEvent,
+  Platform,
+  Pressable,
+  View,
+  ViewStyle,
+} from 'react-native'
 import {
   Button,
   Divider,
@@ -50,15 +57,20 @@ const TITLE: ViewStyle = {
 
 const INFO_BUTTON: ViewStyle = {
   alignSelf: 'flex-end',
-  borderRadius: 30,
+  borderRadius: 32,
   marginTop: -spacing[1],
-  width: 40,
-  height: 40,
+  width: 42,
+  height: 42,
 }
 
 const INFO_ICON: ViewStyle = {
   width: 32,
   height: 32,
+}
+
+const PLUS_ICON: ViewStyle = {
+  width: 28,
+  height: 28,
 }
 
 const NO_ITEM_TEXT: ViewStyle = {
@@ -96,12 +108,35 @@ const LIST_ITEM_HORIZONTAL_LAYOUT: ViewStyle = {
 }
 
 const BRAND_MODEL_TEXT: ViewStyle = {
-  flex: 2,
+  flex: 1,
   marginEnd: spacing[2],
 }
 
 const ITEM_ID_TEXT: ViewStyle = {
-  flex: 1,
+  marginStart: 'auto', // magically puts the view at the far right
+}
+
+const FLOATING_BUTTON: ViewStyle = {
+  position: 'absolute',
+  bottom: 80,
+  left: Dimensions.get('window').width / 2 - 24,
+  width: 48,
+  height: 48,
+  borderRadius: 32,
+  borderWidth: 0.5,
+  zIndex: 999,
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: 10,
+  shadowColor: 'rgba(0,0,0, 0.5)',
+  shadowOffset: { height: 1, width: 1 },
+  shadowOpacity: 1,
+  shadowRadius: 3,
+  elevation: 16,
+}
+
+const LIST: ViewStyle = {
+  marginBottom: 64,
 }
 
 const LoadingIndicator = (props) => (
@@ -112,6 +147,7 @@ const LoadingIndicator = (props) => (
 
 const SearchIcon = (style) => <Icon {...style} name="search" />
 const InfoIcon = (props) => <Icon {...props} style={[props.style, INFO_ICON]} name="info" />
+const PlusIcon = (props) => <Icon {...props} style={[props.style, PLUS_ICON]} name="plus-outline" />
 
 const CloseIcon = ({ onPress, ...props }) => (
   <Pressable onPress={onPress}>
@@ -252,6 +288,7 @@ export const ListScreen = observer(function ListScreen() {
             </Text>
           ) : (
             <List
+              style={LIST}
               data={shownItems}
               renderItem={renderItem}
               refreshing={refreshing}
@@ -270,6 +307,13 @@ export const ListScreen = observer(function ListScreen() {
               }}
             />
           )}
+          {!searchString ? (
+            <Button
+              style={FLOATING_BUTTON}
+              accessoryLeft={PlusIcon}
+              onPress={() => navigation.navigate('register', { fromListScreen: true })}
+            />
+          ) : null}
         </Layout>
       )}
     </Screen>

@@ -383,10 +383,10 @@ exports[`List screen should match snapshot 1`] = `
                                   "alignSelf": "flex-end",
                                   "backgroundColor": "transparent",
                                   "borderColor": "transparent",
-                                  "borderRadius": 30,
+                                  "borderRadius": 32,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
-                                  "height": 40,
+                                  "height": 42,
                                   "justifyContent": "center",
                                   "marginTop": -4,
                                   "minHeight": 56,
@@ -394,7 +394,7 @@ exports[`List screen should match snapshot 1`] = `
                                   "opacity": 1,
                                   "paddingHorizontal": 12,
                                   "paddingVertical": 16,
-                                  "width": 40,
+                                  "width": 42,
                                 }
                               }
                             >
