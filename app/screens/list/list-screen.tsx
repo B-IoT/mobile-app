@@ -95,6 +95,15 @@ const LIST_ITEM_HORIZONTAL_LAYOUT: ViewStyle = {
   backgroundColor: 'transparent',
 }
 
+const BRAND_MODEL_TEXT: ViewStyle = {
+  flex: 2,
+  marginEnd: spacing[2],
+}
+
+const ITEM_ID_TEXT: ViewStyle = {
+  flex: 1,
+}
+
 const LoadingIndicator = (props) => (
   <View style={[props.style, INDICATOR]}>
     <Spinner />
@@ -179,11 +188,12 @@ export const ListScreen = observer(function ListScreen() {
           <Text>ID {item.id}</Text>
         </Layout>
         <Layout style={LIST_ITEM_HORIZONTAL_LAYOUT}>
-          <Text>
+          <Text style={BRAND_MODEL_TEXT}>
             {item.brand} {item.brand ? '-' : ''} {item.model}
           </Text>
-          <Text></Text>
-          <Text appearance="hint">{item.itemID}</Text>
+          <Text style={ITEM_ID_TEXT} appearance="hint">
+            {item.itemID}
+          </Text>
         </Layout>
       </Layout>
     </ListItem>
