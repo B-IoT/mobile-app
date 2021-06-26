@@ -22,7 +22,6 @@ describe('Info screen', () => {
     beacon: 'aa:aa:aa:aa:aa:aa',
     category: 'Lit',
     service: 'Bloc 1',
-    itemID: 'id',
     brand: 'br',
     model: 'mod',
     supplier: 'supp',
@@ -38,7 +37,7 @@ describe('Info screen', () => {
     color: 'blue',
     serialNumber: 'sdsd',
     maintenanceDate: null,
-    status: 'status',
+    status: 'Under creation',
     comments: 'A comment',
     lastModifiedDate: null,
     lastModifiedBy: 'Antoine',
@@ -86,7 +85,7 @@ describe('Info screen', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.itemID'))).toBeTruthy()
+    expect(component.queryByText(translate('registerScreen.id'))).toBeTruthy()
   })
 
   it('should show the category input', async () => {
@@ -240,10 +239,6 @@ describe('Info screen', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
-    const itemID = 'itemID'
-    const idInput = component.queryByText(translate('registerScreen.itemID'))
-    fireEvent.changeText(idInput, itemID)
-
     const category = 'category'
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, category)
@@ -300,10 +295,6 @@ describe('Info screen', () => {
     const serialNumberInput = component.queryByText(translate('registerScreen.serialNumber'))
     fireEvent.changeText(serialNumberInput, serialNumber)
 
-    const status = 'status'
-    const statusInput = component.queryByText(translate('registerScreen.status'))
-    fireEvent.changeText(statusInput, status)
-
     const comments = 'comments'
     const commentsInput = component.queryByText(translate('registerScreen.comments'))
     fireEvent.changeText(commentsInput, comments)
@@ -323,8 +314,7 @@ describe('Info screen', () => {
       category: category,
       contact: contact,
       currentLocation: currentLocation,
-      id: null,
-      itemID: itemID,
+      id: initialItem.id,
       model: model,
       originLocation: originLocation,
       currentOwner,
@@ -338,7 +328,7 @@ describe('Info screen', () => {
       color,
       serialNumber,
       maintenanceDate: null,
-      status,
+      status: initialItem.status,
       comments,
       lastModifiedDate: jasmine.any(Date),
       lastModifiedBy,

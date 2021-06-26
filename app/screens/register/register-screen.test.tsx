@@ -55,13 +55,6 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.title'))).toBeTruthy()
   })
 
-  it('should show the id input', () => {
-    const screen = buildRegisterScreen()
-    const component = render(screen)
-
-    expect(component.queryByText(translate('registerScreen.itemID'))).toBeTruthy()
-  })
-
   it('should show the category input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
@@ -174,11 +167,11 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.maintenanceDate'))).toBeTruthy()
   })
 
-  it('should show the status input', () => {
+  it('should not show the status input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.status'))).toBeTruthy()
+    expect(component.queryByText(translate('registerScreen.status'))).toBeFalsy()
   })
 
   it('should show the comments input', () => {
@@ -212,10 +205,6 @@ describe('Register screen', () => {
   it('should register the item when pressing the register item button', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
-
-    const itemID = 'itemID'
-    const idInput = component.queryByText(translate('registerScreen.itemID'))
-    fireEvent.changeText(idInput, itemID)
 
     const category = 'category'
     const categoryInput = component.queryByText(translate('registerScreen.category'))
@@ -273,10 +262,6 @@ describe('Register screen', () => {
     const serialNumberInput = component.queryByText(translate('registerScreen.serialNumber'))
     fireEvent.changeText(serialNumberInput, serialNumber)
 
-    const status = 'status'
-    const statusInput = component.queryByText(translate('registerScreen.status'))
-    fireEvent.changeText(statusInput, status)
-
     const comments = 'comments'
     const commentsInput = component.queryByText(translate('registerScreen.comments'))
     fireEvent.changeText(commentsInput, comments)
@@ -297,7 +282,6 @@ describe('Register screen', () => {
       contact: contact,
       currentLocation: currentLocation,
       id: null,
-      itemID: itemID,
       model: model,
       originLocation: originLocation,
       currentOwner,
@@ -311,7 +295,7 @@ describe('Register screen', () => {
       color,
       serialNumber,
       maintenanceDate: null,
-      status,
+      status: null,
       comments,
       lastModifiedDate: jasmine.any(Date),
       lastModifiedBy,

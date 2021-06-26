@@ -26,6 +26,7 @@ export const RegisterScreen = observer(function RegisterScreen() {
 
   return (
     <ItemScreen
+      initialId={itemStore.itemId?.toString()}
       asyncOperation={itemStore.registerItem}
       buttonText={strings.register}
       title={strings.title}
