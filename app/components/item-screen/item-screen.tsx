@@ -167,7 +167,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialPreviousOwner ? initialPreviousOwner : '',
   )
   const [purchaseDate, setPurchaseDate] = useState(
-    initialPurchaseDate ? initialPurchaseDate : new Date(),
+    initialPurchaseDate ? initialPurchaseDate : null,
   )
   const [purchasePrice, setPurchasePrice] = useState(
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
@@ -209,8 +209,8 @@ export function ItemScreen(props: ItemScreenProps) {
    * @param date the date to fix
    */
   const fixDate = (date: Date) => {
-    const d = new Date()
     if (date) {
+      const d = new Date()
       d.setDate(date.getDate())
       return d
     } else {
