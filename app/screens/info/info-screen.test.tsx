@@ -319,7 +319,7 @@ describe('Info screen', () => {
       originLocation: originLocation,
       currentOwner,
       previousOwner,
-      purchaseDate: jasmine.any(Date),
+      purchaseDate: null,
       purchasePrice: 25,
       room: room,
       service: null,

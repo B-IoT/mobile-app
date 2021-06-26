@@ -1917,7 +1917,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      26/06/2021
+                                      Enter the purchase date
                                     </Text>
                                   </View>
                                 </View>
