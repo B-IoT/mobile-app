@@ -8,7 +8,6 @@ describe('Item Api', () => {
     beacon: 'aa:aa:aa:aa:aa:aa',
     category: 'Lit',
     service: 'Bloc 1',
-    itemID: 'id',
     brand: 'br',
     model: 'mod',
     supplier: 'supp',

@@ -9,7 +9,7 @@ export interface ItemScreenProps {
   /**
    * The initial item id value. If not specified, defaults to ''.
    */
-  initialItemID?: string
+  initialId?: string
 
   /**
    * The initial category value. If not specified, defaults to ''.
