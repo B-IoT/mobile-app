@@ -23,6 +23,7 @@ const BACKDROP: ViewStyle = {
 }
 
 const LOGOUT_BUTTON: ViewStyle = {
+  marginTop: spacing[2],
   borderRadius: 8,
 }
 
@@ -48,6 +49,10 @@ const DISCLAIMER = 'Disclaimer'
 const COPYRIGHT = 'Copyright © 2021 BioT SA.'
 const ALL_RIGHTS_RESERVED = 'All Rights Reserved.'
 
+const strings = {
+  user: translate('common.user'),
+}
+
 /**
  * A popup component with logout button and app information.
  */
@@ -59,7 +64,10 @@ export function InfoPopup(props: InfoPopupProps) {
   return (
     <Modal visible={visible} backdropStyle={BACKDROP} onBackdropPress={onBackdropPress}>
       <Layout style={LAYOUT}>
-        <Button size="large" style={LOGOUT_BUTTON} onPress={async () => await itemStore.logout()}>
+        <Text>
+          {strings.user}: {itemStore.username}
+        </Text>
+        <Button style={LOGOUT_BUTTON} onPress={async () => await itemStore.logout()}>
           {LOGOUT}
         </Button>
         <Text category="c2" style={VERSION}>

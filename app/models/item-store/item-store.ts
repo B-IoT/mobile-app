@@ -38,6 +38,7 @@ export const ItemStoreModel = types
     itemId: types.maybe(types.number),
     isAuthenticated: types.optional(types.boolean, false),
     authToken: types.maybe(types.string),
+    username: types.maybe(types.string),
     /**
      * Map from dataType to (map from entryName to rank)
      */
@@ -127,6 +128,15 @@ export const ItemStoreModel = types
      */
     setAuthenticated(value: boolean) {
       self.isAuthenticated = value
+    },
+
+    /**
+     * Sets the username.
+     *
+     * @param value the username of the current logged in user
+     */
+    setUsername(value: string) {
+      self.username = value
     },
 
     /**
@@ -271,6 +281,7 @@ export const ItemStoreModel = types
             level: Sentry.Native.Severity.Info,
           })
           self.setAuthToken(result.token)
+          self.setUsername(username)
           if (remember) {
             yield self.storeCredentials(username, password)
           }
@@ -292,6 +303,7 @@ export const ItemStoreModel = types
       yield self.removeCredentials()
       self.setAuthToken(undefined)
       self.setAuthenticated(false)
+      self.setUsername(undefined)
     }),
   }))
 

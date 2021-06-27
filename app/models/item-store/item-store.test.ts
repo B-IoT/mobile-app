@@ -39,7 +39,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {},
@@ -86,7 +86,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -152,7 +152,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -197,7 +197,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -243,7 +243,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     instance.saveItem(item)
@@ -273,6 +273,14 @@ describe('Item store', () => {
     expect(instance.isAuthenticated).toEqual(true)
   })
 
+  it('should set username', () => {
+    const instance = ItemStoreModel.create(itemStore)
+
+    instance.setUsername('username')
+
+    expect(instance.username).toEqual('username')
+  })
+
   it('should store credentials', async () => {
     const instance = ItemStoreModel.create(itemStore)
 
@@ -295,31 +303,33 @@ describe('Item store', () => {
   })
 
   it('should get all items', async () => {
-    const expectedItems = [{
-      id: 2,
-      beacon: 'aa:aa:aa:aa:aa:aa',
-      category: 'Lit',
-      service: 'Bloc 1',
-      brand: 'br',
-      model: 'mod',
-      supplier: 'supp',
-      originLocation: 'origin',
-      currentLocation: 'current',
-      room: 'room',
-      contact: 'contact',
-      currentOwner: 'own',
-      previousOwner: 'prev',
-      purchaseDate: new Date(),
-      purchasePrice: 42.3,
-      orderNumber: 'aasas',
-      color: 'blue',
-      serialNumber: 'sdsd',
-      maintenanceDate: new Date(),
-      status: 'status',
-      comments: 'A comment',
-      lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
-    }]
+    const expectedItems = [
+      {
+        id: 2,
+        beacon: 'aa:aa:aa:aa:aa:aa',
+        category: 'Lit',
+        service: 'Bloc 1',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      },
+    ]
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
@@ -371,7 +381,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -443,7 +453,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -487,7 +497,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -527,7 +537,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -569,7 +579,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())

@@ -9,7 +9,8 @@
     "shouldNotBeEmpty": "Ne devrait pas être vide",
     "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro",
     "scan": "Scan",
-    "list": "Liste"
+    "list": "Liste",
+    "user": "Utilisateur"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
