@@ -95,6 +95,13 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('registerScreen.category'))).toBeTruthy()
   })
 
+  it('should show the service input', async () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.service'))).toBeTruthy()
+  })
+
   it('should show the brand input', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
@@ -243,6 +250,10 @@ describe('Info screen', () => {
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, category)
 
+    const service = 'service'
+    const serviceInput = component.queryByText(translate('registerScreen.service'))
+    fireEvent.changeText(serviceInput, service)
+
     const brand = 'brand'
     const brandInput = component.queryByText(translate('registerScreen.brand'))
     fireEvent.changeText(brandInput, brand)
@@ -312,6 +323,7 @@ describe('Info screen', () => {
       beacon: null,
       brand: brand,
       category: category,
+      service: service,
       contact: contact,
       currentLocation: currentLocation,
       id: initialItem.id,
@@ -322,7 +334,6 @@ describe('Info screen', () => {
       purchaseDate: null,
       purchasePrice: 25,
       room: room,
-      service: null,
       supplier: supplier,
       orderNumber,
       color,

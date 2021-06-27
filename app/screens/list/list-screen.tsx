@@ -112,7 +112,7 @@ const BRAND_MODEL_TEXT: ViewStyle = {
   marginEnd: spacing[2],
 }
 
-const ITEM_ID_TEXT: ViewStyle = {
+const SERVICE_TEXT: ViewStyle = {
   marginStart: 'auto', // magically puts the view at the far right
 }
 
@@ -227,8 +227,8 @@ export const ListScreen = observer(function ListScreen() {
           <Text style={BRAND_MODEL_TEXT}>
             {item.brand} {item.brand ? '-' : ''} {item.model}
           </Text>
-          <Text style={ITEM_ID_TEXT} appearance="hint">
-            {item.itemID}
+          <Text style={SERVICE_TEXT} appearance="hint">
+            {item.service}
           </Text>
         </Layout>
       </Layout>

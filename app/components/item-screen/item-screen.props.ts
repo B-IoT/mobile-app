@@ -17,6 +17,11 @@ export interface ItemScreenProps {
   initialCategory?: string
 
   /**
+   * The initial service value. If not specified, defaults to ''.
+   */
+  initialService?: string
+
+  /**
    * The initial brand value. If not specified, defaults to ''.
    */
   initialBrand?: string

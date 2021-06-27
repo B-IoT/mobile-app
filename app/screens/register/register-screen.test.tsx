@@ -17,9 +17,12 @@ jest.useFakeTimers()
 
 describe('Register screen', () => {
   const mockRegisterItem = jest.fn().mockResolvedValue(true)
+  const initialId = 1
 
   function buildRegisterScreen() {
-    const itemStore = ItemStoreModel.create()
+    const itemStore = ItemStoreModel.create({
+      itemId: initialId,
+    })
     Object.defineProperty(itemStore, 'registerItem', { value: mockRegisterItem, writable: true })
     const rootStore = RootStoreModel.create({ itemStore })
 
@@ -55,11 +58,25 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.title'))).toBeTruthy()
   })
 
+  it('should show the id input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.id'))).toBeTruthy()
+  })
+
   it('should show the category input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('registerScreen.category'))).toBeTruthy()
+  })
+
+  it('should show the service input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.service'))).toBeTruthy()
   })
 
   it('should show the brand input', () => {
@@ -210,6 +227,10 @@ describe('Register screen', () => {
     const categoryInput = component.queryByText(translate('registerScreen.category'))
     fireEvent.changeText(categoryInput, category)
 
+    const service = 'service'
+    const serviceInput = component.queryByText(translate('registerScreen.service'))
+    fireEvent.changeText(serviceInput, service)
+
     const brand = 'brand'
     const brandInput = component.queryByText(translate('registerScreen.brand'))
     fireEvent.changeText(brandInput, brand)
@@ -281,7 +302,7 @@ describe('Register screen', () => {
       category: category,
       contact: contact,
       currentLocation: currentLocation,
-      id: null,
+      id: initialId,
       model: model,
       originLocation: originLocation,
       currentOwner,
@@ -289,7 +310,7 @@ describe('Register screen', () => {
       purchaseDate: null,
       purchasePrice: 25,
       room: room,
-      service: null,
+      service: service,
       supplier: supplier,
       orderNumber,
       color,

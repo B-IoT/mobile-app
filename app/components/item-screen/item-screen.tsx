@@ -63,6 +63,8 @@ const strings = {
   id: translate('registerScreen.id'),
   category: translate('registerScreen.category'),
   categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
+  service: translate('registerScreen.service'),
+  servicePlaceholder: translate('registerScreen.servicePlaceholder'),
   brand: translate('registerScreen.brand'),
   brandPlaceholder: translate('registerScreen.brandPlaceholder'),
   model: translate('registerScreen.model'),
@@ -122,6 +124,7 @@ export function ItemScreen(props: ItemScreenProps) {
     asyncOperation,
     initialId,
     initialCategory,
+    initialService,
     initialBrand,
     initialModel,
     initialSupplier,
@@ -152,6 +155,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const status = initialStatus ? initialStatus : null
 
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
+  const [service, setService] = useState(initialService ? initialService : '')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
   const [model, setModel] = useState(initialModel ? initialModel : '')
   const [supplier, setSupplier] = useState(initialSupplier ? initialSupplier : '')
@@ -167,9 +171,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const [previousOwner, setPreviousOwner] = useState(
     initialPreviousOwner ? initialPreviousOwner : '',
   )
-  const [purchaseDate, setPurchaseDate] = useState(
-    initialPurchaseDate ? initialPurchaseDate : null,
-  )
+  const [purchaseDate, setPurchaseDate] = useState(initialPurchaseDate ? initialPurchaseDate : null)
   const [purchasePrice, setPurchasePrice] = useState(
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
   )
@@ -191,7 +193,12 @@ export function ItemScreen(props: ItemScreenProps) {
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() =>
+        shouldGoBackWithoutReset ? navigation.goBack() : resetAndNavigateTo(navigation, 'home')
+      }
+    />
   )
 
   /**
@@ -235,6 +242,14 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.CATEGORY}
           value={category}
           setValue={setCategory}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.service}
+          placeholder={strings.servicePlaceholder}
+          dataType={DataType.SERVICE}
+          value={service}
+          setValue={setService}
         />
         <Autocomplete
           style={INPUT}
@@ -409,7 +424,7 @@ export function ItemScreen(props: ItemScreenProps) {
               const item: Item = {
                 id: id ? parseInt(id) : null,
                 beacon: null,
-                service: null,
+                service,
                 category,
                 brand,
                 model,
@@ -443,6 +458,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 // Save the data inserted by the user for future autocompletion
                 const newAutocompleteEntries: Array<[DataType, string]> = [
                   [DataType.CATEGORY, category],
+                  [DataType.SERVICE, service],
                   [DataType.BRAND, brand],
                   [DataType.MODEL, model],
                   [DataType.SUPPLIER, supplier],

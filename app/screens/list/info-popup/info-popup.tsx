@@ -51,6 +51,7 @@ const ALL_RIGHTS_RESERVED = 'All Rights Reserved.'
 
 const strings = {
   user: translate('common.user'),
+  noUser: translate('common.noUser'),
 }
 
 /**
@@ -64,9 +65,7 @@ export function InfoPopup(props: InfoPopupProps) {
   return (
     <Modal visible={visible} backdropStyle={BACKDROP} onBackdropPress={onBackdropPress}>
       <Layout style={LAYOUT}>
-        <Text>
-          {strings.user}: {itemStore.username}
-        </Text>
+        <Text>{strings.user ? `${strings.user}: ${itemStore.username}` : strings.noUser}</Text>
         <Button style={LOGOUT_BUTTON} onPress={async () => await itemStore.logout()}>
           {LOGOUT}
         </Button>

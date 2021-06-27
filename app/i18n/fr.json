@@ -10,7 +10,8 @@
     "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro",
     "scan": "Scan",
     "list": "Liste",
-    "user": "Utilisateur"
+    "user": "Utilisateur",
+    "noUser": "Aucun utilisateur connecté"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
@@ -39,6 +40,8 @@
     "id": "Id",
     "category": "Catégorie",
     "categoryPlaceholder": "Entre la catégorie",
+    "service": "Service",
+    "servicePlaceholder": "Entre le service",
     "brand": "Marque",
     "brandPlaceholder": "Entre la marque",
     "model": "Modèle",

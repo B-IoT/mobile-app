@@ -14,6 +14,7 @@ export enum GetItemResult {
 
 export enum DataType {
   CATEGORY,
+  SERVICE,
   BRAND,
   MODEL,
   SUPPLIER,

@@ -9,7 +9,8 @@
     "shouldBeValidPrice": "Should be a number greater than zero",
     "scan": "Scan",
     "list": "List",
-    "user": "User"
+    "user": "User",
+    "noUser": "No user connected"
   },
   "loginScreen": {
     "welcome": "Welcome,",
@@ -38,6 +39,8 @@
     "id": "Id",
     "category": "Category",
     "categoryPlaceholder": "Enter the category",
+    "service": "Service",
+    "servicePlaceholder": "Enter the service",
     "brand": "Brand",
     "brandPlaceholder": "Enter the brand",
     "model": "Model",
