@@ -31,7 +31,7 @@ export const InfoScreen = observer(function InfoScreen() {
   }, [itemStore.item, navigation])
 
   const {
-    itemID,
+    id,
     category,
     brand,
     model,
@@ -57,7 +57,7 @@ export const InfoScreen = observer(function InfoScreen() {
   return (
     <ItemScreen
       asyncOperation={itemStore.updateItem}
-      initialItemID={itemID}
+      initialId={id?.toString()}
       initialCategory={category}
       initialBrand={brand}
       initialModel={model}

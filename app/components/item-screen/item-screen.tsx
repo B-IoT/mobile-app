@@ -60,8 +60,7 @@ const IMAGE: ImageStyle = {
 }
 
 const strings = {
-  itemID: translate('registerScreen.itemID'),
-  itemIDPlaceholder: translate('registerScreen.itemIDPlaceholder'),
+  id: translate('registerScreen.id'),
   category: translate('registerScreen.category'),
   categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
   brand: translate('registerScreen.brand'),
@@ -110,6 +109,8 @@ const Shape = () => <Image style={IMAGE} source={image} />
 
 const MAX_DATE = new Date('2025-12-31')
 
+const UNDER_CREATION = 'Under creation'
+
 const isIos = Platform.OS === 'ios'
 
 /**
@@ -119,7 +120,7 @@ const isIos = Platform.OS === 'ios'
 export function ItemScreen(props: ItemScreenProps) {
   const {
     asyncOperation,
-    initialItemID,
+    initialId,
     initialCategory,
     initialBrand,
     initialModel,
@@ -145,10 +146,11 @@ export function ItemScreen(props: ItemScreenProps) {
     shouldGoBackWithoutReset,
   } = props
 
-  // Cannot be modified by the user, it is a constant that defaults to today
-  const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date()
+  // Constants that annot be modified by the user
+  const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date() // defaults to today
+  const id = initialId ? initialId : null
+  const status = initialStatus ? initialStatus : null
 
-  const [itemID, setItemID] = useState(initialItemID ? initialItemID : '')
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
   const [model, setModel] = useState(initialModel ? initialModel : '')
@@ -166,7 +168,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialPreviousOwner ? initialPreviousOwner : '',
   )
   const [purchaseDate, setPurchaseDate] = useState(
-    initialPurchaseDate ? initialPurchaseDate : new Date(),
+    initialPurchaseDate ? initialPurchaseDate : null,
   )
   const [purchasePrice, setPurchasePrice] = useState(
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
@@ -178,7 +180,6 @@ export function ItemScreen(props: ItemScreenProps) {
   const [maintenanceDate, setMaintenanceDate] = useState(
     initialMaintenanceDate ? initialMaintenanceDate : null,
   )
-  const [status, setStatus] = useState(initialStatus ? initialStatus : '')
   const [comments, setComments] = useState(initialComments ? initialComments : '')
   const [lastModifiedBy, setLastModifiedBy] = useState(
     initialLastModifiedBy ? initialLastModifiedBy : '',
@@ -209,8 +210,8 @@ export function ItemScreen(props: ItemScreenProps) {
    * @param date the date to fix
    */
   const fixDate = (date: Date) => {
-    const d = new Date()
     if (date) {
+      const d = new Date()
       d.setDate(date.getDate())
       return d
     } else {
@@ -223,14 +224,10 @@ export function ItemScreen(props: ItemScreenProps) {
       <TopNavigation accessoryLeft={BackAction} accessoryRight={Shape} title={title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
-        <Autocomplete
-          style={INPUT}
-          label={strings.itemID}
-          placeholder={strings.itemIDPlaceholder}
-          dataType={DataType.ITEM_ID}
-          value={itemID}
-          setValue={setItemID}
-        />
+        {id ? <Input disabled={true} style={INPUT} label={strings.id} value={id} /> : null}
+        {status === UNDER_CREATION ? (
+          <Input disabled={true} style={INPUT} label={strings.status} value={status} />
+        ) : null}
         <Autocomplete
           style={INPUT}
           label={strings.category}
@@ -362,14 +359,6 @@ export function ItemScreen(props: ItemScreenProps) {
           value={color}
           setValue={setColor}
         />
-        <Autocomplete
-          style={INPUT}
-          label={strings.status}
-          placeholder={strings.statusPlaceholder}
-          dataType={DataType.STATUS}
-          value={status}
-          setValue={setStatus}
-        />
         <Input
           style={INPUT}
           label={strings.comments}
@@ -418,10 +407,9 @@ export function ItemScreen(props: ItemScreenProps) {
               const correctLastModifiedDate = new Date() // set to today
 
               const item: Item = {
-                id: null,
+                id: id ? parseInt(id) : null,
                 beacon: null,
                 service: null,
-                itemID,
                 category,
                 brand,
                 model,
@@ -454,7 +442,6 @@ export function ItemScreen(props: ItemScreenProps) {
 
                 // Save the data inserted by the user for future autocompletion
                 const newAutocompleteEntries: Array<[DataType, string]> = [
-                  [DataType.ITEM_ID, itemID],
                   [DataType.CATEGORY, category],
                   [DataType.BRAND, brand],
                   [DataType.MODEL, model],
@@ -469,7 +456,6 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.ORDER_NUMBER, orderNumber],
                   [DataType.COLOR, color],
                   [DataType.SERIAL_NUMBER, serialNumber],
-                  [DataType.STATUS, status],
                   [DataType.LAST_MODIFIED_BY, lastModifiedBy],
                 ]
                 newAutocompleteEntries.forEach(

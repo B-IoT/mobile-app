@@ -13,7 +13,6 @@ export enum GetItemResult {
 }
 
 export enum DataType {
-  ITEM_ID,
   CATEGORY,
   BRAND,
   MODEL,
@@ -28,7 +27,6 @@ export enum DataType {
   ORDER_NUMBER,
   COLOR,
   SERIAL_NUMBER,
-  STATUS,
   LAST_MODIFIED_BY,
 }
 

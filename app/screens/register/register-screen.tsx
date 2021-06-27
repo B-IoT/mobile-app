@@ -33,6 +33,7 @@ export const RegisterScreen = observer(function RegisterScreen() {
 
   return (
     <ItemScreen
+      initialId={itemStore.itemId?.toString()}
       asyncOperation={(item) => {
         // Reset the item id only if we are creating a new item without having scanned a QR code
         fromListScreen && itemStore.resetItemId()

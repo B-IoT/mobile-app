@@ -34,8 +34,7 @@
   "registerScreen": {
     "register": "Register",
     "title": "Register an item",
-    "itemID": "Item ID",
-    "itemIDPlaceholder": "Enter the item ID",
+    "id": "Id",
     "category": "Category",
     "categoryPlaceholder": "Enter the category",
     "brand": "Brand",

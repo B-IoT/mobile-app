@@ -181,7 +181,6 @@ function extractItem(rawItem): Item {
     beacon: rawItem.beacon,
     category: rawItem.category,
     service: rawItem.service,
-    itemID: rawItem.itemID,
     brand: rawItem.brand,
     model: rawItem.model,
     supplier: rawItem.supplier,

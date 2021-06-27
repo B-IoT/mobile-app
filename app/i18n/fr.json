@@ -35,8 +35,7 @@
   "registerScreen": {
     "register": "Enregistrer",
     "title": "Enregistrer un objet",
-    "itemID": "ID de l'objet",
-    "itemIDPlaceholder": "Entre l'ID de l'objet",
+    "id": "Id",
     "category": "Catégorie",
     "categoryPlaceholder": "Entre la catégorie",
     "brand": "Marque",
