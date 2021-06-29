@@ -343,7 +343,7 @@ describe('Info screen', () => {
       comments,
       lastModifiedDate: jasmine.any(Date),
       lastModifiedBy,
-    })
+    }, true)
     const item = mockUpdateItem.mock.calls[0][0]
     expect(item.lastModifiedDate.toISOString().split('T')[0]).toEqual(
       new Date().toISOString().split('T')[0],

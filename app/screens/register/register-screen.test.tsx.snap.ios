@@ -2711,6 +2711,8 @@ exports[`Register screen should match snapshot 1`] = `
                                       allowFontScaling={true}
                                       appearance="default"
                                       editable={true}
+                                      maxLength={200}
+                                      multiline={true}
                                       onBlur={[Function]}
                                       onChangeText={[Function]}
                                       onFocus={[Function]}
@@ -2830,11 +2832,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-<<<<<<< HEAD
-                                      27/06/2021
-=======
                                       29/06/2021
->>>>>>> main
                                     </Text>
                                   </View>
                                 </View>
