@@ -357,6 +357,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setColor}
         />
         <Input
+          maxLength={200}
           multiline={true}
           style={INPUT}
           label={strings.comments}
