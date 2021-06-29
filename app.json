@@ -2,7 +2,7 @@
   "expo": {
     "name": "BioT Mobile",
     "slug": "biot",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "owner": "biot",
     "orientation": "portrait",
     "icon": "./assets/biot-shape-square.png",
@@ -22,12 +22,12 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "ch.biot.mobile",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.3"
     },
     "android": {
       "permissions": ["CAMERA"],
       "package": "ch.biot.mobile",
-      "versionCode": 3
+      "versionCode": 4
     },
     "locales": {
       "fr": "./app/i18n/fr.json"

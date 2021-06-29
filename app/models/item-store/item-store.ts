@@ -27,7 +27,7 @@ export enum DataType {
   ORDER_NUMBER,
   COLOR,
   SERIAL_NUMBER,
-  LAST_MODIFIED_BY
+  LAST_MODIFIED_BY,
 }
 
 export const ItemStoreModel = types
@@ -191,9 +191,11 @@ export const ItemStoreModel = types
      * Updates the given item at the server.
      *
      * @param item the item to update
+     * @param scan true if the object has been scanned before update, false otherwise
      * @returns true if it was successful, false otherwise
      */
-    updateItem: flow(function* (item: Item) {
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+    updateItem: flow(function* (item: Item, scan: boolean = true) {
       // First we update the auth token with the one stored, which is not volatile
       self.environment.api.setAuthToken(self.authToken)
       const itemApi = new ItemApi(self.environment.api)
@@ -202,7 +204,7 @@ export const ItemStoreModel = types
         Object.entries(item).filter(([_, v]) => v != null),
       )
       const updatedItem = { ...self.item, ...itemWithoutNulls }
-      const result = yield itemApi.updateItem(updatedItem)
+      const result = yield itemApi.updateItem(updatedItem, scan)
 
       if (result.kind === 'ok') {
         self.saveItem(updatedItem)
