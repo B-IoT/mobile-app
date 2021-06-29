@@ -159,7 +159,7 @@ describe('Item Api', () => {
       originalError: null,
     })
 
-    const result = await itemApi.updateItem(item)
+    const result = await itemApi.updateItem(item, false)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
     expect(mockPut).toHaveBeenCalledWith(
@@ -167,12 +167,13 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('ok')
   })
 
-  it('should fail registering an item', async () => {
+  it('should fail updating an item', async () => {
     const api = new Api()
     api.setup()
     const itemApi = new ItemApi(api)
@@ -183,7 +184,7 @@ describe('Item Api', () => {
       originalError: null,
     })
 
-    const result = await itemApi.updateItem(item)
+    const result = await itemApi.updateItem(item, false)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
     expect(mockPut).toHaveBeenCalledWith(
@@ -191,12 +192,13 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('server')
   })
 
-  it('should fail registering an item because of bad data', async () => {
+  it('should fail updating an item because of bad data', async () => {
     const api = new Api()
     api.setup()
     const itemApi = new ItemApi(api)
@@ -205,7 +207,7 @@ describe('Item Api', () => {
       throw new Error('')
     })
 
-    const result = await itemApi.updateItem(item)
+    const result = await itemApi.updateItem(item, false)
 
     expect(mockPut).toHaveBeenCalledTimes(1)
     expect(mockPut).toHaveBeenCalledWith(
@@ -213,6 +215,7 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('bad-data')
