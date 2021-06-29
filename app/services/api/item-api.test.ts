@@ -167,6 +167,7 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('ok')
@@ -191,6 +192,7 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('server')
@@ -213,6 +215,7 @@ describe('Item Api', () => {
       cleanItem(item),
       {
         headers: { 'Content-Type': 'application/json' },
+        params: { scan: false },
       },
     )
     expect(result.kind).toEqual('bad-data')

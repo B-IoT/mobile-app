@@ -487,7 +487,7 @@ describe('Item store', () => {
 
     expect(result).toBeTruthy()
     expect(mockUpdateItem).toHaveBeenCalledTimes(1)
-    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem)
+    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem, true)
     expect(instance.item).toEqual(expectedItem)
     expect(instance.itemId).toEqual(expectedItem.id)
   })
@@ -529,7 +529,7 @@ describe('Item store', () => {
 
     expect(result).toBeFalsy()
     expect(mockUpdateItem).toHaveBeenCalledTimes(1)
-    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem)
+    expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem, true)
   })
 
   it('should login', async () => {

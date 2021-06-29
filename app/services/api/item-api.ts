@@ -109,9 +109,9 @@ export class ItemApi {
     try {
       const itemCleaned = cleanItem(item)
       const response: ApiResponse<any> = await this.api.apisauce.put(
-        `${this.api.config.url}/api/items/${item.id}?${scan}`,
+        `${this.api.config.url}/api/items/${item.id}`,
         itemCleaned,
-        { headers: { 'Content-Type': 'application/json' } },
+        { headers: { 'Content-Type': 'application/json' }, params: { scan } },
       )
 
       if (!response.ok) {
