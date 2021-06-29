@@ -24,6 +24,8 @@ export const InfoScreen = observer(function InfoScreen() {
   const navigation = useNavigation<InfoScreenNavigationProp>()
   const route = useRoute<InfoScreenRouteProp>()
 
+  const fromListScreen = route.params?.fromListScreen
+
   useEffect(() => {
     if (!itemStore.item) {
       resetAndNavigateTo(navigation, 'home')
@@ -56,7 +58,7 @@ export const InfoScreen = observer(function InfoScreen() {
 
   return (
     <ItemScreen
-      asyncOperation={itemStore.updateItem}
+      asyncOperation={(item) => itemStore.updateItem(item, !fromListScreen)}
       initialId={id?.toString()}
       initialCategory={category}
       initialBrand={brand}
@@ -82,7 +84,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialLastModifiedBy={lastModifiedBy}
       buttonText={strings.update}
       title={strings.title}
-      shouldGoBackWithoutReset={route.params?.fromListScreen}
+      shouldGoBackWithoutReset={fromListScreen}
     />
   )
 })

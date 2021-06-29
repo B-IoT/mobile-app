@@ -109,15 +109,16 @@ export class ItemApi {
    * Updates the given item.
    *
    * @param item the item to update
+   * @param scan true if the object has been scanned before update, false otherwise
    * @returns an object storing whether the request was successful
    */
-  async updateItem(item: Item): Promise<UpdateItemResult> {
+  async updateItem(item: Item, scan: boolean): Promise<UpdateItemResult> {
     try {
       const itemCleaned = cleanItem(item)
       const response: ApiResponse<any> = await this.api.apisauce.put(
         `${this.api.config.url}/api/items/${item.id}`,
         itemCleaned,
-        { headers: { 'Content-Type': 'application/json' } },
+        { headers: { 'Content-Type': 'application/json' }, params: { scan } },
       )
 
       if (!response.ok) {

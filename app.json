@@ -27,7 +27,7 @@
     "android": {
       "permissions": ["CAMERA"],
       "package": "ch.biot.mobile",
-      "versionCode": 4
+      "versionCode": 5
     },
     "locales": {
       "fr": "./app/i18n/fr.json"

@@ -6622,7 +6622,11 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
+<<<<<<< HEAD
                                       27/06/2021
+=======
+                                      29/06/2021
+>>>>>>> main
                                     </Text>
                                   </View>
                                 </View>
