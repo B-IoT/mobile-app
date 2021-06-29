@@ -166,9 +166,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const [previousOwner, setPreviousOwner] = useState(
     initialPreviousOwner ? initialPreviousOwner : '',
   )
-  const [purchaseDate, setPurchaseDate] = useState(
-    initialPurchaseDate ? initialPurchaseDate : null,
-  )
+  const [purchaseDate, setPurchaseDate] = useState(initialPurchaseDate ? initialPurchaseDate : null)
   const [purchasePrice, setPurchasePrice] = useState(
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
   )
@@ -359,6 +357,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setColor}
         />
         <Input
+          multiline={true}
           style={INPUT}
           label={strings.comments}
           placeholder={strings.commentsPlaceholder}
