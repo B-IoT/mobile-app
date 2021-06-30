@@ -7,7 +7,8 @@
     "retry": "Réessayer",
     "error": "Erreur, réessaye!",
     "shouldNotBeEmpty": "Ne devrait pas être vide",
-    "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro"
+    "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro",
+    "mandatory": "Obligatoire"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",

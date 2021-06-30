@@ -6,7 +6,8 @@
     "retry": "Retry",
     "error": "Error, try again!",
     "shouldNotBeEmpty": "Should not be empty",
-    "shouldBeValidPrice": "Should be a number greater than zero"
+    "shouldBeValidPrice": "Should be a number greater than zero",
+    "mandatory": "Mandatory"
   },
   "loginScreen": {
     "welcome": "Welcome,",

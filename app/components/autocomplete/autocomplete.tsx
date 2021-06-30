@@ -28,7 +28,7 @@ const hideEvent: 'keyboardDidHide' | 'keyboardWillHide' = Platform.select({
  * The most used entries are shown on top.
  */
 export function Autocomplete(props: AutocompleteProps) {
-  const { value, setValue, dataType, label, status, placeholder, errorCaption, ...uiProps } = props
+  const { value, setValue, dataType, label, status, placeholder, caption, errorCaption, ...uiProps } = props
 
   const { itemStore } = useStores()
 
@@ -87,7 +87,7 @@ export function Autocomplete(props: AutocompleteProps) {
       status={status}
       placeholder={placeholder}
       placement={placement}
-      caption={status === 'danger' ? errorCaption : null}
+      caption={status === 'danger' ? errorCaption : caption}
       captionIcon={status === 'danger' ? AlertIcon : null}
       accessoryRight={value ? CloseIcon : null}
       onChangeText={onChangeText}
