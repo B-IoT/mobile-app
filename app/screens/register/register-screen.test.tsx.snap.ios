@@ -823,6 +823,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -845,6 +846,33 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -1039,6 +1067,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1061,6 +1090,33 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -1147,6 +1203,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1169,6 +1226,33 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -1255,6 +1339,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1277,6 +1362,33 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -2013,9 +2125,36 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Enter the purchase date
+                                      30/06/2021
                                     </Text>
                                   </View>
+                                  <Text
+                                    appearance="default"
+                                    category="p1"
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#222B45",
+                                          "fontFamily": "System",
+                                          "fontSize": 15,
+                                          "fontWeight": "400",
+                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#8F9BB3",
+                                            "fontFamily": "System",
+                                            "fontSize": 12,
+                                            "fontWeight": "400",
+                                          },
+                                          Object {
+                                            "textAlign": "left",
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                  >
+                                    Mandatory
+                                  </Text>
                                 </View>
                                 <View
                                   onLayout={[Function]}
@@ -2125,6 +2264,33 @@ exports[`Register screen should match snapshot 1`] = `
                                         value=""
                                       />
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -2502,6 +2668,8 @@ exports[`Register screen should match snapshot 1`] = `
                                       allowFontScaling={true}
                                       appearance="default"
                                       editable={true}
+                                      maxLength={200}
+                                      multiline={true}
                                       onBlur={[Function]}
                                       onChangeText={[Function]}
                                       onFocus={[Function]}
@@ -2621,7 +2789,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      29/06/2021
+                                      30/06/2021
                                     </Text>
                                   </View>
                                 </View>
