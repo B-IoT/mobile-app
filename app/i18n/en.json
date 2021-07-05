@@ -10,7 +10,8 @@
     "scan": "Scan",
     "list": "List",
     "user": "User",
-    "noUser": "No user connected"
+    "noUser": "No user connected",
+    "mandatory": "Mandatory"
   },
   "loginScreen": {
     "welcome": "Welcome,",

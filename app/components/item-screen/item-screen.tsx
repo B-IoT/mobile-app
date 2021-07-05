@@ -22,6 +22,7 @@ import { AutocompleteStatus } from '../autocomplete/autocomplete.props'
 import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
+import { isEmpty } from '../../utils/function-utils/function-utils'
 const image = require('../../../assets/biot-shape-square.png')
 
 const ROOT: ViewStyle = {
@@ -103,6 +104,8 @@ const strings = {
   lastModifiedBy: translate('registerScreen.lastModifiedBy'),
   lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
+  shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
+  mandatory: translate('common.mandatory'),
 }
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />
@@ -110,6 +113,8 @@ const BackIcon = (props) => <Icon {...props} name="arrow-back" />
 const Shape = () => <Image style={IMAGE} source={image} />
 
 const MAX_DATE = new Date('2025-12-31')
+
+const COMMENTS_MAX_LENGTH = 200
 
 const UNDER_CREATION = 'Under creation'
 
@@ -149,16 +154,20 @@ export function ItemScreen(props: ItemScreenProps) {
     shouldGoBackWithoutReset,
   } = props
 
-  // Constants that annot be modified by the user
+  // Constants that cannot be modified by the user
   const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date() // defaults to today
   const id = initialId ? initialId : null
   const status = initialStatus ? initialStatus : null
 
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
+  const [categoryStatus, setCategoryStatus] = useState<AutocompleteStatus>('basic')
   const [service, setService] = useState(initialService ? initialService : '')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
+  const [brandStatus, setBrandStatus] = useState<AutocompleteStatus>('basic')
   const [model, setModel] = useState(initialModel ? initialModel : '')
+  const [modelStatus, setModelStatus] = useState<AutocompleteStatus>('basic')
   const [supplier, setSupplier] = useState(initialSupplier ? initialSupplier : '')
+  const [supplierStatus, setSupplierStatus] = useState<AutocompleteStatus>('basic')
   const [originLocation, setOriginLocation] = useState(
     initialOriginLocation ? initialOriginLocation : '',
   )
@@ -171,7 +180,9 @@ export function ItemScreen(props: ItemScreenProps) {
   const [previousOwner, setPreviousOwner] = useState(
     initialPreviousOwner ? initialPreviousOwner : '',
   )
-  const [purchaseDate, setPurchaseDate] = useState(initialPurchaseDate ? initialPurchaseDate : null)
+  const [purchaseDate, setPurchaseDate] = useState(
+    initialPurchaseDate ? initialPurchaseDate : new Date(),
+  )
   const [purchasePrice, setPurchasePrice] = useState(
     initialPurchasePrice ? initialPurchasePrice.toString() : '',
   )
@@ -237,6 +248,9 @@ export function ItemScreen(props: ItemScreenProps) {
         ) : null}
         <Autocomplete
           style={INPUT}
+          status={categoryStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
           label={strings.category}
           placeholder={strings.categoryPlaceholder}
           dataType={DataType.CATEGORY}
@@ -262,6 +276,9 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.brand}
+          status={brandStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
           placeholder={strings.brandPlaceholder}
           dataType={DataType.BRAND}
           value={brand}
@@ -270,6 +287,9 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.model}
+          status={modelStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
           placeholder={strings.modelPlaceholder}
           dataType={DataType.MODEL}
           value={model}
@@ -278,6 +298,9 @@ export function ItemScreen(props: ItemScreenProps) {
         <Autocomplete
           style={INPUT}
           label={strings.supplier}
+          status={supplierStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
           placeholder={strings.supplierPlaceholder}
           dataType={DataType.SUPPLIER}
           value={supplier}
@@ -334,6 +357,7 @@ export function ItemScreen(props: ItemScreenProps) {
         <Datepicker
           style={INPUT}
           date={purchaseDate}
+          caption={strings.mandatory}
           onSelect={setPurchaseDate}
           label={strings.purchaseDate}
           placeholder={strings.purchaseDatePlaceholder}
@@ -343,12 +367,19 @@ export function ItemScreen(props: ItemScreenProps) {
           style={INPUT}
           label={strings.purchasePrice}
           status={purchasePriceStatus}
+          caption={strings.mandatory}
           placeholder={strings.purchasePricePlaceholder}
           errorCaption={strings.shouldBeValidPrice}
           dataType={DataType.PRICE}
           keyboardType="numeric"
           value={purchasePrice}
-          setValue={(val) => setPurchasePrice(val.replace(',', '.'))}
+          setValue={(val) => {
+            // Make sure we have period instead of comma and that there are only two decimal digits after it
+            const segments = val.replace(',', '.').split('.', 2)
+            setPurchasePrice(
+              segments.length === 2 ? `${segments[0]}.${segments[1].substring(0, 2)}` : segments[0],
+            )
+          }}
         />
         <Autocomplete
           style={INPUT}
@@ -375,7 +406,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setColor}
         />
         <Input
-          maxLength={200}
+          maxLength={COMMENTS_MAX_LENGTH}
           multiline={true}
           style={INPUT}
           label={strings.comments}
@@ -405,8 +436,11 @@ export function ItemScreen(props: ItemScreenProps) {
           onPress={async () => {
             // prettier-ignore
             const statusSetters: Array<[boolean, React.Dispatch<React.SetStateAction<AutocompleteStatus>>]> = [
-              [purchasePrice && (!Number(purchasePrice) || Number(purchasePrice) <= 0), setPurchasePriceStatus],
-              // Add more conditions here
+              [isEmpty(purchasePrice) || !Number(purchasePrice) || Number(purchasePrice) <= 0, setPurchasePriceStatus],
+              [isEmpty(category), setCategoryStatus],
+              [isEmpty(brand), setBrandStatus],
+              [isEmpty(model), setModelStatus],
+              [isEmpty(supplier), setSupplierStatus],
             ]
 
             const noErrors = statusSetters.reduce((noErrors, [isInvalid, currSetter]) => {

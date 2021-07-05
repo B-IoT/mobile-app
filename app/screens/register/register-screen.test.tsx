@@ -307,7 +307,7 @@ describe('Register screen', () => {
       originLocation: originLocation,
       currentOwner,
       previousOwner,
-      purchaseDate: null,
+      purchaseDate: jasmine.any(Date),
       purchasePrice: 25,
       room: room,
       service: service,
@@ -327,20 +327,20 @@ describe('Register screen', () => {
     )
   })
 
-  // it('should show warnings when registering an item with empty fields', () => {
-  //   const screen = buildRegisterScreen()
-  //   const component = render(screen)
+  it('should show warnings when registering an item with empty fields', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
 
-  //   const registerItemButton = component.queryByText(translate('registerScreen.register'))
-  //   fireEvent.press(registerItemButton)
+    const registerItemButton = component.queryByText(translate('registerScreen.register'))
+    fireEvent.press(registerItemButton)
 
-  //   const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
-  //   const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
+    const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
+    const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
 
-  //   expect(warnings).toHaveLength(13)
-  //   warnings.forEach((w) => expect(w).toBeTruthy())
-  //   expect(priceWarning).toBeTruthy()
-  // })
+    expect(warnings).toHaveLength(4)
+    warnings.forEach((w) => expect(w).toBeTruthy())
+    expect(priceWarning).toBeTruthy()
+  })
 
   it('should match snapshot', () => {
     const screen = buildRegisterScreen()

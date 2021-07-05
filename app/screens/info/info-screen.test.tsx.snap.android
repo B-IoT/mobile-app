@@ -902,6 +902,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -1196,6 +1197,33 @@ exports[`Info screen should match snapshot 1`] = `
                                         </RNSVGSvgView>
                                       </View>
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -1773,6 +1801,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2067,6 +2096,33 @@ exports[`Info screen should match snapshot 1`] = `
                                         </RNSVGSvgView>
                                       </View>
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -2153,6 +2209,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2447,6 +2504,33 @@ exports[`Info screen should match snapshot 1`] = `
                                         </RNSVGSvgView>
                                       </View>
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -2533,6 +2617,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         placeholderTextColor="#8F9BB3"
                                         rejectResponderTermination={true}
                                         size="large"
+                                        status="basic"
                                         style={
                                           Array [
                                             Object {
@@ -2827,6 +2912,33 @@ exports[`Info screen should match snapshot 1`] = `
                                         </RNSVGSvgView>
                                       </View>
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -5195,9 +5307,36 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      Enter the purchase date
+                                      05/07/2021
                                     </Text>
                                   </View>
+                                  <Text
+                                    appearance="default"
+                                    category="p1"
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#222B45",
+                                          "fontFamily": "System",
+                                          "fontSize": 15,
+                                          "fontWeight": "400",
+                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#8F9BB3",
+                                            "fontFamily": "System",
+                                            "fontSize": 12,
+                                            "fontWeight": "400",
+                                          },
+                                          Object {
+                                            "textAlign": "left",
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                  >
+                                    Mandatory
+                                  </Text>
                                 </View>
                                 <View
                                   onLayout={[Function]}
@@ -5579,6 +5718,33 @@ exports[`Info screen should match snapshot 1`] = `
                                         </RNSVGSvgView>
                                       </View>
                                     </View>
+                                    <Text
+                                      appearance="default"
+                                      category="p1"
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#222B45",
+                                            "fontFamily": "System",
+                                            "fontSize": 15,
+                                            "fontWeight": "400",
+                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#8F9BB3",
+                                              "fontFamily": "System",
+                                              "fontSize": 12,
+                                              "fontWeight": "400",
+                                            },
+                                            Object {
+                                              "textAlign": "left",
+                                            },
+                                          ],
+                                        ]
+                                      }
+                                    >
+                                      Mandatory
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -6624,7 +6790,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      29/06/2021
+                                      05/07/2021
                                     </Text>
                                   </View>
                                 </View>

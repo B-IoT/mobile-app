@@ -11,7 +11,8 @@
     "scan": "Scan",
     "list": "Liste",
     "user": "Utilisateur",
-    "noUser": "Aucun utilisateur connecté"
+    "noUser": "Aucun utilisateur connecté",
+    "mandatory": "Obligatoire"
   },
   "loginScreen": {
     "welcome": "Bienvenue,",
