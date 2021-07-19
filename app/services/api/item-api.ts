@@ -176,7 +176,7 @@ export function cleanItem(item: Item): Record<string, unknown> {
  * @param rawItem the object corresponding to a raw item
  * @returns the corresponding Item
  */
-function extractItem(rawItem): Item {
+export function extractItem(rawItem): Item {
   return {
     id: rawItem.id,
     beacon: rawItem.beacon,

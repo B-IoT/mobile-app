@@ -1,10 +1,10 @@
 import * as Sentry from 'sentry-expo'
-import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, flow, cast } from 'mobx-state-tree'
 import { Item, ItemModel } from '../item/item'
 import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
 import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'
-import { ItemApi } from '../../services/api'
+import { ItemApi, UserInfo } from '../../services/api'
 
 export enum GetItemResult {
   OK,
@@ -109,7 +109,7 @@ export const ItemStoreModel = types
      * @param items the items
      */
     saveItems: (items: Array<Item>) => {
-      self.items = items
+      self.items.replace(items)
     },
 
     /**
@@ -166,6 +166,24 @@ export const ItemStoreModel = types
     }),
   }))
   .actions((self) => ({
+    /**
+     * Gets the user information.
+     *
+     * @returns the user information, or null if any error occurred
+     */
+    getUserInfo: flow(function* () {
+      self.environment.api.setAuthToken(self.authToken)
+
+      const result = yield self.environment.api.getUserInfo()
+
+      if (result.kind === 'ok') {
+        return result.data as UserInfo
+      } else {
+        __DEV__ && console.log(`Get user info failed, ${result.kind} error`)
+        return null
+      }
+    }),
+
     /**
      * Gets the item with the given id from the server.
      *
@@ -283,6 +301,7 @@ export const ItemStoreModel = types
             message: `Authenticated user: ${username}`,
             level: Sentry.Native.Severity.Info,
           })
+
           self.setAuthToken(result.token)
           self.setUsername(username)
           if (remember) {
@@ -307,6 +326,8 @@ export const ItemStoreModel = types
       self.setAuthToken(undefined)
       self.setAuthenticated(false)
       self.setUsername(undefined)
+      eventBusClient?.disconnect()
+      eventBusClient = null
     }),
   }))
 

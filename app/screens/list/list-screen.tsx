@@ -18,10 +18,13 @@ import {
   ListItem,
   Spinner,
   Text,
+  useTheme,
 } from '@ui-kitten/components'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 import { clone } from 'mobx-state-tree'
+import { Client, UpdateType } from '@biot-dev/event-bus-client'
+import { extractItem } from '../../services/api'
 
 import { Screen } from '../../components'
 import { spacing } from '../../theme'
@@ -187,6 +190,7 @@ const strings = {
 export const ListScreen = observer(function ListScreen() {
   const { itemStore } = useStores()
   const navigation = useNavigation<ListScreenNavigationProp>()
+  const theme = useTheme()
 
   const [items, setItems] = useState<Array<Item>>([])
   const [shownItems, setShownItems] = useState<Array<Item>>(items)
@@ -194,6 +198,61 @@ export const ListScreen = observer(function ListScreen() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [infoPopupVisible, setInfoPopupVisible] = useState(false)
+  const [eventBusClient, setEventBusClient] = useState<Client>(null)
+
+  useEffect(() => {
+    ;(async () => {
+      const result = await itemStore.getUserInfo()
+      console.log('HERE 1!')
+      if (result) {
+        console.log('HERE 2!')
+        setEventBusClient(
+          new Client(
+            `${itemStore.environment.api.config.url}/eventbus`,
+            itemStore.authToken,
+            result.company,
+          ),
+        )
+      }
+    })()
+  }, [itemStore])
+
+  useEffect(() => {
+    ;(async () => {
+      console.log('HERE 3!')
+      if (eventBusClient) {
+        console.log('HERE 4!')
+        await eventBusClient.connect()
+
+        console.log('HERE 5!')
+
+        eventBusClient.onItemUpdate((type, id, content) => {
+          switch (type) {
+            case UpdateType.DELETE: {
+              itemStore.saveItems(itemStore.items.filter((item) => item.id !== id))
+              break
+            }
+            case UpdateType.POST: {
+              itemStore.saveItems(itemStore.items.concat([extractItem(content)]))
+              break
+            }
+            case UpdateType.PUT: {
+              console.log('HERE 6!')
+              itemStore.saveItems(
+                itemStore.items.filter((item) => item.id !== id).concat([extractItem(content)]),
+              )
+              break
+            }
+          }
+        })
+      }
+
+      return () => {
+        console.log('HERE 7!')
+        eventBusClient?.disconnect()
+      }
+    })()
+  }, [eventBusClient, itemStore])
 
   useEffect(() => {
     ;(async () => {
@@ -210,6 +269,14 @@ export const ListScreen = observer(function ListScreen() {
 
   const renderItem = ({ item }: { item: Item }) => (
     <ListItem
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{
+        backgroundColor:
+          item.status === 'Under creation'
+            ? theme['color-under-creation-blue-transparent']
+            : theme['color-white'],
+      }}
+      key={item.id}
       onPress={() => {
         // Open the Info screen
         itemStore.saveItem(clone(item))

@@ -84,4 +84,28 @@ export class Api {
       return { kind: 'bad-data' }
     }
   }
+
+  /**
+   * Gets the user information.
+   *
+   * @returns a Promise wrapping the user info
+   */
+  async getUserInfo(): Promise<Types.UserInfoResult> {
+    try {
+      const response: ApiResponse<any> = await this.apisauce.get(`${this.config.url}/api/users/me`)
+
+      if (!response.ok) {
+        const problem = getGeneralApiProblem(response)
+        if (problem) return problem
+      }
+
+      const data = response.data
+
+      return { kind: 'ok', data }
+    } catch (e) {
+      __DEV__ && console.log(`Bad getUserInfo request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
+      return { kind: 'bad-data' }
+    }
+  }
 }

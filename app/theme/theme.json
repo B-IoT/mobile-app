@@ -74,5 +74,6 @@
   "color-danger-transparent-400": "rgba(255, 50, 43, 0.32)",
   "color-danger-transparent-500": "rgba(255, 50, 43, 0.4)",
   "color-danger-transparent-600": "rgba(255, 50, 43, 0.48)",
-  "color-white": "#FFFFFF"
+  "color-white": "#FFFFFF",
+  "color-under-creation-blue-transparent": "rgba(37, 114, 232, 0.15)"
 }
