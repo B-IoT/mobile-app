@@ -192,8 +192,7 @@ export const ListScreen = observer(function ListScreen() {
   const navigation = useNavigation<ListScreenNavigationProp>()
   const theme = useTheme()
 
-  const [items, setItems] = useState<Array<Item>>([])
-  const [shownItems, setShownItems] = useState<Array<Item>>(items)
+  const [shownItems, setShownItems] = useState<Array<Item>>(itemStore.items)
   const [searchString, setSearchString] = useState('')
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
@@ -203,9 +202,7 @@ export const ListScreen = observer(function ListScreen() {
   useEffect(() => {
     ;(async () => {
       const result = await itemStore.getUserInfo()
-      console.log('HERE 1!')
       if (result) {
-        console.log('HERE 2!')
         setEventBusClient(
           new Client(
             `${itemStore.environment.api.config.url}/eventbus`,
@@ -219,12 +216,9 @@ export const ListScreen = observer(function ListScreen() {
 
   useEffect(() => {
     ;(async () => {
-      console.log('HERE 3!')
+      // This check is needed because sometimes the other useEffect runs before this one
       if (eventBusClient) {
-        console.log('HERE 4!')
         await eventBusClient.connect()
-
-        console.log('HERE 5!')
 
         eventBusClient.onItemUpdate((type, id, content) => {
           switch (type) {
@@ -233,11 +227,12 @@ export const ListScreen = observer(function ListScreen() {
               break
             }
             case UpdateType.POST: {
+              // New item put at the end
               itemStore.saveItems(itemStore.items.concat([extractItem(content)]))
               break
             }
             case UpdateType.PUT: {
-              console.log('HERE 6!')
+              // Updated item put at the top
               itemStore.saveItems(
                 [extractItem(content)].concat(itemStore.items.filter((item) => item.id !== id)),
               )
@@ -247,11 +242,7 @@ export const ListScreen = observer(function ListScreen() {
         })
       }
     })()
-    return () => {
-      console.log('HERE 7!')
-      eventBusClient?.disconnect()
-      setEventBusClient(null)
-    }
+    return () => eventBusClient?.disconnect()
   }, [eventBusClient, itemStore])
 
   useEffect(() => {
@@ -259,7 +250,6 @@ export const ListScreen = observer(function ListScreen() {
       const isSuccessful = await itemStore.getItems()
       setLoading(false)
       if (isSuccessful) {
-        setItems(itemStore.items)
         setShownItems(itemStore.items)
       } else {
         __DEV__ && console.error('Error while getting items')
@@ -280,7 +270,7 @@ export const ListScreen = observer(function ListScreen() {
       onPress={() => {
         // Open the Info screen
         itemStore.saveItem(clone(item))
-        navigation.navigate('info', { fromListScreen: true })
+        navigation.navigate('info')
       }}
     >
       <Layout style={LIST_ITEM_ROOT_LAYOUT}>
@@ -333,15 +323,15 @@ export const ListScreen = observer(function ListScreen() {
             searchString={searchString}
             onCloseIconPress={() => {
               setSearchString('')
-              setShownItems(items)
+              setShownItems(itemStore.items)
             }}
             onChangeText={(text) => {
               setSearchString(text)
               if (isEmpty(text)) {
-                setShownItems(items)
+                setShownItems(itemStore.items)
               } else {
                 setShownItems(
-                  items.filter((item) =>
+                  itemStore.items.filter((item) =>
                     // Search across all fields
                     Object.values(item).join('').toLowerCase().includes(text.toLowerCase()),
                   ),
@@ -349,7 +339,7 @@ export const ListScreen = observer(function ListScreen() {
               }
             }}
           />
-          {items.length === 0 ? (
+          {itemStore.items.length === 0 ? (
             <Text style={NO_ITEM_TEXT} appearance="hint">
               {strings.noItems}
             </Text>
@@ -366,7 +356,6 @@ export const ListScreen = observer(function ListScreen() {
                 const isSuccessful = await itemStore.getItems()
                 setRefreshing(false)
                 if (isSuccessful) {
-                  setItems(itemStore.items)
                   setShownItems(itemStore.items)
                 } else {
                   __DEV__ && console.error('Error while refreshing items')

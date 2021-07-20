@@ -21,9 +21,9 @@ import { RegisterScreen, InfoScreen, HomeScreen, ListScreen } from '../screens'
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type MainPrimaryParamList = {
-  home: { showList: boolean }
+  home: undefined
   register: { fromListScreen: boolean }
-  info: { fromListScreen: boolean }
+  info: undefined
   list: undefined
 }
 

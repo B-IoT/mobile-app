@@ -326,8 +326,6 @@ export const ItemStoreModel = types
       self.setAuthToken(undefined)
       self.setAuthenticated(false)
       self.setUsername(undefined)
-      eventBusClient?.disconnect()
-      eventBusClient = null
     }),
   }))
 

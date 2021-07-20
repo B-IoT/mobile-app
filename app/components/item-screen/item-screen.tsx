@@ -15,7 +15,6 @@ import {
 } from '@ui-kitten/components'
 import { AsyncButton } from '../../components/async-button/async-button'
 import { translate } from '../../i18n'
-import { resetAndNavigateTo } from '../../navigators'
 import { DataType } from '../../models/item-store/item-store'
 import { ItemScreenProps } from './item-screen.props'
 import { AutocompleteStatus } from '../autocomplete/autocomplete.props'
@@ -151,7 +150,6 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy,
     buttonText,
     title,
-    shouldGoBackWithoutReset,
   } = props
 
   // Constants that cannot be modified by the user
@@ -204,12 +202,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction
-      icon={BackIcon}
-      onPress={() =>
-        shouldGoBackWithoutReset ? navigation.goBack() : resetAndNavigateTo(navigation, 'home')
-      }
-    />
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
   )
 
   /**
@@ -517,9 +510,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 )
 
                 setSuccess(true)
-                setTimeout(() => {
-                  resetAndNavigateTo(navigation, 'home', { showList: shouldGoBackWithoutReset })
-                }, OPERATION_TIMEOUT)
+                setTimeout(() => navigation.goBack(), OPERATION_TIMEOUT)
               }
             }
           }}
