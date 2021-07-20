@@ -121,13 +121,13 @@
       "/e2e"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
     ],
     "projects": [
       {
         "preset": "jest-expo/ios",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",
@@ -137,7 +137,7 @@
       {
         "preset": "jest-expo/android",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",

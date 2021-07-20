@@ -109,7 +109,11 @@ export const ItemStoreModel = types
      * @param items the items
      */
     saveItems: (items: Array<Item>) => {
-      self.items.replace(items)
+      if (!self.items) {
+        self.items = cast(items)
+      } else {
+        self.items.replace(items)
+      }
     },
 
     /**
