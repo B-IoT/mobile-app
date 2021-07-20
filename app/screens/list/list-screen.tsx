@@ -239,19 +239,19 @@ export const ListScreen = observer(function ListScreen() {
             case UpdateType.PUT: {
               console.log('HERE 6!')
               itemStore.saveItems(
-                itemStore.items.filter((item) => item.id !== id).concat([extractItem(content)]),
+                [extractItem(content)].concat(itemStore.items.filter((item) => item.id !== id)),
               )
               break
             }
           }
         })
       }
-
-      return () => {
-        console.log('HERE 7!')
-        eventBusClient?.disconnect()
-      }
     })()
+    return () => {
+      console.log('HERE 7!')
+      eventBusClient?.disconnect()
+      setEventBusClient(null)
+    }
   }, [eventBusClient, itemStore])
 
   useEffect(() => {
