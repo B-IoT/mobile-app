@@ -33,7 +33,7 @@ const Stack = createNativeStackNavigator<RootParamList>()
 const RootStack = observer(() => {
   const { itemStore } = useStores()
 
-  const isAuthenticated = itemStore.isAuthenticated
+  const isAuthenticated = Boolean(itemStore.isAuthenticated && itemStore.authToken)
   useEffect(() => {
     // If the user is not authenticated, try to authenticate it with his credentials, if stored
     const loginIfCredentials = async () => {
@@ -55,7 +55,7 @@ const RootStack = observer(() => {
         headerShown: false,
       }}
     >
-      {itemStore.isAuthenticated ? (
+      {isAuthenticated ? (
         <Stack.Screen
           name="mainStack"
           component={MainNavigator}
