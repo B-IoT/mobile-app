@@ -28,7 +28,17 @@ const hideEvent: 'keyboardDidHide' | 'keyboardWillHide' = Platform.select({
  * The most used entries are shown on top.
  */
 export function Autocomplete(props: AutocompleteProps) {
-  const { value, setValue, dataType, label, status, placeholder, caption, errorCaption, ...uiProps } = props
+  const {
+    value,
+    setValue,
+    dataType,
+    label,
+    status,
+    placeholder,
+    caption,
+    errorCaption,
+    ...uiProps
+  } = props
 
   const { itemStore } = useStores()
 
@@ -55,7 +65,7 @@ export function Autocomplete(props: AutocompleteProps) {
   })
 
   const onSelect = (index: number) => {
-    setValue(autocompleteData[index].name)
+    setValue(data[index].name)
   }
 
   const onChangeText = (query: string) => {

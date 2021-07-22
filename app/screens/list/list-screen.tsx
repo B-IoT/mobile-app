@@ -270,7 +270,7 @@ export const ListScreen = observer(function ListScreen() {
       onPress={() => {
         // Open the Info screen
         itemStore.saveItem(clone(item))
-        navigation.navigate('info')
+        navigation.navigate('info', { fromListScreen: true })
       }}
     >
       <Layout style={LIST_ITEM_ROOT_LAYOUT}>

@@ -34,7 +34,9 @@ export const InfoScreen = observer(function InfoScreen() {
 
   const {
     id,
+    beacon,
     category,
+    service,
     brand,
     model,
     supplier,
@@ -60,7 +62,9 @@ export const InfoScreen = observer(function InfoScreen() {
     <ItemScreen
       asyncOperation={(item) => itemStore.updateItem(item, !fromListScreen)}
       initialId={id?.toString()}
+      initialBeacon={beacon}
       initialCategory={category}
+      initialService={service}
       initialBrand={brand}
       initialModel={model}
       initialSupplier={supplier}

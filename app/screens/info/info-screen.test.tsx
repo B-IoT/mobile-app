@@ -320,7 +320,7 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('common.error'))).toBeFalsy() // the error is not shown
     expect(mockUpdateItem).toHaveBeenCalledTimes(1)
     expect(mockUpdateItem).toHaveBeenCalledWith({
-      beacon: null,
+      beacon: initialItem.beacon,
       brand: brand,
       category: category,
       service: service,

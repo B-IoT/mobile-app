@@ -17,6 +17,11 @@ export interface ItemScreenProps {
   initialCategory?: string
 
   /**
+   * The initial beacon value. If not specified, defaults to ''.
+   */
+   initialBeacon?: string
+
+  /**
    * The initial service value. If not specified, defaults to ''.
    */
   initialService?: string

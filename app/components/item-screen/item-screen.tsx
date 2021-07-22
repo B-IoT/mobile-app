@@ -10,6 +10,7 @@ import {
   Icon,
   Input,
   Layout,
+  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components'
@@ -22,6 +23,7 @@ import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
 import { isEmpty } from '../../utils/function-utils/function-utils'
+import { resetAndNavigateTo } from '../../navigators'
 const image = require('../../../assets/biot-shape-square.png')
 
 const ROOT: ViewStyle = {
@@ -48,8 +50,14 @@ const INPUT: ViewStyle = {
   marginVertical: spacing[3],
 }
 
+const ERROR_MESSAGE: ViewStyle = {
+  alignSelf: 'center',
+  marginTop: spacing[1],
+  marginBottom: -spacing[3],
+}
+
 const BUTTON: ViewStyle = {
-  marginTop: spacing[6],
+  marginTop: spacing[5],
 }
 
 const IMAGE: ImageStyle = {
@@ -102,6 +110,7 @@ const strings = {
   lastModifiedDate: translate('registerScreen.lastModifiedDate'),
   lastModifiedBy: translate('registerScreen.lastModifiedBy'),
   lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
+  errorsPresent: translate('registerScreen.errorsPresent'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
   mandatory: translate('common.mandatory'),
@@ -127,6 +136,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const {
     asyncOperation,
     initialId,
+    initialBeacon,
     initialCategory,
     initialService,
     initialBrand,
@@ -150,11 +160,13 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy,
     buttonText,
     title,
+    shouldGoBackWithoutReset,
   } = props
 
   // Constants that cannot be modified by the user
   const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date() // defaults to today
   const id = initialId ? initialId : null
+  const beacon = initialBeacon ? initialBeacon : null
   const status = initialStatus ? initialStatus : null
 
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
@@ -196,13 +208,19 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy ? initialLastModifiedBy : '',
   )
   const [executing, setExecuting] = useState(false)
+  const [wrongFields, setWrongFields] = useState(false) // used to display a small message if some fields are wrong
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
   const { itemStore } = useStores()
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() =>
+        shouldGoBackWithoutReset ? navigation.goBack() : resetAndNavigateTo(navigation, 'home')
+      }
+    />
   )
 
   /**
@@ -421,6 +439,11 @@ export function ItemScreen(props: ItemScreenProps) {
           value={lastModifiedBy}
           setValue={setLastModifiedBy}
         />
+        {wrongFields ? (
+          <Text style={ERROR_MESSAGE} category="label" status="danger">
+            {strings.errorsPresent}
+          </Text>
+        ) : null}
         <AsyncButton
           style={BUTTON}
           loading={executing}
@@ -452,7 +475,7 @@ export function ItemScreen(props: ItemScreenProps) {
 
               const item: Item = {
                 id: id ? parseInt(id) : null,
-                beacon: null,
+                beacon,
                 service,
                 category,
                 brand,
@@ -510,8 +533,18 @@ export function ItemScreen(props: ItemScreenProps) {
                 )
 
                 setSuccess(true)
-                setTimeout(() => navigation.goBack(), OPERATION_TIMEOUT)
+                setTimeout(
+                  () =>
+                    shouldGoBackWithoutReset
+                      ? navigation.goBack()
+                      : resetAndNavigateTo(navigation, 'home'),
+                  OPERATION_TIMEOUT,
+                )
               }
+            } else {
+              // Display to the user that some fields are wrong
+              setWrongFields(true)
+              setTimeout(() => setWrongFields(false), ERROR_TIMEOUT)
             }
           }}
         />

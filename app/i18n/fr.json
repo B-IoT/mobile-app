@@ -79,7 +79,8 @@
     "commentsPlaceholder": "Entre les commentaires",
     "lastModifiedDate": "Dernière modification le",
     "lastModifiedBy": "Dernière modification par",
-    "lastModifiedByPlaceholder": "Entre le dernier modificateur"
+    "lastModifiedByPlaceholder": "Entre le dernier modificateur",
+    "errorsPresent": "Des champs sont manquants ou invalides"
   },
   "infoScreen": {
     "update": "Mettre à jour",

@@ -3129,7 +3129,7 @@ exports[`Register screen should match snapshot 1`] = `
                                       "borderWidth": 1,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "marginTop": 32,
+                                      "marginTop": 24,
                                       "minHeight": 40,
                                       "minWidth": 40,
                                       "opacity": 1,
