@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import * as eva from '@eva-design/eva'
 import { render } from '@testing-library/react-native'
 import renderer from 'react-test-renderer'
-import { RootStoreModel, RootStoreProvider } from '../../models'
+import { createEnvironment, RootStoreModel, RootStoreProvider } from '../../models'
 import { ItemStoreModel } from '../../models/item-store/item-store'
 import CustomTheme from '../../theme/theme.json'
 import { ListScreen } from './list-screen'
@@ -46,11 +46,11 @@ describe('List screen', () => {
     },
   ]
 
-  function buildListScreen() {
+  async function buildListScreen() {
     const itemStore = ItemStoreModel.create()
     itemStore.saveItems(initialItems)
     Object.defineProperty(itemStore, 'getItems', { value: mockGetItems, writable: true })
-    const rootStore = RootStoreModel.create({ itemStore })
+    const rootStore = RootStoreModel.create({ itemStore }, await createEnvironment())
 
     const Stack = createStackNavigator()
 
@@ -77,16 +77,16 @@ describe('List screen', () => {
     return screen
   }
 
-  it('should show the title', () => {
-    const screen = buildListScreen()
+  it('should show the title', async () => {
+    const screen = await buildListScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('listScreen.material'))).toBeTruthy()
   })
 
   // They are failing, but should be fixed
-  // it('should show the search bar', () => {
-  //   const screen = buildListScreen()
+  // it('should show the search bar', async () => {
+  //   const screen = await buildListScreen()
   //   const component = render(screen)
 
   //   expect(component.queryByText(translate('listScreen.search'))).toBeTruthy()
@@ -104,8 +104,8 @@ describe('List screen', () => {
   //   expect(component.queryByText(firstItem.itemID)).toBeTruthy()
   // })
 
-  it('should match snapshot', () => {
-    const screen = buildListScreen()
+  it('should match snapshot', async () => {
+    const screen = await buildListScreen()
     const tree = renderer.create(screen).toJSON()
     expect(tree).toMatchSnapshot()
   })

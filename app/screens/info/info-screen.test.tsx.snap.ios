@@ -5394,7 +5394,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      21/07/2021
+                                      22/07/2021
                                     </Text>
                                   </View>
                                   <Text
@@ -6865,7 +6865,7 @@ exports[`Info screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      21/07/2021
+                                      22/07/2021
                                     </Text>
                                   </View>
                                 </View>
