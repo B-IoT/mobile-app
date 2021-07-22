@@ -4,7 +4,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import React from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { createEnvironment, RootStoreModel, RootStoreProvider } from '../../models'
+import { RootStoreModel, RootStoreProvider } from '../../models'
 import { ItemStoreModel } from '../../models/item-store/item-store'
 import { HomeScreen } from './home-screen'
 import * as eva from '@eva-design/eva'
@@ -16,9 +16,9 @@ import { translate } from '../../i18n'
 jest.useFakeTimers()
 
 describe('Home screen', () => {
-  async function buildHomeScreen() {
+  function buildHomeScreen() {
     const itemStore = ItemStoreModel.create()
-    const rootStore = RootStoreModel.create({ itemStore }, await createEnvironment())
+    const rootStore = RootStoreModel.create({ itemStore })
 
     const Stack = createStackNavigator()
 
@@ -45,15 +45,15 @@ describe('Home screen', () => {
     return screen
   }
 
-  it('should show the requesting camera permissions text in the scan tab', async () => {
-    const screen = await buildHomeScreen()
+  it('should show the requesting camera permissions text in the scan tab', () => {
+    const screen = buildHomeScreen()
     const component = render(screen)
 
     expect(component.queryByText(translate('scanScreen.requestingCamera'))).toBeTruthy()
   })
 
-  it("should show the items' list in the list tab", async () => {
-    const screen = await buildHomeScreen()
+  it("should show the items' list in the list tab", () => {
+    const screen = buildHomeScreen()
     const component = render(screen)
 
     const listTabButton = component.queryByText(translate('common.list'))

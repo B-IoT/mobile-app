@@ -192,8 +192,6 @@ export const ListScreen = observer(function ListScreen() {
   const navigation = useNavigation<ListScreenNavigationProp>()
   const theme = useTheme()
 
-  itemStore.setAuthToken(undefined)
-
   const [shownItems, setShownItems] = useState<Array<Item>>(itemStore.items)
   const [searchString, setSearchString] = useState('')
   const [loading, setLoading] = useState(true)
