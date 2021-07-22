@@ -1,6 +1,13 @@
 /* eslint-disable no-unneeded-ternary */
 import React, { useState } from 'react'
-import { Image, ImageStyle, Keyboard, Platform, ViewStyle } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  ViewStyle,
+} from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
@@ -248,14 +255,22 @@ export function ItemScreen(props: ItemScreenProps) {
     }
   }
 
+  const EraseCommentsIcon = (props) => (
+    <TouchableWithoutFeedback onPress={() => setComments('')}>
+      <Icon {...props} name={'close-outline'} />
+    </TouchableWithoutFeedback>
+  )
+
   return (
     <Screen style={ROOT} preset="scroll" statusBar={isIos ? 'dark-content' : 'light-content'}>
       <TopNavigation accessoryLeft={BackAction} accessoryRight={Shape} title={title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
-        {id ? <Input disabled={true} style={INPUT} label={strings.id} value={id} /> : null}
+        {id ? (
+          <Input size="large" disabled={true} style={INPUT} label={strings.id} value={id} />
+        ) : null}
         {status === UNDER_CREATION ? (
-          <Input disabled={true} style={INPUT} label={strings.status} value={status} />
+          <Input size="large" disabled={true} style={INPUT} label={strings.status} value={status} />
         ) : null}
         <Autocomplete
           style={INPUT}
@@ -366,6 +381,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setPreviousOwner}
         />
         <Datepicker
+          size="large"
           style={INPUT}
           date={purchaseDate}
           caption={strings.mandatory}
@@ -401,6 +417,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setOrderNumber}
         />
         <Datepicker
+          size="large"
           style={INPUT}
           date={maintenanceDate}
           onSelect={setMaintenanceDate}
@@ -417,15 +434,18 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setColor}
         />
         <Input
+          size="large"
           maxLength={COMMENTS_MAX_LENGTH}
           multiline={true}
           style={INPUT}
           label={strings.comments}
           placeholder={strings.commentsPlaceholder}
           value={comments}
+          accessoryRight={comments ? EraseCommentsIcon : null}
           onChangeText={setComments}
         />
         <Datepicker
+          size="large"
           style={INPUT}
           date={lastModifiedDate}
           label={strings.lastModifiedDate}
