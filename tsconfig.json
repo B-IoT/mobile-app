@@ -6,6 +6,7 @@
     "jsx": "react-native",
     "module": "es2015",
     "moduleResolution": "node",
+    "incremental": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,

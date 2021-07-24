@@ -6,7 +6,7 @@
  */
 import React from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { ScanScreen, RegisterScreen, InfoScreen } from '../screens'
+import { RegisterScreen, InfoScreen, HomeScreen, ListScreen } from '../screens'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -21,9 +21,10 @@ import { ScanScreen, RegisterScreen, InfoScreen } from '../screens'
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type MainPrimaryParamList = {
-  scan: undefined
-  register: undefined
-  info: undefined
+  home: undefined
+  register: { fromListScreen: boolean }
+  info: { fromListScreen: boolean }
+  list: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -36,9 +37,10 @@ export function MainNavigator() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="scan" component={ScanScreen} />
+      <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen name="info" component={InfoScreen} />
+      <Stack.Screen name="list" component={ListScreen} />
     </Stack.Navigator>
   )
 }

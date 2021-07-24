@@ -8,6 +8,10 @@
     "error": "Erreur, réessaye!",
     "shouldNotBeEmpty": "Ne devrait pas être vide",
     "shouldBeValidPrice": "Devrait être un nombre plus grand que zéro",
+    "scan": "Scan",
+    "list": "Liste",
+    "user": "Utilisateur",
+    "noUser": "Aucun utilisateur connecté",
     "mandatory": "Obligatoire"
   },
   "loginScreen": {
@@ -26,12 +30,19 @@
     "whyCamera": "Caméra pas disponible.\nLa caméra est nécessaire pour scanner les QR codes",
     "requestingCamera": "En train de demander les permissions pour la caméra..."
   },
+  "listScreen": {
+    "material": "Matériel",
+    "noItems": "Aucun objet trouvé",
+    "search": "Rechercher"
+  },
   "registerScreen": {
     "register": "Enregistrer",
     "title": "Enregistrer un objet",
     "id": "Id",
     "category": "Catégorie",
     "categoryPlaceholder": "Entre la catégorie",
+    "service": "Service",
+    "servicePlaceholder": "Entre le service",
     "brand": "Marque",
     "brandPlaceholder": "Entre la marque",
     "model": "Modèle",
@@ -68,7 +79,8 @@
     "commentsPlaceholder": "Entre les commentaires",
     "lastModifiedDate": "Dernière modification le",
     "lastModifiedBy": "Dernière modification par",
-    "lastModifiedByPlaceholder": "Entre le dernier modificateur"
+    "lastModifiedByPlaceholder": "Entre le dernier modificateur",
+    "errorsPresent": "Des champs sont manquants ou invalides"
   },
   "infoScreen": {
     "update": "Mettre à jour",

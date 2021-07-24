@@ -17,6 +17,16 @@ export interface ItemScreenProps {
   initialCategory?: string
 
   /**
+   * The initial beacon value. If not specified, defaults to ''.
+   */
+   initialBeacon?: string
+
+  /**
+   * The initial service value. If not specified, defaults to ''.
+   */
+  initialService?: string
+
+  /**
    * The initial brand value. If not specified, defaults to ''.
    */
   initialBrand?: string
@@ -120,4 +130,9 @@ export interface ItemScreenProps {
    * The screen title
    */
   title: string
+
+  /**
+   * True if we should navigate back in the stack, false if we should reset it before navigating
+   */
+  shouldGoBackWithoutReset: boolean
 }

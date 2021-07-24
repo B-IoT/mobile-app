@@ -1,6 +1,13 @@
 /* eslint-disable no-unneeded-ternary */
 import React, { useState } from 'react'
-import { Image, ImageStyle, Platform, ViewStyle } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  ViewStyle,
+} from 'react-native'
 import { Autocomplete, Screen } from '../../components'
 import { useNavigation } from '@react-navigation/native'
 import { spacing } from '../../theme'
@@ -10,12 +17,12 @@ import {
   Icon,
   Input,
   Layout,
+  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components'
 import { AsyncButton } from '../../components/async-button/async-button'
 import { translate } from '../../i18n'
-import { resetAndNavigateTo } from '../../navigators'
 import { DataType } from '../../models/item-store/item-store'
 import { ItemScreenProps } from './item-screen.props'
 import { AutocompleteStatus } from '../autocomplete/autocomplete.props'
@@ -23,6 +30,7 @@ import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
 import { isEmpty } from '../../utils/function-utils/function-utils'
+import { resetAndNavigateTo } from '../../navigators'
 const image = require('../../../assets/biot-shape-square.png')
 
 const ROOT: ViewStyle = {
@@ -49,8 +57,14 @@ const INPUT: ViewStyle = {
   marginVertical: spacing[3],
 }
 
+const ERROR_MESSAGE: ViewStyle = {
+  alignSelf: 'center',
+  marginTop: spacing[1],
+  marginBottom: -spacing[3],
+}
+
 const BUTTON: ViewStyle = {
-  marginTop: spacing[6],
+  marginTop: spacing[5],
 }
 
 const IMAGE: ImageStyle = {
@@ -64,6 +78,8 @@ const strings = {
   id: translate('registerScreen.id'),
   category: translate('registerScreen.category'),
   categoryPlaceholder: translate('registerScreen.categoryPlaceholder'),
+  service: translate('registerScreen.service'),
+  servicePlaceholder: translate('registerScreen.servicePlaceholder'),
   brand: translate('registerScreen.brand'),
   brandPlaceholder: translate('registerScreen.brandPlaceholder'),
   model: translate('registerScreen.model'),
@@ -101,6 +117,7 @@ const strings = {
   lastModifiedDate: translate('registerScreen.lastModifiedDate'),
   lastModifiedBy: translate('registerScreen.lastModifiedBy'),
   lastModifiedByPlaceholder: translate('registerScreen.lastModifiedByPlaceholder'),
+  errorsPresent: translate('registerScreen.errorsPresent'),
   shouldBeValidPrice: translate('common.shouldBeValidPrice'),
   shouldNotBeEmpty: translate('common.shouldNotBeEmpty'),
   mandatory: translate('common.mandatory'),
@@ -126,7 +143,9 @@ export function ItemScreen(props: ItemScreenProps) {
   const {
     asyncOperation,
     initialId,
+    initialBeacon,
     initialCategory,
+    initialService,
     initialBrand,
     initialModel,
     initialSupplier,
@@ -148,15 +167,18 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy,
     buttonText,
     title,
+    shouldGoBackWithoutReset,
   } = props
 
   // Constants that cannot be modified by the user
   const lastModifiedDate = initialLastModifiedDate ? initialLastModifiedDate : new Date() // defaults to today
   const id = initialId ? initialId : null
+  const beacon = initialBeacon ? initialBeacon : null
   const status = initialStatus ? initialStatus : null
 
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
   const [categoryStatus, setCategoryStatus] = useState<AutocompleteStatus>('basic')
+  const [service, setService] = useState(initialService ? initialService : '')
   const [brand, setBrand] = useState(initialBrand ? initialBrand : '')
   const [brandStatus, setBrandStatus] = useState<AutocompleteStatus>('basic')
   const [model, setModel] = useState(initialModel ? initialModel : '')
@@ -193,13 +215,19 @@ export function ItemScreen(props: ItemScreenProps) {
     initialLastModifiedBy ? initialLastModifiedBy : '',
   )
   const [executing, setExecuting] = useState(false)
+  const [wrongFields, setWrongFields] = useState(false) // used to display a small message if some fields are wrong
   const [success, setSuccess] = useState<boolean>(undefined) // used to display success popup or error popup; it is undefined when no attempt has been made
 
   const { itemStore } = useStores()
   const navigation = useNavigation()
 
   const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => resetAndNavigateTo(navigation, 'scan')} />
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() =>
+        shouldGoBackWithoutReset ? navigation.goBack() : resetAndNavigateTo(navigation, 'home')
+      }
+    />
   )
 
   /**
@@ -227,21 +255,29 @@ export function ItemScreen(props: ItemScreenProps) {
     }
   }
 
+  const EraseCommentsIcon = (props) => (
+    <TouchableWithoutFeedback onPress={() => setComments('')}>
+      <Icon {...props} name={'close-outline'} />
+    </TouchableWithoutFeedback>
+  )
+
   return (
     <Screen style={ROOT} preset="scroll" statusBar={isIos ? 'dark-content' : 'light-content'}>
       <TopNavigation accessoryLeft={BackAction} accessoryRight={Shape} title={title} />
       <Divider style={DIVIDER} />
       <Layout style={MAIN_LAYOUT}>
-        {id ? <Input disabled={true} style={INPUT} label={strings.id} value={id} /> : null}
+        {id ? (
+          <Input size="large" disabled={true} style={INPUT} label={strings.id} value={id} />
+        ) : null}
         {status === UNDER_CREATION ? (
-          <Input disabled={true} style={INPUT} label={strings.status} value={status} />
+          <Input size="large" disabled={true} style={INPUT} label={strings.status} value={status} />
         ) : null}
         <Autocomplete
           style={INPUT}
           status={categoryStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
-          label={strings.category}
+          label={`${strings.category}*`}
           placeholder={strings.categoryPlaceholder}
           dataType={DataType.CATEGORY}
           value={category}
@@ -249,15 +285,7 @@ export function ItemScreen(props: ItemScreenProps) {
         />
         <Autocomplete
           style={INPUT}
-          label={strings.serialNumber}
-          placeholder={strings.serialNumberPlaceholder}
-          dataType={DataType.SERIAL_NUMBER}
-          value={serialNumber}
-          setValue={setSerialNumber}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.brand}
+          label={`${strings.brand}*`}
           status={brandStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
@@ -268,7 +296,7 @@ export function ItemScreen(props: ItemScreenProps) {
         />
         <Autocomplete
           style={INPUT}
-          label={strings.model}
+          label={`${strings.model}*`}
           status={modelStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
@@ -279,7 +307,7 @@ export function ItemScreen(props: ItemScreenProps) {
         />
         <Autocomplete
           style={INPUT}
-          label={strings.supplier}
+          label={`${strings.supplier}*`}
           status={supplierStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
@@ -287,6 +315,50 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.SUPPLIER}
           value={supplier}
           setValue={setSupplier}
+        />
+        <Datepicker
+          size="large"
+          style={INPUT}
+          date={purchaseDate}
+          caption={strings.mandatory}
+          onSelect={setPurchaseDate}
+          label={`${strings.purchaseDate}*`}
+          placeholder={strings.purchaseDatePlaceholder}
+          max={MAX_DATE}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={`${strings.purchasePrice}*`}
+          status={purchasePriceStatus}
+          caption={strings.mandatory}
+          placeholder={strings.purchasePricePlaceholder}
+          errorCaption={strings.shouldBeValidPrice}
+          dataType={DataType.PRICE}
+          keyboardType="numeric"
+          value={purchasePrice}
+          setValue={(val) => {
+            // Make sure we have period instead of comma and that there are only two decimal digits after it
+            const segments = val.replace(',', '.').split('.', 2)
+            setPurchasePrice(
+              segments.length === 2 ? `${segments[0]}.${segments[1].substring(0, 2)}` : segments[0],
+            )
+          }}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.service}
+          placeholder={strings.servicePlaceholder}
+          dataType={DataType.SERVICE}
+          value={service}
+          setValue={setService}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={strings.serialNumber}
+          placeholder={strings.serialNumberPlaceholder}
+          dataType={DataType.SERIAL_NUMBER}
+          value={serialNumber}
+          setValue={setSerialNumber}
         />
         <Autocomplete
           style={INPUT}
@@ -336,33 +408,6 @@ export function ItemScreen(props: ItemScreenProps) {
           value={previousOwner}
           setValue={setPreviousOwner}
         />
-        <Datepicker
-          style={INPUT}
-          date={purchaseDate}
-          caption={strings.mandatory}
-          onSelect={setPurchaseDate}
-          label={strings.purchaseDate}
-          placeholder={strings.purchaseDatePlaceholder}
-          max={MAX_DATE}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.purchasePrice}
-          status={purchasePriceStatus}
-          caption={strings.mandatory}
-          placeholder={strings.purchasePricePlaceholder}
-          errorCaption={strings.shouldBeValidPrice}
-          dataType={DataType.PRICE}
-          keyboardType="numeric"
-          value={purchasePrice}
-          setValue={(val) => {
-            // Make sure we have period instead of comma and that there are only two decimal digits after it
-            const segments = val.replace(',', '.').split('.', 2)
-            setPurchasePrice(
-              segments.length === 2 ? `${segments[0]}.${segments[1].substring(0, 2)}` : segments[0],
-            )
-          }}
-        />
         <Autocomplete
           style={INPUT}
           label={strings.orderNumber}
@@ -372,6 +417,7 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setOrderNumber}
         />
         <Datepicker
+          size="large"
           style={INPUT}
           date={maintenanceDate}
           onSelect={setMaintenanceDate}
@@ -388,15 +434,18 @@ export function ItemScreen(props: ItemScreenProps) {
           setValue={setColor}
         />
         <Input
+          size="large"
           maxLength={COMMENTS_MAX_LENGTH}
           multiline={true}
           style={INPUT}
           label={strings.comments}
           placeholder={strings.commentsPlaceholder}
           value={comments}
+          accessoryRight={comments ? EraseCommentsIcon : null}
           onChangeText={setComments}
         />
         <Datepicker
+          size="large"
           style={INPUT}
           date={lastModifiedDate}
           label={strings.lastModifiedDate}
@@ -410,6 +459,11 @@ export function ItemScreen(props: ItemScreenProps) {
           value={lastModifiedBy}
           setValue={setLastModifiedBy}
         />
+        {wrongFields ? (
+          <Text style={ERROR_MESSAGE} category="label" status="danger">
+            {strings.errorsPresent}
+          </Text>
+        ) : null}
         <AsyncButton
           style={BUTTON}
           loading={executing}
@@ -441,8 +495,8 @@ export function ItemScreen(props: ItemScreenProps) {
 
               const item: Item = {
                 id: id ? parseInt(id) : null,
-                beacon: null,
-                service: null,
+                beacon,
+                service,
                 category,
                 brand,
                 model,
@@ -471,9 +525,12 @@ export function ItemScreen(props: ItemScreenProps) {
                 setSuccess(false)
                 setTimeout(() => setSuccess(undefined), ERROR_TIMEOUT)
               } else {
+                Keyboard.dismiss()
+
                 // Save the data inserted by the user for future autocompletion
                 const newAutocompleteEntries: Array<[DataType, string]> = [
                   [DataType.CATEGORY, category],
+                  [DataType.SERVICE, service],
                   [DataType.BRAND, brand],
                   [DataType.MODEL, model],
                   [DataType.SUPPLIER, supplier],
@@ -496,8 +553,18 @@ export function ItemScreen(props: ItemScreenProps) {
                 )
 
                 setSuccess(true)
-                setTimeout(() => resetAndNavigateTo(navigation, 'scan'), OPERATION_TIMEOUT)
+                setTimeout(
+                  () =>
+                    shouldGoBackWithoutReset
+                      ? navigation.goBack()
+                      : resetAndNavigateTo(navigation, 'home'),
+                  OPERATION_TIMEOUT,
+                )
               }
+            } else {
+              // Display to the user that some fields are wrong
+              setWrongFields(true)
+              setTimeout(() => setWrongFields(false), ERROR_TIMEOUT)
             }
           }}
         />

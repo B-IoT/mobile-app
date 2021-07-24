@@ -89,4 +89,58 @@ describe('Api', () => {
     expect(mockPost).toHaveBeenCalledWith(`${api.config.url}/oauth/token`, { username, password })
     expect(result.kind).toEqual('bad-data')
   })
+
+  it('should get the user information', async () => {
+    const api = new Api()
+    api.setup()
+
+    const data = {
+      company: 'biot',
+    }
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: true,
+      problem: null,
+      originalError: null,
+      data,
+    })
+
+    const result = await api.getUserInfo()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/users/me`)
+    expect(result.kind).toEqual('ok')
+    expect(result.data).toEqual(data)
+  })
+
+  it('should fail getting the user information', async () => {
+    const api = new Api()
+    api.setup()
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: false,
+      problem: SERVER_ERROR,
+      originalError: null,
+    })
+
+    const result = await api.getUserInfo()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/users/me`)
+    expect(result.kind).toEqual('server')
+  })
+
+  it('should fail getting the user information because of bad data', async () => {
+    const api = new Api()
+    api.setup()
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const result = await api.getUserInfo()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/users/me`)
+    expect(result.kind).toEqual('bad-data')
+  })
 })

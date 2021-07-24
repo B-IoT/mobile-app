@@ -7,6 +7,10 @@
     "error": "Error, try again!",
     "shouldNotBeEmpty": "Should not be empty",
     "shouldBeValidPrice": "Should be a number greater than zero",
+    "scan": "Scan",
+    "list": "List",
+    "user": "User",
+    "noUser": "No user connected",
     "mandatory": "Mandatory"
   },
   "loginScreen": {
@@ -25,12 +29,19 @@
     "whyCamera": "No access to camera.\nThe camera is required to scan QR codes",
     "requestingCamera": "Requesting camera permissions..."
   },
+  "listScreen": {
+    "material": "Material",
+    "noItems": "No item found",
+    "search": "Search"
+  },
   "registerScreen": {
     "register": "Register",
     "title": "Register an item",
     "id": "Id",
     "category": "Category",
     "categoryPlaceholder": "Enter the category",
+    "service": "Service",
+    "servicePlaceholder": "Enter the service",
     "brand": "Brand",
     "brandPlaceholder": "Enter the brand",
     "model": "Model",
@@ -67,7 +78,8 @@
     "commentsPlaceholder": "Enter the comments",
     "lastModifiedDate": "Last modified",
     "lastModifiedBy": "Last modified by",
-    "lastModifiedByPlaceholder": "Enter the last modifier"
+    "lastModifiedByPlaceholder": "Enter the last modifier",
+    "errorsPresent": "Some fields are missing or invalid"
   },
   "infoScreen": {
     "update": "Update",

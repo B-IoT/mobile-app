@@ -16,10 +16,20 @@ import { NavigationContainer } from '@react-navigation/native'
 jest.useFakeTimers()
 
 describe('Register screen', () => {
+  const CATEGORY_LABEL = `${translate('registerScreen.category')}*`
+  const BRAND_LABEL = `${translate('registerScreen.brand')}*`
+  const MODEL_LABEL = `${translate('registerScreen.model')}*`
+  const SUPPLIER_LABEL = `${translate('registerScreen.supplier')}*`
+  const PURCHASE_DATE_LABEL = `${translate('registerScreen.purchaseDate')}*`
+  const PURCHASE_PRICE_LABEL = `${translate('registerScreen.purchasePrice')}*`
+
   const mockRegisterItem = jest.fn().mockResolvedValue(true)
+  const initialId = 1
 
   function buildRegisterScreen() {
-    const itemStore = ItemStoreModel.create()
+    const itemStore = ItemStoreModel.create({
+      itemId: initialId,
+    })
     Object.defineProperty(itemStore, 'registerItem', { value: mockRegisterItem, writable: true })
     const rootStore = RootStoreModel.create({ itemStore })
 
@@ -55,32 +65,46 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.title'))).toBeTruthy()
   })
 
+  it('should show the id input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.id'))).toBeTruthy()
+  })
+
   it('should show the category input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.category'))).toBeTruthy()
+    expect(component.queryByText(CATEGORY_LABEL)).toBeTruthy()
+  })
+
+  it('should show the service input', () => {
+    const screen = buildRegisterScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(translate('registerScreen.service'))).toBeTruthy()
   })
 
   it('should show the brand input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.brand'))).toBeTruthy()
+    expect(component.queryByText(BRAND_LABEL)).toBeTruthy()
   })
 
   it('should show the model input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.model'))).toBeTruthy()
+    expect(component.queryByText(MODEL_LABEL)).toBeTruthy()
   })
 
   it('should show the supplier input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.supplier'))).toBeTruthy()
+    expect(component.queryByText(SUPPLIER_LABEL)).toBeTruthy()
   })
 
   it('should show the origin location input', () => {
@@ -129,14 +153,14 @@ describe('Register screen', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.purchaseDate'))).toBeTruthy()
+    expect(component.queryByText(PURCHASE_DATE_LABEL)).toBeTruthy()
   })
 
   it('should show the purchase price input', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
-    expect(component.queryByText(translate('registerScreen.purchasePrice'))).toBeTruthy()
+    expect(component.queryByText(PURCHASE_PRICE_LABEL)).toBeTruthy()
   })
 
   it('should show the order number input', () => {
@@ -207,19 +231,23 @@ describe('Register screen', () => {
     const component = render(screen)
 
     const category = 'category'
-    const categoryInput = component.queryByText(translate('registerScreen.category'))
+    const categoryInput = component.queryByText(CATEGORY_LABEL)
     fireEvent.changeText(categoryInput, category)
 
+    const service = 'service'
+    const serviceInput = component.queryByText(translate('registerScreen.service'))
+    fireEvent.changeText(serviceInput, service)
+
     const brand = 'brand'
-    const brandInput = component.queryByText(translate('registerScreen.brand'))
+    const brandInput = component.queryByText(BRAND_LABEL)
     fireEvent.changeText(brandInput, brand)
 
     const model = 'model'
-    const modelInput = component.queryByText(translate('registerScreen.model'))
+    const modelInput = component.queryByText(MODEL_LABEL)
     fireEvent.changeText(modelInput, model)
 
     const supplier = 'supplier'
-    const supplierInput = component.queryByText(translate('registerScreen.supplier'))
+    const supplierInput = component.queryByText(SUPPLIER_LABEL)
     fireEvent.changeText(supplierInput, supplier)
 
     const originLocation = 'origin'
@@ -247,7 +275,7 @@ describe('Register screen', () => {
     fireEvent.changeText(previousOwnerInput, previousOwner)
 
     const purchasePrice = '25'
-    const purchasePriceInput = component.queryByText(translate('registerScreen.purchasePrice'))
+    const purchasePriceInput = component.queryByText(PURCHASE_PRICE_LABEL)
     fireEvent.changeText(purchasePriceInput, purchasePrice)
 
     const orderNumber = 'orderNumber'
@@ -281,7 +309,7 @@ describe('Register screen', () => {
       category: category,
       contact: contact,
       currentLocation: currentLocation,
-      id: null,
+      id: initialId,
       model: model,
       originLocation: originLocation,
       currentOwner,
@@ -289,7 +317,7 @@ describe('Register screen', () => {
       purchaseDate: jasmine.any(Date),
       purchasePrice: 25,
       room: room,
-      service: null,
+      service: service,
       supplier: supplier,
       orderNumber,
       color,

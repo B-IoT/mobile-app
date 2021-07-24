@@ -26,13 +26,14 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@eva-design/eva": "2.1.0",
+    "@biot-dev/event-bus-client": "1.0.5",
+    "@eva-design/eva": "2.1.1",
     "@react-native-async-storage/async-storage": "^1.13.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "5.8.10",
     "@react-navigation/stack": "5.12.8",
-    "@ui-kitten/components": "5.1.0",
-    "@ui-kitten/eva-icons": "5.1.0",
+    "@ui-kitten/components": "5.1.1",
+    "@ui-kitten/eva-icons": "5.1.1",
     "@unimodules/core": "~7.1.0",
     "apisauce": "2.0.0",
     "expo": "^41.0.0",
@@ -56,7 +57,7 @@
     "react-native-splash-screen": "3.2.0",
     "react-native-svg": "9.13.6",
     "react-native-unimodules": "~0.13.3",
-    "sentry-expo": "^3.1.0",
+    "sentry-expo": "3.1.3",
     "validate.js": "0.13.1"
   },
   "devDependencies": {
@@ -101,7 +102,7 @@
     "react-test-renderer": "16.13.1",
     "rimraf": "3.0.2",
     "solidarity": "2.3.1",
-    "typescript": "~4.3.2",
+    "typescript": "4.3.2",
     "utf-8-validate": "5.0.3",
     "weak-napi": "^2.0.2"
   },
@@ -120,13 +121,13 @@
       "/e2e"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+      "node_modules/(?!(jest-)?react-native|@react-navigation|@storybook|@react-native-community|expo-localization|@unimodules|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
     ],
     "projects": [
       {
         "preset": "jest-expo/ios",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",
@@ -136,7 +137,7 @@
       {
         "preset": "jest-expo/android",
         "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry)"
+          "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|native-base|@storybook|@ui-kitten|unimodules-permissions-interface|sentry-expo|@sentry|@biot-dev/event-bus-client)"
         ],
         "testPathIgnorePatterns": [
           "/node_modules/",

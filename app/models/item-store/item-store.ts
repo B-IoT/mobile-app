@@ -1,10 +1,10 @@
 import * as Sentry from 'sentry-expo'
-import { Instance, SnapshotOut, types, flow } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, flow, cast } from 'mobx-state-tree'
 import { Item, ItemModel } from '../item/item'
 import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
 import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'
-import { ItemApi } from '../../services/api'
+import { ItemApi, UserInfo } from '../../services/api'
 
 export enum GetItemResult {
   OK,
@@ -14,6 +14,7 @@ export enum GetItemResult {
 
 export enum DataType {
   CATEGORY,
+  SERVICE,
   BRAND,
   MODEL,
   SUPPLIER,
@@ -33,10 +34,12 @@ export enum DataType {
 export const ItemStoreModel = types
   .model('ItemStore')
   .props({
+    items: types.maybe(types.array(ItemModel)),
     item: types.maybe(ItemModel),
     itemId: types.maybe(types.number),
     isAuthenticated: types.optional(types.boolean, false),
     authToken: types.maybe(types.string),
+    username: types.maybe(types.string),
     /**
      * Map from dataType to (map from entryName to rank)
      */
@@ -101,6 +104,19 @@ export const ItemStoreModel = types
     },
 
     /**
+     * Saves all the given items in the store.
+     *
+     * @param items the items
+     */
+    saveItems: (items: Array<Item>) => {
+      if (!self.items) {
+        self.items = cast(items)
+      } else {
+        self.items.replace(items)
+      }
+    },
+
+    /**
      * Sets the authentication token in the store and in the environment's API.
      *
      * @param token the authentication token
@@ -117,6 +133,22 @@ export const ItemStoreModel = types
      */
     setAuthenticated(value: boolean) {
       self.isAuthenticated = value
+    },
+
+    /**
+     * Sets the username.
+     *
+     * @param value the username of the current logged in user
+     */
+    setUsername(value: string) {
+      self.username = value
+    },
+
+    /**
+     * Resets the item id in the store.
+     */
+    resetItemId: () => {
+      self.itemId = undefined
     },
   }))
   .actions((self) => ({
@@ -138,6 +170,24 @@ export const ItemStoreModel = types
     }),
   }))
   .actions((self) => ({
+    /**
+     * Gets the user information.
+     *
+     * @returns the user information, or null if any error occurred
+     */
+    getUserInfo: flow(function* () {
+      self.environment.api.setAuthToken(self.authToken)
+
+      const result = yield self.environment.api.getUserInfo()
+
+      if (result.kind === 'ok') {
+        return result.data as UserInfo
+      } else {
+        __DEV__ && console.log(`Get user info failed, ${result.kind} error`)
+        return null
+      }
+    }),
+
     /**
      * Gets the item with the given id from the server.
      *
@@ -165,6 +215,28 @@ export const ItemStoreModel = types
     }),
 
     /**
+     * Gets all the items from the server.
+     *
+     * @returns OK if the items are retrieved, otherwise ERROR if any error occurred
+     */
+    getItems: flow(function* () {
+      // First we update the auth token with the one stored, which is not volatile
+      self.environment.api.setAuthToken(self.authToken)
+
+      const itemApi = new ItemApi(self.environment.api)
+      const result = yield itemApi.getItems()
+
+      switch (result.kind) {
+        case 'ok':
+          self.saveItems(result.items)
+          return true
+        default:
+          __DEV__ && console.log(`Get items failed, ${result.kind} error`)
+          return false
+      }
+    }),
+
+    /**
      * Registers the given item at the server.
      *
      * @param item the item to register
@@ -179,7 +251,7 @@ export const ItemStoreModel = types
       const result = yield itemApi.registerItem(itemToRegister)
 
       if (result.kind === 'ok') {
-        self.saveItem(itemToRegister)
+        self.saveItem({ ...item, id: result.id })
         return true
       } else {
         __DEV__ && console.log(`Register item failed, ${result.kind} error`)
@@ -233,7 +305,9 @@ export const ItemStoreModel = types
             message: `Authenticated user: ${username}`,
             level: Sentry.Native.Severity.Info,
           })
+
           self.setAuthToken(result.token)
+          self.setUsername(username)
           if (remember) {
             yield self.storeCredentials(username, password)
           }
@@ -255,6 +329,7 @@ export const ItemStoreModel = types
       yield self.removeCredentials()
       self.setAuthToken(undefined)
       self.setAuthenticated(false)
+      self.setUsername(undefined)
     }),
   }))
 

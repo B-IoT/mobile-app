@@ -39,7 +39,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {},
@@ -86,7 +86,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -152,7 +152,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -197,7 +197,7 @@ describe('Item store', () => {
         status: 'status',
         comments: 'A comment',
         lastModifiedDate: new Date(),
-        lastModifiedBy: 'Antoine'
+        lastModifiedBy: 'Antoine',
       }),
       authToken: 'token',
       autocompleteDataMap: {
@@ -243,13 +243,117 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     instance.saveItem(item)
 
     expect(instance.item).toEqual(item)
     expect(instance.itemId).toEqual(item.id)
+  })
+
+  it('should save all given items when no items are present', () => {
+    const instance = ItemStoreModel.create(itemStore)
+
+    const items = [
+      {
+        id: 1,
+        beacon: 'aa:aa:aa:aa:aa:aa',
+        category: 'Lit',
+        service: 'Bloc 1',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      },
+    ]
+
+    instance.saveItems(items)
+
+    expect(instance.items).toEqual(items)
+  })
+
+  it('should save all given items when some items are present', () => {
+    itemStore = {
+      isAuthenticated: false,
+      itemId: 1,
+      item: ItemModel.create({
+        id: 1,
+        beacon: 'aa:aa:aa:aa:aa:aa',
+        category: 'Lit',
+        service: 'Bloc 1',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      }),
+      items: [itemStore.item],
+      authToken: 'token',
+      autocompleteDataMap: {},
+    }
+    const instance = ItemStoreModel.create(itemStore)
+
+    const items = [
+      {
+        id: 1,
+        beacon: 'bb:aa:aa:aa:aa:aa',
+        category: 'ECG',
+        service: 'Bloc 2',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      },
+    ]
+
+    instance.saveItems(items)
+
+    expect(instance.items).toEqual(items)
   })
 
   it('should set the authentication token', async () => {
@@ -273,6 +377,14 @@ describe('Item store', () => {
     expect(instance.isAuthenticated).toEqual(true)
   })
 
+  it('should set username', () => {
+    const instance = ItemStoreModel.create(itemStore)
+
+    instance.setUsername('username')
+
+    expect(instance.username).toEqual('username')
+  })
+
   it('should store credentials', async () => {
     const instance = ItemStoreModel.create(itemStore)
 
@@ -292,6 +404,61 @@ describe('Item store', () => {
     await instance.removeCredentials()
 
     expect(reset).toHaveBeenCalledTimes(1)
+  })
+
+  it('should get all items', async () => {
+    const expectedItems = [
+      {
+        id: 2,
+        beacon: 'aa:aa:aa:aa:aa:aa',
+        category: 'Lit',
+        service: 'Bloc 1',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      },
+    ]
+
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetItems = jest.fn()
+    mockGetItems.mockResolvedValue({ kind: 'ok', items: expectedItems })
+    ItemApi.prototype.getItems = mockGetItems
+
+    const result = await instance.getItems()
+
+    expect(mockGetItems).toHaveBeenCalledTimes(1)
+    expect(result).toBeTruthy()
+    expect(instance.items).toEqual(expectedItems)
+  })
+
+  it('should fail getting all items', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetItems = jest.fn()
+    mockGetItems.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.getItems = mockGetItems
+
+    const result = await instance.getItems()
+
+    expect(mockGetItems).toHaveBeenCalledTimes(1)
+    expect(result).toBeFalsy()
   })
 
   it('should get an item', async () => {
@@ -318,7 +485,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -368,7 +535,7 @@ describe('Item store', () => {
 
   it('should register an item', async () => {
     const expectedItem = {
-      id: 2,
+      id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
       service: 'Bloc 1',
@@ -390,13 +557,13 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
 
     const mockRegisterItem = jest.fn()
-    mockRegisterItem.mockResolvedValue({ kind: 'ok', item: expectedItem })
+    mockRegisterItem.mockResolvedValue({ kind: 'ok', id: expectedItem.id })
     ItemApi.prototype.registerItem = mockRegisterItem
 
     const result = await instance.registerItem(expectedItem)
@@ -434,7 +601,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -474,7 +641,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -516,7 +683,7 @@ describe('Item store', () => {
       status: 'status',
       comments: 'A comment',
       lastModifiedDate: new Date(),
-      lastModifiedBy: 'Antoine'
+      lastModifiedBy: 'Antoine',
     }
 
     const instance = ItemStoreModel.create(itemStore, await createEnvironment())
@@ -530,6 +697,31 @@ describe('Item store', () => {
     expect(result).toBeFalsy()
     expect(mockUpdateItem).toHaveBeenCalledTimes(1)
     expect(mockUpdateItem).toHaveBeenCalledWith(expectedItem, true)
+  })
+
+  it('should get the user info', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const expectedResult = { company: 'biot' }
+    const spy = jest
+      .spyOn(Api.prototype, 'getUserInfo')
+      .mockResolvedValue({ kind: 'ok', data: expectedResult })
+
+    const result = await instance.getUserInfo()
+
+    expect(result).toEqual(expectedResult)
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should fail getting the user info', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const spy = jest.spyOn(Api.prototype, 'getUserInfo').mockResolvedValue({ kind: 'server' })
+
+    const result = await instance.getUserInfo()
+
+    expect(result).toBeFalsy()
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   it('should login', async () => {
