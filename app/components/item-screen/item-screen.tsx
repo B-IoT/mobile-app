@@ -277,11 +277,72 @@ export function ItemScreen(props: ItemScreenProps) {
           status={categoryStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
-          label={strings.category}
+          label={`${strings.category}*`}
           placeholder={strings.categoryPlaceholder}
           dataType={DataType.CATEGORY}
           value={category}
           setValue={setCategory}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={`${strings.brand}*`}
+          status={brandStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
+          placeholder={strings.brandPlaceholder}
+          dataType={DataType.BRAND}
+          value={brand}
+          setValue={setBrand}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={`${strings.model}*`}
+          status={modelStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
+          placeholder={strings.modelPlaceholder}
+          dataType={DataType.MODEL}
+          value={model}
+          setValue={setModel}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={`${strings.supplier}*`}
+          status={supplierStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
+          placeholder={strings.supplierPlaceholder}
+          dataType={DataType.SUPPLIER}
+          value={supplier}
+          setValue={setSupplier}
+        />
+        <Datepicker
+          size="large"
+          style={INPUT}
+          date={purchaseDate}
+          caption={strings.mandatory}
+          onSelect={setPurchaseDate}
+          label={`${strings.purchaseDate}*`}
+          placeholder={strings.purchaseDatePlaceholder}
+          max={MAX_DATE}
+        />
+        <Autocomplete
+          style={INPUT}
+          label={`${strings.purchasePrice}*`}
+          status={purchasePriceStatus}
+          caption={strings.mandatory}
+          placeholder={strings.purchasePricePlaceholder}
+          errorCaption={strings.shouldBeValidPrice}
+          dataType={DataType.PRICE}
+          keyboardType="numeric"
+          value={purchasePrice}
+          setValue={(val) => {
+            // Make sure we have period instead of comma and that there are only two decimal digits after it
+            const segments = val.replace(',', '.').split('.', 2)
+            setPurchasePrice(
+              segments.length === 2 ? `${segments[0]}.${segments[1].substring(0, 2)}` : segments[0],
+            )
+          }}
         />
         <Autocomplete
           style={INPUT}
@@ -298,39 +359,6 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.SERIAL_NUMBER}
           value={serialNumber}
           setValue={setSerialNumber}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.brand}
-          status={brandStatus}
-          caption={strings.mandatory}
-          errorCaption={strings.shouldNotBeEmpty}
-          placeholder={strings.brandPlaceholder}
-          dataType={DataType.BRAND}
-          value={brand}
-          setValue={setBrand}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.model}
-          status={modelStatus}
-          caption={strings.mandatory}
-          errorCaption={strings.shouldNotBeEmpty}
-          placeholder={strings.modelPlaceholder}
-          dataType={DataType.MODEL}
-          value={model}
-          setValue={setModel}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.supplier}
-          status={supplierStatus}
-          caption={strings.mandatory}
-          errorCaption={strings.shouldNotBeEmpty}
-          placeholder={strings.supplierPlaceholder}
-          dataType={DataType.SUPPLIER}
-          value={supplier}
-          setValue={setSupplier}
         />
         <Autocomplete
           style={INPUT}
@@ -379,34 +407,6 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.PREVIOUS_OWNER}
           value={previousOwner}
           setValue={setPreviousOwner}
-        />
-        <Datepicker
-          size="large"
-          style={INPUT}
-          date={purchaseDate}
-          caption={strings.mandatory}
-          onSelect={setPurchaseDate}
-          label={strings.purchaseDate}
-          placeholder={strings.purchaseDatePlaceholder}
-          max={MAX_DATE}
-        />
-        <Autocomplete
-          style={INPUT}
-          label={strings.purchasePrice}
-          status={purchasePriceStatus}
-          caption={strings.mandatory}
-          placeholder={strings.purchasePricePlaceholder}
-          errorCaption={strings.shouldBeValidPrice}
-          dataType={DataType.PRICE}
-          keyboardType="numeric"
-          value={purchasePrice}
-          setValue={(val) => {
-            // Make sure we have period instead of comma and that there are only two decimal digits after it
-            const segments = val.replace(',', '.').split('.', 2)
-            setPurchasePrice(
-              segments.length === 2 ? `${segments[0]}.${segments[1].substring(0, 2)}` : segments[0],
-            )
-          }}
         />
         <Autocomplete
           style={INPUT}
