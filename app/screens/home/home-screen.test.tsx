@@ -18,6 +18,7 @@ jest.useFakeTimers()
 describe('Home screen', () => {
   function buildHomeScreen() {
     const itemStore = ItemStoreModel.create()
+    itemStore.saveItems([])
     const rootStore = RootStoreModel.create({ itemStore })
 
     const Stack = createStackNavigator()

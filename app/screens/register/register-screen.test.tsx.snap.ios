@@ -1470,7 +1470,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      24/07/2021
+                                      17/08/2021
                                     </Text>
                                   </View>
                                   <Text
@@ -2998,7 +2998,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      24/07/2021
+                                      17/08/2021
                                     </Text>
                                   </View>
                                 </View>
