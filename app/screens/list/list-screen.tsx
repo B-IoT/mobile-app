@@ -192,7 +192,9 @@ export const ListScreen = observer(function ListScreen() {
   const navigation = useNavigation<ListScreenNavigationProp>()
   const theme = useTheme()
 
-  const [shownItems, setShownItems] = useState<Array<Item>>([...itemStore.items])
+  const [shownItems, setShownItems] = useState<Array<Item>>(
+    itemStore.items ? [...itemStore.items] : [],
+  )
   const [searchString, setSearchString] = useState('')
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
