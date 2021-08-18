@@ -192,7 +192,9 @@ export const ListScreen = observer(function ListScreen() {
   const navigation = useNavigation<ListScreenNavigationProp>()
   const theme = useTheme()
 
-  const [shownItems, setShownItems] = useState<Array<Item>>(itemStore.items)
+  const [shownItems, setShownItems] = useState<Array<Item>>(
+    itemStore.items ? [...itemStore.items] : [],
+  )
   const [searchString, setSearchString] = useState('')
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
@@ -201,18 +203,20 @@ export const ListScreen = observer(function ListScreen() {
 
   useEffect(() => {
     ;(async () => {
-      const result = await itemStore.getUserInfo()
-      if (result) {
-        setEventBusClient(
-          new Client(
-            `${itemStore.environment.api.config.url}/eventbus`,
-            itemStore.authToken,
-            result.company,
-          ),
-        )
+      if (eventBusClient == null) {
+        const userInfo = await itemStore.getUserInfo()
+        if (userInfo) {
+          setEventBusClient(
+            new Client(
+              `${itemStore.environment.api.config.url}/eventbus`,
+              itemStore.authToken,
+              userInfo.company,
+            ),
+          )
+        }
       }
     })()
-  }, [itemStore])
+  }, [eventBusClient, itemStore])
 
   useEffect(() => {
     ;(async () => {
@@ -221,24 +225,30 @@ export const ListScreen = observer(function ListScreen() {
         await eventBusClient.connect()
 
         eventBusClient.onItemUpdate((type, id, content) => {
+          let updatedItems = []
           switch (type) {
             case UpdateType.DELETE: {
-              itemStore.saveItems(itemStore.items.filter((item) => item.id !== id))
+              updatedItems = itemStore.items.filter((item) => item.id !== id)
+              itemStore.saveItems(updatedItems)
               break
             }
             case UpdateType.POST: {
               // New item put at the end
-              itemStore.saveItems(itemStore.items.concat([extractItem(content)]))
+              updatedItems = itemStore.items.concat([extractItem(content)])
+              itemStore.saveItems(updatedItems)
               break
             }
             case UpdateType.PUT: {
-              // Updated item put at the top
-              itemStore.saveItems(
-                [extractItem(content)].concat(itemStore.items.filter((item) => item.id !== id)),
-              )
+              // Update item in place
+              const itemIdx = itemStore.items.findIndex((item) => item.id === id)
+              const newItems = [...itemStore.items]
+              newItems[itemIdx] = extractItem(content)
+              updatedItems = newItems
+              itemStore.saveItems(updatedItems)
               break
             }
           }
+          setShownItems(updatedItems)
         })
       }
     })()
