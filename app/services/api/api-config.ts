@@ -1,7 +1,7 @@
 // Use this import if you want to use "env.js" file
 // const { API_URL } = require("../../config/env")
 // Or just specify it directly like this:
-const API_URL = 'https://api.b-iot.ch:8080'
+const API_URL = 'https://api.b-iot.ch:443'
 
 /**
  * The options used to configure the API.
