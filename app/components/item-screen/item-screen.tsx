@@ -86,6 +86,8 @@ const strings = {
   modelPlaceholder: translate('registerScreen.modelPlaceholder'),
   supplier: translate('registerScreen.supplier'),
   supplierPlaceholder: translate('registerScreen.supplierPlaceholder'),
+  itemID: translate('registerScreen.itemID'),
+  itemIDPlaceholder: translate('registerScreen.itemIDPlaceholder'),
   originLocation: translate('registerScreen.originLocation'),
   originLocationPlaceholder: translate('registerScreen.originLocationPlaceholder'),
   currentLocation: translate('registerScreen.currentLocation'),
@@ -149,6 +151,7 @@ export function ItemScreen(props: ItemScreenProps) {
     initialBrand,
     initialModel,
     initialSupplier,
+    initialItemID,
     initialOriginLocation,
     initialCurrentLocation,
     initialRoom,
@@ -185,6 +188,8 @@ export function ItemScreen(props: ItemScreenProps) {
   const [modelStatus, setModelStatus] = useState<AutocompleteStatus>('basic')
   const [supplier, setSupplier] = useState(initialSupplier ? initialSupplier : '')
   const [supplierStatus, setSupplierStatus] = useState<AutocompleteStatus>('basic')
+  const [itemID, setItemID] = useState(initialItemID ? initialItemID : '')
+  const [itemIDStatus, setItemIDStatus] = useState<AutocompleteStatus>('basic')
   const [originLocation, setOriginLocation] = useState(
     initialOriginLocation ? initialOriginLocation : '',
   )
@@ -315,6 +320,17 @@ export function ItemScreen(props: ItemScreenProps) {
           dataType={DataType.SUPPLIER}
           value={supplier}
           setValue={setSupplier}
+        />
+        <Autocomplete
+          style={INPUT}
+          status={itemIDStatus}
+          caption={strings.mandatory}
+          errorCaption={strings.shouldNotBeEmpty}
+          label={`${strings.itemID}*`}
+          placeholder={strings.itemIDPlaceholder}
+          dataType={DataType.ITEM_ID}
+          value={itemID}
+          setValue={setItemID}
         />
         <Datepicker
           size="large"
@@ -477,6 +493,7 @@ export function ItemScreen(props: ItemScreenProps) {
               [isEmpty(brand), setBrandStatus],
               [isEmpty(model), setModelStatus],
               [isEmpty(supplier), setSupplierStatus],
+              [isEmpty(itemID), setItemIDStatus],
             ]
 
             const noErrors = statusSetters.reduce((noErrors, [isInvalid, currSetter]) => {
@@ -501,6 +518,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 brand,
                 model,
                 supplier,
+                itemID,
                 originLocation,
                 currentLocation,
                 room,
@@ -534,6 +552,7 @@ export function ItemScreen(props: ItemScreenProps) {
                   [DataType.BRAND, brand],
                   [DataType.MODEL, model],
                   [DataType.SUPPLIER, supplier],
+                  [DataType.ITEM_ID, itemID],
                   [DataType.ORIGIN, originLocation],
                   [DataType.LOCATION, currentLocation],
                   [DataType.ROOM, room],

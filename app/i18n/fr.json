@@ -49,6 +49,8 @@
     "modelPlaceholder": "Entre le modèle",
     "supplier": "Fournisseur",
     "supplierPlaceholder": "Entre le fournisseur",
+    "itemID": "Numéro d'article",
+    "itemIDPlaceholder": "Entre le numéro d'article",
     "originLocation": "Lieu d'origine",
     "originLocationPlaceholder": "Entre le lieu d'origine",
     "currentLocation": "Lieu actuel",

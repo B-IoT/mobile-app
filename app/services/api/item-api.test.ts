@@ -11,6 +11,7 @@ describe('Item Api', () => {
     brand: 'br',
     model: 'mod',
     supplier: 'supp',
+    itemID: 'itemID',
     originLocation: 'origin',
     currentLocation: 'current',
     room: 'room',

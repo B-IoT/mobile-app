@@ -278,8 +278,15 @@ export const ListScreen = observer(function ListScreen() {
       }}
       key={item.id}
       onPress={() => {
-        // Open the Info screen
-        itemStore.saveItem(clone(item))
+        // Save the item and open the Info screen
+        try {
+          // The item belongs to the item store
+          itemStore.saveItem(clone(item))
+        } catch (error) {
+          // The item does not belong to the item store
+          itemStore.saveItem(item)
+        }
+
         navigation.navigate('info', { fromListScreen: true })
       }}
     >
