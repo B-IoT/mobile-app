@@ -40,6 +40,7 @@ export const InfoScreen = observer(function InfoScreen() {
     brand,
     model,
     supplier,
+    itemID,
     originLocation,
     currentLocation,
     room,
@@ -68,6 +69,7 @@ export const InfoScreen = observer(function InfoScreen() {
       initialBrand={brand}
       initialModel={model}
       initialSupplier={supplier}
+      initialItemID={itemID}
       initialOriginLocation={originLocation}
       initialCurrentLocation={currentLocation}
       initialRoom={room}

@@ -225,26 +225,34 @@ export const ListScreen = observer(function ListScreen() {
         await eventBusClient.connect()
 
         eventBusClient.onItemUpdate((type, id, content) => {
-          let updatedItems = []
+          let updatedItems = [] // used to update the items that are visible
           switch (type) {
             case UpdateType.DELETE: {
-              updatedItems = itemStore.items.filter((item) => item.id !== id)
-              itemStore.saveItems(updatedItems)
+              const deleteItem = (array: Array<Item>) => array.filter((item) => item.id !== id)
+
+              updatedItems = deleteItem(shownItems)
+              itemStore.saveItems(deleteItem(itemStore.items))
               break
             }
             case UpdateType.POST: {
               // New item put at the end
-              updatedItems = itemStore.items.concat([extractItem(content)])
-              itemStore.saveItems(updatedItems)
+              const addItem = (array: Array<Item>) => array.concat([extractItem(content)])
+
+              updatedItems = addItem(shownItems)
+              itemStore.saveItems(addItem(itemStore.items))
               break
             }
             case UpdateType.PUT: {
               // Update item in place
-              const itemIdx = itemStore.items.findIndex((item) => item.id === id)
-              const newItems = [...itemStore.items]
-              newItems[itemIdx] = extractItem(content)
-              updatedItems = newItems
-              itemStore.saveItems(updatedItems)
+              const updateItem = (array: Array<Item>) => {
+                const itemIdx = array.findIndex((item) => item.id === id)
+                const newItems = [...array]
+                newItems[itemIdx] = extractItem(content)
+                return newItems
+              }
+
+              updatedItems = updateItem(shownItems)
+              itemStore.saveItems(updateItem(itemStore.items))
               break
             }
           }
@@ -253,7 +261,7 @@ export const ListScreen = observer(function ListScreen() {
       }
     })()
     return () => eventBusClient?.disconnect()
-  }, [eventBusClient, itemStore])
+  }, [eventBusClient, itemStore, shownItems])
 
   useEffect(() => {
     ;(async () => {
@@ -278,8 +286,15 @@ export const ListScreen = observer(function ListScreen() {
       }}
       key={item.id}
       onPress={() => {
-        // Open the Info screen
-        itemStore.saveItem(clone(item))
+        // Save the item and open the Info screen
+        try {
+          // The item belongs to the item store
+          itemStore.saveItem(clone(item))
+        } catch (error) {
+          // The item does not belong to the item store
+          itemStore.saveItem(item)
+        }
+
         navigation.navigate('info', { fromListScreen: true })
       }}
     >

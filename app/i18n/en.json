@@ -48,6 +48,8 @@
     "modelPlaceholder": "Enter the model",
     "supplier": "Supplier",
     "supplierPlaceholder": "Enter the supplier",
+    "itemID": "Article number",
+    "itemIDPlaceholder": "Enter the article number",
     "originLocation": "Place of origin",
     "originLocationPlaceholder": "Enter the place of origin",
     "currentLocation": "Current location",

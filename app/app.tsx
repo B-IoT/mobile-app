@@ -42,7 +42,7 @@ Sentry.init({
   integrations: (oldIntegrations) => [
     ...oldIntegrations,
     new Sentry.Native.ReactNativeTracing({
-      tracingOrigins: ['localhost', 'api.b-iot.ch:8080', /^\//],
+      tracingOrigins: ['localhost', 'api.b-iot.ch:443', /^\//],
       routingInstrumentation,
     }),
   ],

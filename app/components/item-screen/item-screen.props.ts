@@ -19,7 +19,7 @@ export interface ItemScreenProps {
   /**
    * The initial beacon value. If not specified, defaults to ''.
    */
-   initialBeacon?: string
+  initialBeacon?: string
 
   /**
    * The initial service value. If not specified, defaults to ''.
@@ -40,6 +40,11 @@ export interface ItemScreenProps {
    * The initial supplier value. If not specified, defaults to ''.
    */
   initialSupplier?: string
+
+  /**
+   * The initial item ID (article number). If not specified, defaults to ''.
+   */
+  initialItemID?: string
 
   /**
    * The initial origin location value. If not specified, defaults to ''.

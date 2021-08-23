@@ -20,6 +20,7 @@ describe('Info screen', () => {
   const BRAND_LABEL = `${translate('registerScreen.brand')}*`
   const MODEL_LABEL = `${translate('registerScreen.model')}*`
   const SUPPLIER_LABEL = `${translate('registerScreen.supplier')}*`
+  const ITEM_ID_LABEL = `${translate('registerScreen.itemID')}*`
   const PURCHASE_DATE_LABEL = `${translate('registerScreen.purchaseDate')}*`
   const PURCHASE_PRICE_LABEL = `${translate('registerScreen.purchasePrice')}*`
 
@@ -128,6 +129,13 @@ describe('Info screen', () => {
     const component = render(screen)
 
     expect(component.queryByText(SUPPLIER_LABEL)).toBeTruthy()
+  })
+
+  it('should show the itemID input', () => {
+    const screen = buildInfoScreen()
+    const component = render(screen)
+
+    expect(component.queryByText(ITEM_ID_LABEL)).toBeTruthy()
   })
 
   it('should show the origin location input', () => {
@@ -273,6 +281,10 @@ describe('Info screen', () => {
     const supplierInput = component.queryByText(SUPPLIER_LABEL)
     fireEvent.changeText(supplierInput, supplier)
 
+    const itemID = 'itemID'
+    const itemIDInput = component.queryByText(ITEM_ID_LABEL)
+    fireEvent.changeText(itemIDInput, itemID)
+
     const originLocation = 'origin'
     const originLocationInput = component.queryByText(translate('registerScreen.originLocation'))
     fireEvent.changeText(originLocationInput, originLocation)
@@ -343,6 +355,7 @@ describe('Info screen', () => {
         purchasePrice: 25,
         room: room,
         supplier: supplier,
+        itemID,
         orderNumber,
         color,
         serialNumber,
@@ -376,6 +389,9 @@ describe('Info screen', () => {
     const supplierInput = component.queryByText(SUPPLIER_LABEL)
     fireEvent.changeText(supplierInput, '')
 
+    const itemIDInput = component.queryByText(ITEM_ID_LABEL)
+    fireEvent.changeText(itemIDInput, '')
+
     const purchasePriceInput = component.queryByText(PURCHASE_PRICE_LABEL)
     fireEvent.changeText(purchasePriceInput, '')
 
@@ -385,7 +401,7 @@ describe('Info screen', () => {
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
 
-    expect(warnings).toHaveLength(4)
+    expect(warnings).toHaveLength(5)
     warnings.forEach((w) => expect(w).toBeTruthy())
     expect(priceWarning).toBeTruthy()
   })

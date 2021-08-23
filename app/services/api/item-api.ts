@@ -185,6 +185,7 @@ export function extractItem(rawItem): Item {
     brand: rawItem.brand,
     model: rawItem.model,
     supplier: rawItem.supplier,
+    itemID: rawItem.itemID,
     originLocation: rawItem.originLocation,
     currentLocation: rawItem.currentLocation,
     room: rawItem.room,

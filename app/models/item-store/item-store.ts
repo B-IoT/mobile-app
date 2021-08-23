@@ -29,6 +29,7 @@ export enum DataType {
   COLOR,
   SERIAL_NUMBER,
   LAST_MODIFIED_BY,
+  ITEM_ID,
 }
 
 export const ItemStoreModel = types
