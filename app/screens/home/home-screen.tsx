@@ -41,29 +41,10 @@ export const HomeScreen = observer(function HomeScreen() {
 
   useEffect(() => {
     ;(async () => {
-      itemStore.saveCategories([
-        {
-          id: 1,
-          name: 'ECG',
-        },
-        {
-          id: 2,
-          name: 'Lit',
-        },
-        {
-          id: 3,
-          name: 'Mobilier.Bouteille ollee',
-        },
-        {
-          id: 4,
-          name: 'Informatique.Bouteille ollee',
-        },
-      ])
-      // TODO: decomment
-      // const isSuccessful = await itemStore.getCategories()
-      // if (!isSuccessful) {
-      //   __DEV__ && console.error('Error while getting categories')
-      // }
+      const isSuccessful = await itemStore.getCategories()
+      if (!isSuccessful) {
+        __DEV__ && console.error('Error while getting categories')
+      }
     })()
   }, [itemStore])
 
