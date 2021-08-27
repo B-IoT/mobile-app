@@ -323,4 +323,20 @@ describe('Item Api', () => {
     expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items/categories`)
     expect(result.kind).toEqual('server')
   })
+
+  it('should fail getting the categories because of bad data', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const result = await itemApi.getCategories()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items/categories`)
+    expect(result.kind).toEqual('bad-data')
+  })
 })

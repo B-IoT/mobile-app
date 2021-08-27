@@ -907,4 +907,12 @@ describe('Item store', () => {
     expect(mockSetAuthToken).toHaveBeenCalledWith(undefined)
     expect(reset).toHaveBeenCalledTimes(1)
   })
+
+  it('should reset the item id', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    instance.resetItemId()
+
+    expect(instance.itemId).toBeUndefined()
+  })
 })

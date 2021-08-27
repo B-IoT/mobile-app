@@ -100,7 +100,7 @@ export class ItemApi {
       const data = response.data
       return { kind: 'ok', categories: data }
     } catch (e) {
-      __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
+      __DEV__ && console.log(`Bad getCategories request with error message ${e.message}`)
       Sentry.Native.captureException(e)
       return { kind: 'bad-data' }
     }
