@@ -12,6 +12,7 @@
     "list": "Liste",
     "user": "Utilisateur",
     "noUser": "Aucun utilisateur connecté",
+    "noCategoryFound": "Aucune catégorie trouvée",
     "mandatory": "Obligatoire"
   },
   "loginScreen": {

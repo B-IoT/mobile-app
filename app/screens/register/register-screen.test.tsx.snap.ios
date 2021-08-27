@@ -911,10 +911,10 @@ exports[`Register screen should match snapshot 1`] = `
                                       <TextInput
                                         allowFontScaling={true}
                                         appearance="default"
-                                        captionIcon={null}
                                         editable={true}
                                         onBlur={[Function]}
                                         onChangeText={[Function]}
+                                        onEndEditing={[Function]}
                                         onFocus={[Function]}
                                         onMouseEnter={[Function]}
                                         onMouseLeave={[Function]}
@@ -1606,7 +1606,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      19/08/2021
+                                      27/08/2021
                                     </Text>
                                   </View>
                                   <Text
@@ -3134,7 +3134,7 @@ exports[`Register screen should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      19/08/2021
+                                      27/08/2021
                                     </Text>
                                   </View>
                                 </View>

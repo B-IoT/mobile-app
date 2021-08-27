@@ -20,6 +20,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -68,6 +69,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -135,6 +137,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -181,6 +184,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -228,6 +232,7 @@ describe('Item store', () => {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',
@@ -265,6 +270,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -302,6 +308,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -335,6 +342,7 @@ describe('Item store', () => {
         id: 1,
         beacon: 'bb:aa:aa:aa:aa:aa',
         category: 'ECG',
+        categoryID: null,
         service: 'Bloc 2',
         brand: 'br',
         model: 'mod',
@@ -362,6 +370,76 @@ describe('Item store', () => {
     instance.saveItems(items)
 
     expect(instance.items).toEqual(items)
+  })
+
+  it('should save all given categories when no categories are present', () => {
+    const instance = ItemStoreModel.create(itemStore)
+
+    const categories = [
+      {
+        id: 1,
+        name: 'ECG',
+      },
+    ]
+
+    instance.saveCategories(categories)
+
+    expect(instance.categories).toEqual(categories)
+  })
+
+  it('should save all given categories when some categories are present', () => {
+    const category = {
+      id: 2,
+      name: 'Lit',
+    }
+
+    const newCategories = [
+      {
+        id: 3,
+        name: 'ECG',
+      },
+    ]
+
+    itemStore = {
+      isAuthenticated: false,
+      itemId: 1,
+      item: ItemModel.create({
+        id: 1,
+        beacon: 'aa:aa:aa:aa:aa:aa',
+        category: 'Lit',
+        categoryID: null,
+        service: 'Bloc 1',
+        brand: 'br',
+        model: 'mod',
+        supplier: 'supp',
+        itemID: 'itemID',
+        originLocation: 'origin',
+        currentLocation: 'current',
+        room: 'room',
+        contact: 'contact',
+        currentOwner: 'own',
+        previousOwner: 'prev',
+        purchaseDate: new Date(),
+        purchasePrice: 42.3,
+        orderNumber: 'aasas',
+        color: 'blue',
+        serialNumber: 'sdsd',
+        maintenanceDate: new Date(),
+        status: 'status',
+        comments: 'A comment',
+        lastModifiedDate: new Date(),
+        lastModifiedBy: 'Antoine',
+      }),
+      items: [itemStore.item],
+      categories: [category],
+      authToken: 'token',
+      autocompleteDataMap: {},
+    }
+    const instance = ItemStoreModel.create(itemStore)
+
+    instance.saveCategories(newCategories)
+
+    expect(instance.categories).toEqual(newCategories)
   })
 
   it('should set the authentication token', async () => {
@@ -420,6 +498,7 @@ describe('Item store', () => {
         id: 2,
         beacon: 'aa:aa:aa:aa:aa:aa',
         category: 'Lit',
+        categoryID: null,
         service: 'Bloc 1',
         brand: 'br',
         model: 'mod',
@@ -470,11 +549,46 @@ describe('Item store', () => {
     expect(result).toBeFalsy()
   })
 
+  it('should get all categories', async () => {
+    const expectedCategories = [
+      {
+        id: 1,
+        name: 'ECG',
+      },
+    ]
+
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetCategories = jest.fn()
+    mockGetCategories.mockResolvedValue({ kind: 'ok', categories: expectedCategories })
+    ItemApi.prototype.getCategories = mockGetCategories
+
+    const result = await instance.getCategories()
+
+    expect(mockGetCategories).toHaveBeenCalledTimes(1)
+    expect(result).toBeTruthy()
+    expect(instance.categories).toEqual(expectedCategories)
+  })
+
+  it('should fail getting all categories', async () => {
+    const instance = ItemStoreModel.create(itemStore, await createEnvironment())
+
+    const mockGetCategories = jest.fn()
+    mockGetCategories.mockResolvedValue({ kind: 'server' })
+    ItemApi.prototype.getCategories = mockGetCategories
+
+    const result = await instance.getCategories()
+
+    expect(mockGetCategories).toHaveBeenCalledTimes(1)
+    expect(result).toBeFalsy()
+  })
+
   it('should get an item', async () => {
     const expectedItem = {
       id: 2,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',
@@ -548,6 +662,7 @@ describe('Item store', () => {
       id: 1,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',
@@ -593,6 +708,7 @@ describe('Item store', () => {
       id: 2,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',
@@ -634,6 +750,7 @@ describe('Item store', () => {
       id: 2,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',
@@ -677,6 +794,7 @@ describe('Item store', () => {
       id: 2,
       beacon: 'aa:aa:aa:aa:aa:aa',
       category: 'Lit',
+      categoryID: null,
       service: 'Bloc 1',
       brand: 'br',
       model: 'mod',

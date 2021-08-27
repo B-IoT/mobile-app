@@ -1,7 +1,13 @@
 import * as Sentry from 'sentry-expo'
 import { ApiResponse } from 'apisauce'
 import { Api } from './api'
-import { GetItemResult, GetItemsResult, RegisterItemResult, UpdateItemResult } from './api.types'
+import {
+  GetCategoriesResult,
+  GetItemResult,
+  GetItemsResult,
+  RegisterItemResult,
+  UpdateItemResult,
+} from './api.types'
 import { getGeneralApiProblem } from './api-problem'
 import { Item } from '../../models/item/item'
 
@@ -68,6 +74,31 @@ export class ItemApi {
       } catch {
         return { kind: 'bad-data' }
       }
+    } catch (e) {
+      __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
+      Sentry.Native.captureException(e)
+      return { kind: 'bad-data' }
+    }
+  }
+
+  /**
+   * Gets all the categories.
+   *
+   * @returns an object storing whether the request was successful and the categories
+   */
+  async getCategories(): Promise<GetCategoriesResult> {
+    try {
+      const response: ApiResponse<any> = await this.api.apisauce.get(
+        `${this.api.config.url}/api/items/categories`,
+      )
+
+      if (!response.ok) {
+        const problem = getGeneralApiProblem(response)
+        if (problem) return problem
+      }
+
+      const data = response.data
+      return { kind: 'ok', categories: data }
     } catch (e) {
       __DEV__ && console.log(`Bad getItem request with error message ${e.message}`)
       Sentry.Native.captureException(e)
@@ -174,13 +205,14 @@ export function cleanItem(item: Item): Record<string, unknown> {
  * Extracts the Item from the given raw item.
  *
  * @param rawItem the object corresponding to a raw item
- * @returns the corresponding Item
+ * @return the corresponding Item
  */
 export function extractItem(rawItem): Item {
   return {
     id: rawItem.id,
     beacon: rawItem.beacon,
     category: rawItem.category,
+    categoryID: null,
     service: rawItem.service,
     brand: rawItem.brand,
     model: rawItem.model,

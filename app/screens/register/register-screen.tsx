@@ -42,6 +42,7 @@ export const RegisterScreen = observer(function RegisterScreen() {
       buttonText={strings.register}
       title={strings.title}
       shouldGoBackWithoutReset={fromListScreen}
+      categories={itemStore.categories || []}
     />
   )
 })

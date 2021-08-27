@@ -11,6 +11,7 @@
     "list": "List",
     "user": "User",
     "noUser": "No user connected",
+    "noCategoryFound": "No category found",
     "mandatory": "Mandatory"
   },
   "loginScreen": {

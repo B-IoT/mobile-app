@@ -12,8 +12,12 @@ import { RootStoreModel, RootStoreProvider } from '../../models'
 import { ItemStoreModel } from '../../models/item-store/item-store'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
+const utils = require('../../utils/function-utils/function-utils')
 
 jest.useFakeTimers()
+// jest.mock('../../utils/function-utils/function-utils', () => ({
+//   isEmpty: jest.fn(),
+// }))
 
 describe('Register screen', () => {
   const CATEGORY_LABEL = `${translate('registerScreen.category')}*`
@@ -27,11 +31,14 @@ describe('Register screen', () => {
   const mockRegisterItem = jest.fn().mockResolvedValue(true)
   const initialId = 1
 
+  const initialCategory = { id: 2, name: 'Lit' }
+
   function buildRegisterScreen() {
     const itemStore = ItemStoreModel.create({
       itemId: initialId,
     })
     Object.defineProperty(itemStore, 'registerItem', { value: mockRegisterItem, writable: true })
+    itemStore.saveCategories([initialCategory])
     const rootStore = RootStoreModel.create({ itemStore })
 
     const Stack = createStackNavigator()
@@ -73,7 +80,7 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.id'))).toBeTruthy()
   })
 
-  it('should show the category input', () => {
+  it('should show the category dropdown', () => {
     const screen = buildRegisterScreen()
     const component = render(screen)
 
@@ -234,13 +241,14 @@ describe('Register screen', () => {
     expect(component.queryByText(translate('registerScreen.register'))).toBeTruthy()
   })
 
-  it('should register the item when pressing the register item button', () => {
+  it('should register the item when pressing the register item button', async () => {
+    // Since we cannot select an entry in the category dropdown,
+    // make isEmpty always return false so that the item can be created even if the category is not specified
+    const oldIsEmpty = utils.isEmpty
+    utils.isEmpty = () => false
+
     const screen = buildRegisterScreen()
     const component = render(screen)
-
-    const category = 'category'
-    const categoryInput = component.queryByText(CATEGORY_LABEL)
-    fireEvent.changeText(categoryInput, category)
 
     const service = 'service'
     const serviceInput = component.queryByText(translate('registerScreen.service'))
@@ -318,7 +326,8 @@ describe('Register screen', () => {
     expect(mockRegisterItem).toHaveBeenCalledWith({
       beacon: null,
       brand: brand,
-      category: category,
+      category: '',
+      categoryID: null,
       contact: contact,
       currentLocation: currentLocation,
       id: initialId,
@@ -345,6 +354,9 @@ describe('Register screen', () => {
     expect(item.lastModifiedDate.toISOString().split('T')[0]).toEqual(
       new Date().toISOString().split('T')[0],
     )
+
+    // Restore isEmpty original implementation
+    utils.isEmpty = oldIsEmpty
   })
 
   it('should show warnings when registering an item with empty fields', () => {

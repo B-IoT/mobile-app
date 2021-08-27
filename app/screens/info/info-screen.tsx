@@ -91,6 +91,7 @@ export const InfoScreen = observer(function InfoScreen() {
       buttonText={strings.update}
       title={strings.title}
       shouldGoBackWithoutReset={fromListScreen}
+      categories={itemStore.categories || []}
     />
   )
 })
