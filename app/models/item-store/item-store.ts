@@ -5,6 +5,7 @@ import { withEnvironment } from '../extensions/with-environment'
 import { reset, save } from '../../utils/keychain'
 import { AutocompleteEntryModel } from '../autocomplete-entry/autocomplete-entry'
 import { ItemApi, UserInfo } from '../../services/api'
+import { Category, CategoryModel } from '../category/category'
 
 export enum GetItemResult {
   OK,
@@ -13,23 +14,22 @@ export enum GetItemResult {
 }
 
 export enum DataType {
-  CATEGORY,
-  SERVICE,
-  BRAND,
-  MODEL,
-  SUPPLIER,
-  ORIGIN,
-  LOCATION,
-  ROOM,
-  CONTACT,
-  CURRENT_OWNER,
-  PREVIOUS_OWNER,
-  PRICE,
-  ORDER_NUMBER,
-  COLOR,
-  SERIAL_NUMBER,
-  LAST_MODIFIED_BY,
-  ITEM_ID,
+  SERVICE = 'SERVICE',
+  BRAND = 'BRAND',
+  MODEL = 'MODEL',
+  SUPPLIER = 'SUPPLIER',
+  ORIGIN = 'ORIGIN',
+  LOCATION = 'LOCATION',
+  ROOM = 'ROOM',
+  CONTACT = 'CONTACT',
+  CURRENT_OWNER = 'CURRENT_OWNER',
+  PREVIOUS_OWNER = 'PREVIOUS_OWNERS',
+  PRICE = 'PRICE',
+  ORDER_NUMBER = 'ORDER_NUMBER',
+  COLOR = 'COLOR',
+  SERIAL_NUMBER = 'SERIAL_NUMBER',
+  LAST_MODIFIED_BY = 'LAST_MODIFIED_BY',
+  ITEM_ID = 'ITEM_ID',
 }
 
 export const ItemStoreModel = types
@@ -45,6 +45,7 @@ export const ItemStoreModel = types
      * Map from dataType to (map from entryName to rank)
      */
     autocompleteDataMap: types.map(types.map(types.integer)),
+    categories: types.maybe(types.array(CategoryModel)),
   })
   .extend(withEnvironment)
   .actions((self) => ({
@@ -151,6 +152,19 @@ export const ItemStoreModel = types
     resetItemId: () => {
       self.itemId = undefined
     },
+
+    /**
+     * Saves all the given categories in the store.
+     *
+     * @param items the categories
+     */
+    saveCategories: (categories: Array<Category>) => {
+      if (!self.categories) {
+        self.categories = cast(categories)
+      } else {
+        self.categories.replace(categories)
+      }
+    },
   }))
   .actions((self) => ({
     /**
@@ -171,6 +185,26 @@ export const ItemStoreModel = types
     }),
   }))
   .actions((self) => ({
+    /**
+     * Gets the categories.
+     *
+     * @returns true if the items are retrieved, otherwise false if any error occurred
+     */
+    getCategories: flow(function* () {
+      self.environment.api.setAuthToken(self.authToken)
+
+      const itemApi = new ItemApi(self.environment.api)
+      const result = yield itemApi.getCategories()
+
+      if (result.kind === 'ok') {
+        self.saveCategories(result.categories)
+        return true
+      } else {
+        __DEV__ && console.log(`Get categories failed, ${result.kind} error`)
+        return false
+      }
+    }),
+
     /**
      * Gets the user information.
      *
@@ -218,7 +252,7 @@ export const ItemStoreModel = types
     /**
      * Gets all the items from the server.
      *
-     * @returns OK if the items are retrieved, otherwise ERROR if any error occurred
+     * @returns true if the items are retrieved, otherwise false if any error occurred
      */
     getItems: flow(function* () {
       // First we update the auth token with the one stored, which is not volatile
@@ -331,6 +365,11 @@ export const ItemStoreModel = types
       self.setAuthToken(undefined)
       self.setAuthenticated(false)
       self.setUsername(undefined)
+      self.items?.clear()
+      self.item = undefined
+      self.itemId = undefined
+      self.autocompleteDataMap?.clear()
+      self.categories?.clear()
     }),
   }))
 

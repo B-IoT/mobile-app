@@ -7,6 +7,7 @@ describe('Item Api', () => {
     id: 1,
     beacon: 'aa:aa:aa:aa:aa:aa',
     category: 'Lit',
+    categoryID: null,
     service: 'Bloc 1',
     brand: 'br',
     model: 'mod',
@@ -275,6 +276,67 @@ describe('Item Api', () => {
         params: { scan: false },
       },
     )
+    expect(result.kind).toEqual('bad-data')
+  })
+
+  it('should get the categories', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const categories = [
+      {
+        id: 1,
+        name: 'ECG',
+      },
+    ]
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: true,
+      problem: null,
+      originalError: null,
+      data: categories,
+    })
+
+    const result = await itemApi.getCategories()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items/categories`)
+    expect(result.kind).toEqual('ok')
+    expect(result.categories).toEqual(categories)
+  })
+
+  it('should fail getting the categories', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockResolvedValue({
+      ok: false,
+      problem: SERVER_ERROR,
+      originalError: null,
+    })
+
+    const result = await itemApi.getCategories()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items/categories`)
+    expect(result.kind).toEqual('server')
+  })
+
+  it('should fail getting the categories because of bad data', async () => {
+    const api = new Api()
+    api.setup()
+    const itemApi = new ItemApi(api)
+
+    const mockGet = jest.spyOn(api.apisauce, 'get').mockImplementation(() => {
+      throw new Error('')
+    })
+
+    const result = await itemApi.getCategories()
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(mockGet).toHaveBeenCalledWith(`${api.config.url}/api/items/categories`)
     expect(result.kind).toEqual('bad-data')
   })
 })

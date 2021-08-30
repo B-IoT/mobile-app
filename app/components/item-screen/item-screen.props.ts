@@ -1,4 +1,4 @@
-import { Item } from '../../models/item/item'
+import { Category, Item } from '../../models/item/item'
 
 export interface ItemScreenProps {
   /**
@@ -127,17 +127,22 @@ export interface ItemScreenProps {
   initialLastModifiedBy?: string
 
   /**
-   * The text displayed by the button
+   * The text displayed by the button.
    */
   buttonText: string
 
   /**
-   * The screen title
+   * The screen title.
    */
   title: string
 
   /**
-   * True if we should navigate back in the stack, false if we should reset it before navigating
+   * True if we should navigate back in the stack, false if we should reset it before navigating.
    */
   shouldGoBackWithoutReset: boolean
+
+  /**
+   * The item categories.
+   */
+  categories: Category[]
 }

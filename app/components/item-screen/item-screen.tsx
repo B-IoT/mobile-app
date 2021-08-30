@@ -31,6 +31,8 @@ import { useStores } from '../../models'
 import { ERROR_TIMEOUT, OPERATION_TIMEOUT } from '../../screens'
 import { isEmpty } from '../../utils/function-utils/function-utils'
 import { resetAndNavigateTo } from '../../navigators'
+import { CategoryDropdown } from '../category-dropdown/category-dropdown'
+import { Category } from '../../models/category/category'
 const image = require('../../../assets/biot-shape-square.png')
 
 const ROOT: ViewStyle = {
@@ -138,6 +140,16 @@ const UNDER_CREATION = 'Under creation'
 const isIos = Platform.OS === 'ios'
 
 /**
+ * Gets the category ID of the given category.
+ *
+ * @param categories all categories
+ * @param categoryName the name of the category
+ */
+function getCategoryID(categories: Category[], categoryName: string): number | null {
+  return categories.find((c) => c.name === categoryName)?.id || null
+}
+
+/**
  * A screen displaying various information related to an item, with a button that executes an operation
  * (either register or update).
  */
@@ -171,6 +183,7 @@ export function ItemScreen(props: ItemScreenProps) {
     buttonText,
     title,
     shouldGoBackWithoutReset,
+    categories,
   } = props
 
   // Constants that cannot be modified by the user
@@ -179,6 +192,7 @@ export function ItemScreen(props: ItemScreenProps) {
   const beacon = initialBeacon ? initialBeacon : null
   const status = initialStatus ? initialStatus : null
 
+  const [categoryID, setCategoryID] = useState(getCategoryID(categories, initialCategory))
   const [category, setCategory] = useState(initialCategory ? initialCategory : '')
   const [categoryStatus, setCategoryStatus] = useState<AutocompleteStatus>('basic')
   const [service, setService] = useState(initialService ? initialService : '')
@@ -277,16 +291,17 @@ export function ItemScreen(props: ItemScreenProps) {
         {status === UNDER_CREATION ? (
           <Input size="large" disabled={true} style={INPUT} label={strings.status} value={status} />
         ) : null}
-        <Autocomplete
+        <CategoryDropdown
           style={INPUT}
           status={categoryStatus}
           caption={strings.mandatory}
           errorCaption={strings.shouldNotBeEmpty}
           label={`${strings.category}*`}
           placeholder={strings.categoryPlaceholder}
-          dataType={DataType.CATEGORY}
-          value={category}
-          setValue={setCategory}
+          category={{ id: categoryID, name: category }}
+          setCategory={setCategory}
+          setCategoryID={setCategoryID}
+          options={categories}
         />
         <Autocomplete
           style={INPUT}
@@ -515,6 +530,7 @@ export function ItemScreen(props: ItemScreenProps) {
                 beacon,
                 service,
                 category,
+                categoryID,
                 brand,
                 model,
                 supplier,
@@ -547,7 +563,6 @@ export function ItemScreen(props: ItemScreenProps) {
 
                 // Save the data inserted by the user for future autocompletion
                 const newAutocompleteEntries: Array<[DataType, string]> = [
-                  [DataType.CATEGORY, category],
                   [DataType.SERVICE, service],
                   [DataType.BRAND, brand],
                   [DataType.MODEL, model],

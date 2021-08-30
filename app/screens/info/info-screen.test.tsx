@@ -29,7 +29,9 @@ describe('Info screen', () => {
     id: 1,
     beacon: 'aa:aa:aa:aa:aa:aa',
     category: 'Lit',
+    categoryID: 2,
     service: 'Bloc 1',
+    itemID: 'abcd',
     brand: 'br',
     model: 'mod',
     supplier: 'supp',
@@ -54,6 +56,7 @@ describe('Info screen', () => {
   function buildInfoScreen() {
     const itemStore = ItemStoreModel.create()
     itemStore.saveItem(initialItem)
+    itemStore.saveCategories([{ id: 2, name: 'Lit' }])
     Object.defineProperty(itemStore, 'updateItem', { value: mockUpdateItem, writable: true })
     const rootStore = RootStoreModel.create({ itemStore })
 
@@ -96,7 +99,7 @@ describe('Info screen', () => {
     expect(component.queryByText(translate('registerScreen.id'))).toBeTruthy()
   })
 
-  it('should show the category input', async () => {
+  it('should show the category dropdown', async () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
@@ -342,7 +345,8 @@ describe('Info screen', () => {
       {
         beacon: initialItem.beacon,
         brand: brand,
-        category: category,
+        category: initialItem.category,
+        categoryID: initialItem.categoryID,
         service: service,
         contact: contact,
         currentLocation: currentLocation,
@@ -377,9 +381,6 @@ describe('Info screen', () => {
     const screen = buildInfoScreen()
     const component = render(screen)
 
-    const categoryInput = component.queryByText(CATEGORY_LABEL)
-    fireEvent.changeText(categoryInput, '')
-
     const brandInput = component.queryByText(BRAND_LABEL)
     fireEvent.changeText(brandInput, '')
 
@@ -401,7 +402,7 @@ describe('Info screen', () => {
     const warnings = component.queryAllByText(translate('common.shouldNotBeEmpty'))
     const priceWarning = component.queryByText(translate('common.shouldBeValidPrice'))
 
-    expect(warnings).toHaveLength(5)
+    expect(warnings).toHaveLength(4)
     warnings.forEach((w) => expect(w).toBeTruthy())
     expect(priceWarning).toBeTruthy()
   })

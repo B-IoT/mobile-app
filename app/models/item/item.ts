@@ -4,6 +4,7 @@ export const ItemModel = types.model('Item').props({
   id: types.identifierNumber,
   beacon: types.maybeNull(types.string),
   category: types.maybeNull(types.string),
+  categoryID: types.maybeNull(types.number),
   service: types.maybeNull(types.string),
   itemID: types.maybeNull(types.string),
   brand: types.maybeNull(types.string),
