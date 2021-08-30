@@ -32,7 +32,7 @@ import { translate } from '../../i18n'
 import { Item } from '../../models/item/item'
 import { useStores } from '../../models'
 import { MainPrimaryParamList } from '../../navigators'
-import { isEmpty } from '../../utils/function-utils/function-utils'
+import { extractCategoryName, isEmpty } from '../../utils/function-utils/function-utils'
 import { InfoPopup } from './info-popup/info-popup'
 
 type ListScreenNavigationProp = StackNavigationProp<MainPrimaryParamList, 'home'>
@@ -301,7 +301,7 @@ export const ListScreen = observer(function ListScreen() {
       <Layout style={LIST_ITEM_ROOT_LAYOUT}>
         <Layout style={LIST_ITEM_HORIZONTAL_LAYOUT}>
           <Text category="s1" status="primary">
-            {item.category}
+            {item.category ? extractCategoryName(item.category) : ''}
           </Text>
           <Text>ID {item.id}</Text>
         </Layout>

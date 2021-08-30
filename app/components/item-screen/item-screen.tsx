@@ -141,6 +141,9 @@ const isIos = Platform.OS === 'ios'
 
 /**
  * Gets the category ID of the given category.
+ *
+ * @param categories all categories
+ * @param categoryName the name of the category
  */
 function getCategoryID(categories: Category[], categoryName: string): number | null {
   return categories.find((c) => c.name === categoryName)?.id || null

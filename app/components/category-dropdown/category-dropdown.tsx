@@ -4,6 +4,7 @@ import { CategoryDropdownProps } from './category-dropdown.props'
 import { Keyboard, Platform, ViewStyle } from 'react-native'
 import { Category } from '../../models/category/category'
 import { translate } from '../../i18n'
+import { extractCategoryName, groupBy } from '../../utils/function-utils/function-utils'
 
 const showEvent: 'keyboardDidShow' | 'keyboardWillShow' = Platform.select({
   android: 'keyboardDidShow',
@@ -17,17 +18,6 @@ const hideEvent: 'keyboardDidHide' | 'keyboardWillHide' = Platform.select({
 
 const strings = {
   noCategoryFound: translate('common.noCategoryFound'),
-}
-
-/**
- * Extracts the category name given the string. The string can either be of the form "group.category" or simply "category".
- *
- * @param s the string containing the category and eventually its group
- * @return the category name without group, if any
- */
-function extractCategoryName(s: string): string {
-  const split = s.split('.')
-  return split.length > 1 ? split[1] : split[0]
 }
 
 /**
@@ -75,7 +65,14 @@ export function CategoryDropdown(props: CategoryDropdownProps) {
 
   // Useful to detect categories belonging to multiple groups.
   const duplicatedOptions = new Set(
-    options.filter((c) => c.name.split('.').length > 1).map((c) => c.name),
+    Object.entries(
+      groupBy(
+        options.map((c) => c.name).filter((c) => c.split('.').length > 1),
+        (c) => c.split('.')[1],
+      ),
+    )
+      .filter(([_, g]) => g.length > 1)
+      .flatMap(([k, _]) => k),
   )
 
   /**
@@ -84,10 +81,17 @@ export function CategoryDropdown(props: CategoryDropdownProps) {
    * @param categoryName the category
    * @returns the display name
    */
-  const buildCategoryDisplayName = (categoryName: string) =>
-    duplicatedOptions.has(categoryName)
-      ? categoryName.split('.').join(' - ')
-      : extractCategoryName(categoryName)
+  const buildCategoryDisplayName = (categoryName: string) => {
+    console.log(duplicatedOptions)
+    console.log(categoryName)
+
+    if (categoryName && categoryName.split('.').length > 1) {
+      const subcategory = categoryName.split('.')[1]
+      return duplicatedOptions.has(subcategory) ? categoryName.split('.').join(' - ') : subcategory
+    } else {
+      return categoryName
+    }
+  }
 
   // Cleaned options, where each category name is replaced with its display value.
   const cleanOptions: Category[] = options.map((c) => ({
