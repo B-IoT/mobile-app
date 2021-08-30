@@ -7,14 +7,18 @@ publish: &publish
     - checkout
 
     - run:
+        name: Increase Node max memory
+        command: export NODE_OPTIONS=--max-old-space-size=4096
+
+    - run:
         name: Installing dependencies
         command: npm ci
 
     - run:
         name: Run tests
-        command: npm run test:cov 
+        command: npm run test:cov
 
-    - run: 
+    - run:
         name: Upload code coverage
         command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
@@ -39,7 +43,7 @@ jobs:
     environment:
       EXPO_RELEASE_CHANNEL: dev
     <<: *publish
-    
+
   publish_to_expo_dependabot:
     environment:
       EXPO_RELEASE_CHANNEL: dependabot
